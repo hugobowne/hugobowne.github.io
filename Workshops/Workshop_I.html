@@ -76,16 +76,16 @@ img {
 <li><a href="#fourth-way-to-plot-data-column-scatter-plot-with-jitter"><span class="toc-section-number">1.4</span> Fourth way to plot data: column scatter plot (with jitter!)</a></li>
 <li><a href="#fifth-way-to-plot-data-beeswarm-plot"><span class="toc-section-number">1.5</span> Fifth way to plot data: beeswarm plot</a></li>
 </ul></li>
-<li><a href="#summary-statistics"><span class="toc-section-number">2</span> Summary Statistics</a><ul>
-<li><a href="#measures-of-central-tendency"><span class="toc-section-number">2.1</span> Measures of Central Tendency</a></li>
-<li><a href="#measures-of-variabilitydispersion"><span class="toc-section-number">2.2</span> Measures of Variability/Dispersion</a></li>
+<li><a href="#summary-statistics"><span class="toc-section-number">2</span> Summary statistics</a><ul>
+<li><a href="#measures-of-central-tendency"><span class="toc-section-number">2.1</span> Measures of central tendency</a></li>
+<li><a href="#measures-of-variabilitydispersion"><span class="toc-section-number">2.2</span> Measures of variability/dispersion</a></li>
 </ul></li>
-<li><a href="#central-limit-theorem"><span class="toc-section-number">3</span> Central Limit Theorem</a></li>
+<li><a href="#central-limit-theorem"><span class="toc-section-number">3</span> Central limit theorem</a></li>
 <li><a href="#references"><span class="toc-section-number">4</span> References</a></li>
 </ul>
 </div>
 
-<p><strong>These are accompanying notes</strong> for a 4-part ‘Practical Statistics for Experimentalists’ Workshop taught at Yale University in the Fall of 2015, the project of which was to introduce experimentalists to statistical and data analytic methodologies and intuitions that they can immediately use in their everyday work, along with methods to implement everything learned in the R programming language. Participants were Graduate students and Postdoctoral Fellows/Associates from the Molecular Biophysics &amp; Biochemistry Department and Yale Medical School. These notes are not intended as stand-alone resources for ‘Practical Statistics for Experimentalists’, but as supporting material for the Workshop. Having said that, they are relatively complete and give a good indication of what was covered. You will not, however, be able to run all the R code embedded in these notes without the required data sets, many of which were kindly supplied by the relevant scientists/authors. All papers/texts referenced in the body of these notes are listed in the ‘References’ section at the end.</p>
+<p><strong>These are accompanying notes</strong> for a 4-part ‘Practical Statistics for Experimentalists’ Workshop taught at Yale University in the Fall of 2015, the project of which was to introduce experimentalists to statistical and data analytic methodologies and intuitions that they can immediately use in their everyday work, along with methods to implement everything learned in the R programming language. Participants were Graduate students and Postdoctoral Fellows/Associates from the Molecular Biophysics &amp; Biochemistry Department and Yale Medical School. These notes are not intended as stand-alone resources for ‘Practical Statistics for Experimentalists’, but as supporting material for the Workshop. Having said that, they are relatively complete and give a good indication of what was covered. You will not, however, be able to run all the R code embedded in these notes without the required data sets, many of which were kindly supplied by the relevant scientists/authors. All papers/texts referenced in the body of these notes are listed in the ‘References’ section at the end. Feel free to <strong>contact</strong> me at <em>hugobowne at gmail dot com</em> with any questions.</p>
 <p><strong>Workshop I</strong> is concerned with i) plotting data, ii) summary statistics and iii) the Central Limit Theorem. Before even attempting to summarize your data or perform any sort of robust statistical analyses on it, it is important to get a feel for what your data looks like. There are many ways to plot data to do this, a number of which we shall delve into in this Workshop, while weighing up the pros and cons of each type of approach to plotting. We shall then look at how we can use summary statistics to summarize data, with particular reference to <em>measures of central tendency</em> and <em>measures of variability</em>. We close with the statement and examples of the Central Limit Theorem, a powerful result that will influence much of what we do when practicing the art of statistics (for example, statistical hypothesis testing).</p>
 <div id="plotting-data" class="section level1">
 <h1><span class="header-section-number">1</span> Plotting data</h1>
@@ -261,10 +261,10 @@ legend(&quot;topright&quot;, legend = c(&quot;Yes&quot;, &quot;No&quot;),
 </div>
 </div>
 <div id="summary-statistics" class="section level1">
-<h1><span class="header-section-number">2</span> Summary Statistics</h1>
+<h1><span class="header-section-number">2</span> Summary statistics</h1>
 <p>How can we numerically describe &amp; summarize data? We use statistics: but what is a <em>statistic</em>? To liberally paraphrase Phil Gregory (in <em>Bayesian Logical Data Analysis for the Physical Sciences</em>), a <span style="color:red"><em>statistic</em></span> is ‘a function that maps any data set to a numerical measure’ (what Gregory actually wrote is that a <em>statistic</em> is ‘any function of the observed random variables in a sample such that the function does not contain any unknown quantities’!). We use <em>summary statistics</em> to easily identify attributes such as <em>central tendency</em> and <em>variability</em>, also called <em>dispersion</em>. We shall explore these now.</p>
 <div id="measures-of-central-tendency" class="section level2">
-<h2><span class="header-section-number">2.1</span> Measures of Central Tendency</h2>
+<h2><span class="header-section-number">2.1</span> Measures of central tendency</h2>
 <h4>
 Mean
 </h4>
@@ -342,7 +342,7 @@ Mode
 <p>Also see <a href="http://mathworld.wolfram.com/Mode.html">here</a> for some interesting notes on relation between mode, median, mean &amp; something called the Pearson mode skewness.</p>
 </div>
 <div id="measures-of-variabilitydispersion" class="section level2">
-<h2><span class="header-section-number">2.2</span> Measures of Variability/Dispersion</h2>
+<h2><span class="header-section-number">2.2</span> Measures of variability/dispersion</h2>
 <h4>
 Range
 </h4>
@@ -361,7 +361,7 @@ Example: Normal (Gaussian) Distribution
 <ul>
 <li>Things in the phenomenal world are often normally distributed (this is why the term ‘bell curve’ is part of our general society’s lexicon, rather than merely a technical term);</li>
 <li>Measurement error (e.g., from using a ruler) is often normally distributed.</li>
-<li>The Central Limit Theorem! See below.</li>
+<li>The Central limit theorem! See below.</li>
 </ul>
 <p><strong>Equation</strong>: <span class="math">\(P(x) = \frac{1}{\sigma\sqrt{2\pi}}\text{exp}(-\frac{(x - \mu)^2}{2\sigma^2}),\)</span> where <span class="math">\(\mu\)</span> and <span class="math">\(\sigma^2\)</span> are the mean and variance, respectively, of the distribution.</p>
 <h4>
@@ -405,7 +405,7 @@ Standard Error of the Mean
 </h4>
 <p>Let’s say we have drawn <span class="math">\(n\)</span> random, independent samples <span class="math">\(X_1, X_2, \ldots , X_n\)</span> from a probability distribution <span class="math">\(P\)</span>, where <span class="math">\(P\)</span> has mean <span class="math">\(\mu\)</span> and variance <span class="math">\(\sigma^2\)</span>. Now the sample mean <span class="math">\(\mu_X\)</span> provides an estimate of the population mean <span class="math">\(\mu\)</span>. The question is “how good is the estimate <span class="math">\(\mu_X\)</span> of <span class="math">\(\mu\)</span>?” Another way to ask this is as follows: “if I performed the same experiment a number of times, that is, drew another <span class="math">\(n\)</span> samples and calculated the sample mean, what would be the standard deviation of all of these sample means?” The answer is that the <strong>standard error of the sample mean</strong> is</p>
 <p><span class="math">\[SE_{\bar{x}} = \frac{s}{\sqrt{n}},\]</span></p>
-<p>where <span class="math">\(n\)</span> is the sample size and <span class="math">\(s\)</span> is the sample standard deviation. This follows, in fact, from the Central Limit Theorem, which we state below. First note, though, that there are diminishing returns of the number of data points with respect to the standard error, as it decreases as the inverse of <span class="math">\(\sqrt(n)\)</span>, so to be 10 times as certain in your estimate of the mean, you actually require 100 times as many data points!</p>
+<p>where <span class="math">\(n\)</span> is the sample size and <span class="math">\(s\)</span> is the sample standard deviation. This follows, in fact, from the Central limit theorem, which we state below. First note, though, that there are diminishing returns of the number of data points with respect to the standard error, as it decreases as the inverse of <span class="math">\(\sqrt(n)\)</span>, so to be 10 times as certain in your estimate of the mean, you actually require 100 times as many data points!</p>
 <p><strong>Example of computation</strong>:</p>
 <pre class="r"><code>data &lt;- read.csv(&quot;data/lifetimes_tubulin.csv&quot;) #load data from .csv
 slt &lt;- apply( data , 2 , function(x) sd(x , na.rm = TRUE)) #mean lifetime
@@ -422,8 +422,8 @@ One of the most common questions that I am asked by experimentalists
 </div>
 </div>
 <div id="central-limit-theorem" class="section level1">
-<h1><span class="header-section-number">3</span> Central Limit Theorem</h1>
-<p>The Central Limit Theorem, in essence, tells about how the <em>sample mean</em>, as an <em>estimator</em>, is itself distributed, in the limit of large samples:</p>
+<h1><span class="header-section-number">3</span> Central limit theorem</h1>
+<p>The Central limit theorem, in essence, tells about how the <em>sample mean</em>, as an <em>estimator</em>, is itself distributed, in the limit of large samples:</p>
 <p>Let <span class="math">\(X_1, X_2, \ldots X_n\)</span> be a random sample drawn from a probability distribution <span class="math">\(P\)</span> (with mean <span class="math">\(\mu\)</span> and variance <span class="math">\(\sigma^2\)</span>). The sample average is defined as</p>
 <p><span class="math">\[S_n = \frac{X_1 + X_2 + \ldots + X_n}{n}\]</span></p>
 <p>and the Central Limit Theorem states that, as <span class="math">\(n \to \infty\)</span>, <span class="math">\(S_n \to N(\mu,\sigma^2/n)\)</span>. We will demonstrate part of its power when dealing with Student’s t-test in Workshop II. For the time being, let’s look at what Francis Galton (Victorian statistician, progressive, polymath, sociologist, psychologist, anthropologist, eugenicist, tropical explorer, geographer, inventor, meteorologist, proto-geneticist and psychometrician) had to say about the CLT:</p>
@@ -478,10 +478,10 @@ qplot( x , binwidth = 0.01) #plot distribution of estimates</code></pre>
 <div id="references" class="section level1">
 <h1><span class="header-section-number">4</span> References</h1>
 <ul>
+<li>Cumming, G., F. Fidler, D.L. Vaux. 2007. <em>Error bars in experimental biology</em>. J. Cell Biol. 177:7–11.</li>
 <li>Gardner MK, Zanic M, Gell C, Bormuth V, et al. 2011. <em>Depolymerizing kinesins Kip3 and MCAK shape cellular microtubule architecture by differential control of catastrophe.</em> Cell 147: 1092– 103.</li>
 <li>Gregory, P. 2010. <em>Bayesian Logical Data Analysis for the Physical Sciences.</em> <em>Cambridge University Press</em>.</li>
 <li>Scott, David W. 1992. <em>Multivariate Density Estimation: Theory, Practice, and Visualization.</em> <em>New York: John Wiley</em>.</li>
-<li>Cumming, G., F. Fidler, D.L. Vaux. 2007. <em>Error bars in experimental biology</em>. J. Cell Biol. 177:7–11.</li>
 <li>R cheat sheets: see <a href="https://www.rstudio.com/resources/cheatsheets">here</a>.</li>
 </ul>
 </div>
