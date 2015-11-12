@@ -27,7 +27,7 @@ header {
     width: 100%;
     min-height: auto;
     text-align: center;
-    color: #fff;
+    color: black;
     background-image: url('../images/header.jpg');
     background-position: center;
     -webkit-background-size: cover;
@@ -54,7 +54,7 @@ header .header-content .header-content-inner p {
     margin-bottom: 50px;
     font-size: 16px;
     font-weight: 300;
-    color: rgba(255,255,255,1);
+    color: black;
 }
 
 @media(min-width:768px) {
