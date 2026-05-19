@@ -1,392 +1,712 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hugo Bowne-Anderson · independent data &amp; AI consultant, educator, podcaster</title>
+<meta name="description" content="Hugo Bowne-Anderson is an independent data and AI consultant, educator and podcaster. Host of Vanishing Gradients and High Signal. Based in Sydney.">
+<meta name="author" content="Hugo Bowne-Anderson">
+<link rel="canonical" href="https://hugobowne.github.io/">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Hugo Bowne-Anderson is a data scientist, writer, educator and podcaster.">
-    <meta name="author" content="hugo bowne-anderson">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hugobowne.github.io/">
+<meta property="og:title" content="Hugo Bowne-Anderson · independent data &amp; AI consultant, educator, podcaster">
+<meta property="og:description" content="Independent data and AI consultant, educator, and podcaster. Host of Vanishing Gradients and High Signal.">
+<meta property="og:site_name" content="hugo-bowne-anderson.ai">
 
-    <title>hugo bowne-anderson - data scientist</title>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@hugobowne">
+<meta name="twitter:creator" content="@hugobowne">
+<meta name="twitter:title" content="Hugo Bowne-Anderson · independent data &amp; AI consultant, educator, podcaster">
+<meta name="twitter:description" content="Independent data and AI consultant, educator, and podcaster. Host of Vanishing Gradients and High Signal.">
 
-    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Hugo Bowne-Anderson",
+  "url": "https://hugobowne.github.io/",
+  "jobTitle": "Independent data and AI consultant, educator and podcaster",
+  "description": "Host of Vanishing Gradients and High Signal. Writes at hugobowne.substack.com. Previously Outerbounds, Coiled, DataCamp.",
+  "sameAs": [
+    "https://hugobowne.substack.com/",
+    "https://github.com/hugobowne",
+    "https://x.com/hugobowne",
+    "https://www.linkedin.com/in/hugo-bowne-anderson-045939a5/",
+    "https://www.oreilly.com/people/hugo-bowne-anderson/"
+  ]
+}
+</script>
 
-    <!-- Custom CSS -->
-    <link href="css/freelancer.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Reset (inlined from shared.css) */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 
-    <!-- Custom Fonts -->
-    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+:root, :root[data-theme="dark"] {
+  --bg: #0b0c0d;
+  --bg-2: #111315;
+  --bg-3: #17191c;
+  --line: #22262b;
+  --line-2: #2d3239;
+  --fg: #e8eaed;
+  --fg-2: #aeb3ba;
+  --fg-3: #6b7280;
+  --accent: oklch(0.82 0.19 135);
+  --accent-ink: #0b0c0d;
+  --warn: oklch(0.78 0.16 55);
+}
+:root[data-theme="light"] {
+  --bg: #f7f6f3;
+  --bg-2: #ecebe6;
+  --bg-3: #e3e1db;
+  --line: #d4d2ca;
+  --line-2: #a8a59a;
+  --fg: #15171a;
+  --fg-2: #3a3d42;
+  --fg-3: #6a6d73;
+  --accent: oklch(0.48 0.17 135);
+  --accent-ink: #f7f6f3;
+  --warn: oklch(0.55 0.16 55);
+}
+html, body { background: var(--bg); color: var(--fg); }
+body {
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.page { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+/* Top bar */
+.topbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+.logo { color: var(--fg); letter-spacing: -0.01em; }
+.logo .dot { color: var(--accent); }
+.topbar nav { display: flex; gap: 22px; }
+.topbar nav a { color: var(--fg-2); text-decoration: none; }
+.topbar nav a:hover { color: var(--fg); }
+.topbar .status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-2);
+}
+.topbar .status::before {
+  content: "";
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
 
+/* HERO grid */
+.hero {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+}
+.hero .left { padding: 72px 44px 60px 0; border-right: 1px solid var(--line); }
+.hero .right { padding: 40px 0 40px 44px; display: flex; flex-direction: column; gap: 20px; }
+
+.hero .tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-bottom: 22px;
+}
+.hero .tag::before { content: "// "; color: var(--fg-3); }
+.hero h1 {
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 76px;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 0 0 24px;
+}
+.hero h1 .k { color: var(--accent); }
+.hero h1 .dim { color: var(--fg-2); font-weight: 300; }
+.hero .dek { max-width: 60ch; }
+.hero .dek p { margin: 0 0 14px; font-size: 15.5px; line-height: 1.65; color: var(--fg-2); }
+.hero .dek p:first-child { font-size: 18px; color: var(--fg); line-height: 1.55; }
+.hero .dek p:last-child { margin-bottom: 0; }
+.hero .dek a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--accent), transparent 70%); transition: border-color .12s; }
+.hero .dek a:hover { border-bottom-color: var(--accent); }
+.hero .ctas { display: flex; gap: 10px; margin-top: 34px; }
+.btn {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  padding: 12px 18px;
+  border: 1px solid var(--line-2);
+  color: var(--fg);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: background .12s, border-color .12s, color .12s;
+}
+.btn:hover { background: var(--bg-2); border-color: var(--fg-3); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { background: #fff; border-color: #fff; }
+
+/* Terminal */
+.terminal {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.terminal .chrome {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--fg-3);
+  font-size: 11px;
+}
+.terminal .chrome .dots { display: flex; gap: 6px; }
+.terminal .chrome .dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--line-2); }
+.terminal .body { padding: 16px 16px 18px; }
+.terminal .body .prompt { color: var(--accent); }
+.terminal .body .path { color: var(--fg-3); }
+.terminal .body .k { color: var(--fg-3); }
+.terminal .body .v { color: var(--fg); }
+.terminal .body .str { color: oklch(0.82 0.12 200); }
+.terminal .body .com { color: var(--fg-3); font-style: italic; }
+.terminal .cursor {
+  display: inline-block;
+  width: 8px; height: 14px;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 1.05s steps(2) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.kv {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.kv .cell { background: var(--bg); padding: 22px 24px; }
+.kv .cell .k { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); letter-spacing: 0.04em; margin-bottom: 10px; }
+.kv .cell .v { font-size: 26px; line-height: 1.05; letter-spacing: -0.02em; font-weight: 500; }
+.kv .cell .v .u { color: var(--accent); }
+
+/* Section */
+.sec { border-bottom: 1px solid var(--line); padding: 64px 0; }
+.sec h2 {
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin: 0 0 6px;
+}
+.sec .sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-2);
+  margin-bottom: 34px;
+}
+
+/* Podcasts as cards */
+.pods { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pod {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 26px;
+}
+.pod .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+.pod .head .t { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+.pod .head .n { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); }
+.pod .tl { color: var(--fg-2); font-size: 14px; margin-bottom: 20px; max-width: 42ch; }
+.pod .ep {
+  display: grid;
+  grid-template-columns: 32px 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+}
+.pod .ep:last-child { padding-bottom: 0; }
+.pod .ep:hover { color: var(--accent); }
+.pod .ep .play {
+  width: 26px; height: 26px; border: 1px solid var(--line-2); border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--fg-2);
+  transition: all .12s;
+}
+.pod .ep:hover .play { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.pod .ep .play::before { content: ""; border-left: 6px solid currentColor; border-top: 4px solid transparent; border-bottom: 4px solid transparent; margin-left: 2px; }
+.pod .ep .ti { font-size: 14.5px; line-height: 1.3; }
+.pod .ep .g { display: block; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); margin-top: 3px; }
+.pod .ep .num { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); }
+.pod .ep .l { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); }
+
+/* Writing table */
+.table { border: 1px solid var(--line); }
+.table .row { display: grid; grid-template-columns: 110px 1fr 200px 120px 40px; gap: 0; align-items: center; border-top: 1px solid var(--line); transition: background .12s; }
+.table .row:first-child { border-top: 0; }
+.table .row:hover { background: var(--bg-2); }
+.table .row.head { background: var(--bg-2); color: var(--fg-3); font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.04em; }
+.table .row > * { padding: 14px 16px; }
+.table .row .ti { font-size: 15px; }
+.table .row .out { font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--fg-2); }
+.table .row .dt { font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--fg-3); }
+.table .row .tg { font-family: "JetBrains Mono", monospace; font-size: 10.5px; color: var(--accent); }
+.table .row .ar { color: var(--fg-3); text-align: right; }
+.table .row:hover .ar { color: var(--accent); }
+
+.tagfilter { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.tagfilter button {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  padding: 6px 10px;
+  border: 1px solid var(--line-2);
+  color: var(--fg-2);
+  transition: all .12s;
+}
+.tagfilter button.on, .tagfilter button:hover { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+/* Workshops grid */
+.ws { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.ws .c {
+  background: var(--bg-2); border: 1px solid var(--line); padding: 22px; position: relative;
+  display: flex; flex-direction: column; min-height: 220px;
+}
+.ws a.c { color: inherit; text-decoration: none; }
+.ws a.c:hover { border-color: var(--accent); }
+.ws .c .i { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); margin-bottom: 14px; }
+.ws .c .t { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 8px; }
+.ws .c .p { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-2); margin-bottom: 16px; }
+.ws .c .foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--line); }
+.ws .c .foot .m { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); }
+.ws .c .foot .s { font-family: "JetBrains Mono", monospace; font-size: 10.5px; color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase; }
+.ws .c.feat { background: var(--bg); border-color: var(--accent); }
+.ws .c.feat .i { color: var(--accent); }
+
+/* Course / agent harness */
+.course-intro {
+  background: var(--bg-2);
+  border-left: 2px solid var(--accent);
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  font-size: 15px;
+  color: var(--fg-2);
+  max-width: 70ch;
+  line-height: 1.55;
+}
+.course-intro em { color: var(--fg); font-style: normal; }
+.course-outro {
+  background: var(--bg-2);
+  border-left: 2px solid var(--accent);
+  padding: 18px 22px;
+  margin-top: 28px;
+  font-size: 14px;
+  color: var(--fg-2);
+  max-width: 70ch;
+  line-height: 1.55;
+}
+.course-outro a { color: var(--accent); text-decoration: none; }
+.crs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.crs .ch {
+  background: var(--bg-2); border: 1px solid var(--line); padding: 22px;
+  display: flex; flex-direction: column;
+}
+.crs .ch .i { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); margin-bottom: 14px; letter-spacing: 0.04em; }
+.crs .ch .t { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 6px; }
+.crs .ch .p { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-2); margin-bottom: 18px; }
+.crs .ch .items { display: flex; flex-direction: column; gap: 12px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); }
+.crs .ch .item { display: grid; grid-template-columns: 72px 1fr; gap: 10px; align-items: baseline; }
+.crs .ch .item .fmt { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--fg-3); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 2px; }
+.crs .ch .item a { color: var(--fg); text-decoration: none; font-size: 13px; line-height: 1.4; display: block; }
+.crs .ch .item a:hover { color: var(--accent); }
+.crs .ch .item .g { display: block; color: var(--fg-3); font-size: 10.5px; font-family: "JetBrains Mono", monospace; margin-top: 2px; }
+
+/* Collaborators grid */
+.collabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.collabs .n { background: var(--bg); padding: 14px 16px; font-family: "JetBrains Mono", monospace; font-size: 12.5px; }
+.collabs .n .co { display: block; color: var(--fg-3); font-size: 11px; margin-top: 3px; }
+
+/* Subscribe */
+.sub-cta {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  background:
+    radial-gradient(ellipse at top left, oklch(0.82 0.19 135 / 0.1), transparent 60%),
+    var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 44px;
+  margin: 40px 0;
+}
+.sub-cta h3 { font-size: 34px; font-weight: 500; letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 12px; overflow-wrap: anywhere; word-break: break-word; }
+.sub-cta h3 em { font-style: normal; color: var(--accent); }
+.sub-cta p { color: var(--fg-2); max-width: 42ch; }
+.sub-cta .form { display: flex; gap: 10px; align-self: center; }
+.sub-cta .form input {
+  flex: 1; background: var(--bg); border: 1px solid var(--line-2); color: var(--fg);
+  padding: 14px 14px; font-family: "JetBrains Mono", monospace; font-size: 13px;
+}
+.sub-cta .form input:focus { outline: none; border-color: var(--accent); }
+.sub-cta .tiny { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); margin-top: 12px; }
+
+.footer { border-top: 1px solid var(--line); padding: 28px 0; display: flex; justify-content: space-between; font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--fg-3); }
+.footer a { color: var(--fg-2); text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+.footer .socials { display: flex; gap: 18px; flex-wrap: wrap; }
+
+/* Topbar small fixes */
+.topbar #theme-toggle { white-space: nowrap; }
+.topbar .status { white-space: nowrap; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero .left { padding: 56px 0 40px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .hero .right { padding: 32px 0 40px; }
+  .hero h1 { font-size: 60px; }
+  .kv { grid-template-columns: repeat(2, 1fr); }
+  .ws { grid-template-columns: repeat(2, 1fr); }
+  .crs { grid-template-columns: repeat(2, 1fr); }
+  .collabs { grid-template-columns: repeat(4, 1fr); }
+  .pods { grid-template-columns: 1fr; }
+  .table .row { grid-template-columns: 92px 1fr 140px 80px 30px; }
+}
+@media (max-width: 720px) {
+  .page { padding: 0 18px; }
+  .topbar { display: flex; flex-wrap: wrap; gap: 10px 14px; }
+  .topbar nav { flex: 1 1 100%; flex-wrap: wrap; gap: 14px; order: 3; }
+  .hero .left { padding: 40px 0 32px; }
+  .hero h1 { font-size: 44px; letter-spacing: -0.03em; }
+  .hero .dek p:first-child { font-size: 16px; }
+  .hero .ctas { flex-direction: column; align-items: stretch; }
+  .hero .ctas .btn { justify-content: center; }
+  .sec { padding: 48px 0; }
+  .sec h2 { font-size: 28px; }
+  .ws, .crs, .pods { grid-template-columns: 1fr; }
+  .collabs { grid-template-columns: repeat(2, 1fr); }
+  .kv .cell .v { font-size: 22px; }
+  /* Writing table → card-like rows */
+  .table .row.head { display: none; }
+  .table .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; padding: 14px; }
+  .table .row > * { padding: 0; }
+  .table .row .ti { flex: 1 1 100%; font-size: 14.5px; order: 1; }
+  .table .row .dt, .table .row .out, .table .row .tg { flex: 0 0 auto; white-space: nowrap; }
+  .table .row .dt { order: 2; }
+  .table .row .out { order: 3; }
+  .table .row .tg { order: 4; }
+  .table .row .ar { display: none; }
+  .table .row .dt::after, .table .row .out::after { content: " · "; color: var(--fg-3); padding-left: 4px; }
+  .sub-cta { grid-template-columns: 1fr; padding: 28px; }
+  .sub-cta h3 { font-size: 26px; }
+  .footer { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .terminal .body { font-size: 11.5px; }
+  .pod { padding: 20px; }
+  .pod .head { flex-direction: column; gap: 4px; align-items: flex-start; }
+  .pod .ep { grid-template-columns: 28px 1fr auto; }
+  .pod .ep .l { display: none; }
+}
+</style>
 </head>
+<body>
+<div class="page" id="top">
 
-<body id="page-top" class="index">
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <!--<img class="img-responsive profile-pic" src="img/profile.png" alt="">-->
-                <a class="navbar-brand" href="#page-top">hugo bowne-anderson</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#cv">About me</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#podcast">Podcast</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#education">education</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#writing">Writing</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#talks">Talks</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
+  <header class="topbar">
+    <div class="logo"><a href="#top" style="color:inherit;text-decoration:none;">hugo-bowne-anderson<span class="dot">.</span>ai</a></div>
+    <nav>
+      <a href="#podcasts">podcasts</a>
+      <a href="#writing">writing</a>
+      <a href="#workshops">workshops</a>
+      <a href="#course">agents course</a>
     </nav>
+    <div style="display:flex;gap:14px;align-items:center">
+      <button id="theme-toggle" title="Toggle theme" style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 10px;border:1px solid var(--line-2);color:var(--fg-2);letter-spacing:.04em;">[ dark ]</button>
+      <div class="status">based in Sydney</div>
+    </div>
+  </header>
 
-    <!-- Header -->
-    <header>
-    <section id="cv" class="success">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="intro-text">
-                        <span class="skills">data scientist - educator - writer - podcaster</span>
-                        <hr class="divider-custom-line">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <img src="img/hba-standup.png" alt="portrait" class="img-responsive img-rounded">
-                </div>
-                <div class="col-sm-8 text-left">
-                    <p> I'm an independent data and AI scientist, consultant, writer, educator & podcaster. My interests include promoting data & AI literacy/fluency, helping to spread data skills through organizations and society and lowering the barrier to entry for data science, analysis, and machine learning. Previously, I was Head of Developer Relations at <a href="https://outerbounds.com/" style="color: rgb(0,0,150)">Outerbounds</a>, a company committed to building infrastructure that provides a solid foundation for machine learning applications of all shapes and sizes. I am also the host of the industry podcast <a href="https://vanishinggradients.fireside.fm/" style="color: rgb(0,0,150)">Vanishing Gradients</a>. I was previously Head of Marketing and Data Science Evangelism at  <a href="https:coiled.io" style="color: rgb(0,0,150)">Coiled</a>, building solutions for scalable data science and machine learning in Python.
-                        Before this, I was at DataCamp, a data science training company educating over 4 million learners worldwide through interactive courses on the use of Python, R, SQL, Git, Bash and Spreadsheets in a data science context. While there, I spearheaded the development of over 25 courses in DataCamp’s Python curriculum, impacting over 250,000 learners worldwide through my own courses. I hosted and produced the data science podcast <a href="https://www.datacamp.com/community/podcast" style="color: rgb(0,0,150)">DataFramed</a>, in which I used long-format interviews with working data scientists to delve into what actually happens in the space and what impact it can and does have.
-                    <p>
-                    I love to write about all things data; two of my more recent articles from Harvard Business Review are <a href="https://hbr.org/2018/08/what-data-scientists-really-do-according-to-35-data-scientists" style="color: rgb(0,0,150)">What Data Scientists Really Do, According to 35 Data Scientists</a> and <a href="https://hbr.org/2018/10/your-data-literacy-depends-on-understanding-the-types-of-data-and-how-theyre-captured" style="color: rgb(0,0,150)">Your Data Literacy Depends on Understanding the Types of Data and How They’re Captured</a> (keep your eyes peeled for Part II of this piece).</p>
-                    <p>
-                    I also enjoy speaking and teaching tutorials/workshops at conferences. Recent highlights for me include PyData NYC, Innovation X's Chief Data Officer Summit, PyCon and SciPy (see below for videos).
-                    <p>
-                    For more details on all of this and more, scroll down!</a>
-                </div>
-            </div>
+  <section class="hero">
+    <div class="left">
+      <h1>I help teams build <span class="k">AI</span>.<br>And build <span class="k">with AI</span>.</h1>
+      <div class="dek">
+        <p>I'm an independent data and AI consultant with extensive experience in the tech industry. I've advised and taught teams building AI-powered systems, including engineers from Netflix, Meta, and Amazon. I host <a href="https://vanishinggradients.fireside.fm/">Vanishing Gradients</a>, where I explore cutting-edge developments in data science and artificial intelligence, and I've written for publications such as Harvard Business Review and VentureBeat.</p>
+      </div>
+      <div class="ctas">
+        <a class="btn primary" href="#subscribe">Subscribe to Vanishing Gradients ↗</a>
+        <a class="btn" href="#workshops">See workshops &amp; advisory →</a>
+      </div>
+    </div>
+    <div class="right">
+      <div class="terminal">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <span>~/hugo/now.json</span>
         </div>
-    </section>
-    </header>
-
-    <section id="podcast">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="text-center">
-                        <h2>podcast</h2>
-                        <hr class="divider-custom-line">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                  <img src="img/dataframed.png" alt="portrait" class="img-responsive img-rounded">
-                </div>
-                <div class="col-sm-8 text-left">
-                    <p>
-                    As data science, analytics, machine learning and AI capabilities spread through businesses and society at large, it's a challenge to keep track of what is happening in the data space, both at the forefront and in terms of general trends and skills. I started the DataFramed podcast to create a living, evolving audio document to share with people at all stages in their data journeys. Each episode is a long format interview with a professional in the space (from data scientists to tool builders to consultants) broken up with short segments that touch on topics critical to the industry. I've interviewed data scientists from companies such as Google, AT&T, McKinsey & Company, Airbnb, iRobot, Booking.com, Buzzfeed, TD Ameritrade, Etsy, StitchFix,  Doctors without Borders, Github and Microsoft, to name several.
-                    </p>
-                    <p>
-                    As a result of the podcast, I've been called many things, such as a "data science anthropologist" (Michael Chow, Learning Engineer and Data Scientist at DataCamp), "thought surgeon" (Cassie Kozyrkov, Chief Decision Scientist at Google), "the Larry King of data science" (anonymous reviewer on iTunes) and a "podcaster" (most people).
-                    </p>
-                    <p>
-                    Check out the podcast below or find it on your favourite pod player (we're on  iTunes, Overcast, Spotify and more; if you find a player we're not on, let me know).
-                    </p>
-                    <p>
-                    <a class="btn btn-primary" href="https://www.datacamp.com/community/podcast">check out podcast here<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                    </p>
-                    <p>
-                    If you'd like guidance, you can check out any of the following: <a href="https://www.datacamp.com/community/podcast/data-science-past-present-and-future">Episode 1 with Hilary Mason</a>  about data science, past, present and future;  <a href="https://www.datacamp.com/community/podcast/online-experiments-booking">a conversation about large scale, online experimentation with Lukas Vermeer</a>, who is in charge of online experiments at Booking.com; Cassie Kozyrkov, Chief Decision Scientist at Google, and I <a href="https://www.datacamp.com/community/podcast/decision-intelligence-data-science">waxing lyrical about the intersections of data science, decision intelligence and decision making</a>; Gabriel Straub, Head of Data Science and Architecture at the BBC, <a href="https://www.datacamp.com/community/podcast/data-science-bbc">on what the future of machine learning looks like there</a>;
-                    Cathy O'Neill on <a href="https://www.datacamp.com/community/podcast/weapons-math-destruction">Weapons of Math Destruction</a>, the dangerous algorithms at play in society at large; Skipper Seabold of Civis Analytics on <a href="https://www.datacamp.com/community/podcast/credibility-crisis-in-data-science">the (current and looming) Credibility Crisis in Data Science</a>; Renee Teate on <a href="https://www.datacamp.com/community/podcast/becoming-data-scientist">Becoming a Data Scientist</a>; Drew Conway on Building Data Science Teams; Angela Bassa, Director of Data Science at iRobot, on <a href="https://www.datacamp.com/community/podcast/managing-data-science-teams">Managing Data Science Teams</a>; Wes McKinney on <a href="https://www.datacamp.com/community/podcast/data-science-tool-building">the future of Data Science Tool Building</a>.
-                    </p>
-                </div>
-            </div>
+        <div class="body">
+<span class="com"># what I'm up to</span><br>
+<span class="prompt">$</span> cat now.json<br>
+<span class="k">{</span><br>
+&nbsp;&nbsp;<span class="k">"podcasts":</span> <span class="str">"Vanishing Gradients · High Signal"</span>,<br>
+&nbsp;&nbsp;<span class="k">"course":</span>&nbsp;&nbsp; <span class="str">"Building AI Apps · Maven"</span>,<br>
+&nbsp;&nbsp;<span class="k">"writing":</span>&nbsp; <span class="str">"hugobowne.substack.com"</span>,<br>
+&nbsp;&nbsp;<span class="k">"building":</span> <span class="str">"agents · harnesses · skills"</span>,<br>
+&nbsp;&nbsp;<span class="k">"based-in":</span> <span class="str">"Sydney, AU"</span><br>
+<span class="k">}</span><br>
+<span class="prompt">$</span> <span class="cursor"></span>
         </div>
-    </section>
-    </header>
-
-
-
-
-    <section id="education" class="success">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    <h2>education</h2>
-                    <hr class="divider-custom-line">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <img src="img/hba-green.png" alt="Hugo in front of green screen" class="img-responsive img-rounded">
-                </div>
-                <div class="col-sm-8">
-                    <h3>curriculum engineering at scale</h3>
-                    <p>
-                      I've always been an educator and an explainer. In my previous incarnation in academic research, I spent a lot of time teaching statistics,  programming and practical data science to researchers at Yale University, New Haven, and the Max Planck Institute for Cell Biology and Genetics, Dresden, where I was a postdoctoral fellow.
-                    </p>
-                    <p>
-                      I joined DataCamp to teach data science at scale, originally as a Python Curriculum Engineer, charged with building out a curriculum that leveraged modern browser technologies to teach skills to work with data, from machine learning to data visualization, data wrangling and statistics, among many others. The vision has always been <i>Learn By Doing</i> and, to this end, after showing learners short videos by experts in the field, we get them coding as quickly as possible in the browser and provide automated, tailored feedback.
-                    </p>
-                    <p>
-                    Joining DataCamp as the 7th employee (we're now ~150), I've had the pleasure of playing a pivotal role in the development of our product and curriculum, at a high level, on the technical side of things, and as a community builder to connect the company as a whole to the broader data community. Early, fond memories involve working with Travis Oliphant and Peter Wang of Anaconda to build out core pandas and data visualization courses, working with Andreas M&uuml;ller (core developer & co-maintainer of scikit-learn) on our Supervised Learning with scikit-learn course, with Katharine Jarmul (kjamistan) on Natural Language Processing in Python and with Justin Bois (Caltech) on several Statistical Thinking in Python courses.
-
-                    </p>
-                    <p>
-                    <a class="btn btn-primary" href="https://www.datacamp.com/instructors/hugobowne">My courses at DataCamp<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                    </p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-4">
-                  <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/0pZc5u3e884"></iframe>
-                  </div>
-              </div>
-                <div class="col-sm-8">
-                    <h3>tutorials/workshops</h3>
-                    <p>
-                      I <emph>love</emph> to teach in person. There is no substitute for the electricity generated by throwing around ideas, tools, techniques and data challenges in a room with other humans. And it's something that I miss dearly when I don't do it so I make sure to: I am a <a href="https://software-carpentry.org/" style="color: rgb(0, 0, 150)">Software Carpentry</a> and <a href="https://datacarpentry.org/" style="color: rgb(0, 0, 150)">Data Carpentry</a> Instructor. In Summer, 2018, I had the great pleasure of teaching a <a href="https://jasonjwilliamsny.github.io/2018-06-22-cshl/" style="color: rgb(0,0,150)">Genomics Data Carpentry and Machine Learning in R</a> for the Carpentries at Cold Spring Harbour Laboratory with Jason Williams, where we piloted a <a href="https://hugobowne.github.io/machine-learning-r/" style="color: rgb(0,0,150)">Machine Learning in R lesson</a>, which was really well-received (but there's much more work to be done!).
-                    </p>
-                    <p>
-                      I also regularly teach workshops and tutorials at conferences, such as SciPy and PyCon. You can check out some videos and materials under Talks below.
-                    </p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4">
-                    <img src="img/hba-fb-live.jpeg" alt="HBA FB Live" class="img-responsive img-rounded center-block">
-                </div>
-                <div class="col-sm-8">
-                    <h3>other initiatives</h3>
-                    <p>I'm interested in exploring other ways to teach and discuss data science, machine learning and AI. To this end, I piloted a series of <u>Facebook Live coding sessions</u> at DataCamp, which saw up to 40K unique viewers. Two of my favourites are <a  href="https://www.datacamp.com/community/tutorials/tidyverse-tutorial-r" style="color: rgb(0,0,150)">Getting Started with the Tidyverse</a> through the Titanic data set and <a href="https://www.datacamp.com/community/tutorials/web-scraping-python-nlp" style="color: rgb(0,0,150)">Web Scraping & NLP in Python</a>,  in which I scrape novels from the web and plot word frequency distributions.
-                    </p>
-                    <p>
-                    I enjoy <u>writing tutorials</u>. You can find a bunch I've written on <a href="https://www.datacamp.com/community/tutorials"  style="color: rgb(0, 0, 150)">DataCamp's community page</a> by searching for my name. Here are a few to get started with:
-                    <p>
-                    <a class="btn btn-primary" href="https://www.datacamp.com/community/tutorials/pandas-split-apply-combine-groupby">Groupby, split-apply-combine and pandas<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                    <a class="btn btn-primary" href="https://www.datacamp.com/community/tutorials/pandas-multi-index">Hierarchical indices, groupby and pandas<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                    <a class="btn btn-primary" href="https://www.datacamp.com/community/tutorials/preprocessing-in-data-science-part-1-centering-scaling-and-knn">Preprocessing in Data Science (Part 1)<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                    <a class="btn btn-primary" href="https://www.datacamp.com/community/tutorials/preprocessing-in-data-science-part-2-centering-scaling-and-logistic-regression">Preprocessing in Data Science (Part 2)<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                    <a class="btn btn-primary" href="https://www.datacamp.com/community/tutorials/preprocessing-in-data-science-part-3-scaling-synthesized-data">Preprocessing in Data Science (Part 3)<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                    </p>
-                    <p>
-                    I'm constantly thinking  about <u>how data science notebook technologies can be used to design productive educational environments</u>. You can check out Eric Ma's and my interactive Jupyter notebooks for our Bayesian data science workshops <a href="https://gke.mybinder.org/v2/gh/ericmjl/bayesian-stats-modelling-tutorial/master" style="color: rgb(0, 0, 150)">here on Binder</a> (more context in  the github repo <a href="https://github.com/ericmjl/bayesian-stats-modelling-tutorial" style="color: rgb(0, 0, 150)"> here</a>). I also built a DataCamp project that leverages the capabilities of Jupyter notebooks to create a novel educational experience: it's called <a href="https://www.datacamp.com/projects/38" style="color: rgb(0, 0, 150)">"Word Frequency in Moby Dick"</a> and in it, you'll get to scrape the novel Moby Dick from the website Project Gutenberg (which contains a large corpus of books), extract words from it and dive into analyzing the distribution of words using the Natural Language ToolKit (nltk).
-                    </p>
-                    <p>
-                      I've given a lot of <u>webinars for business leaders, managers and learning and development leaders across several verticals</u>. Highlights include:
-                      <a href="https://support.datacamp.com/hc/en-us/articles/360008278474-August-2018-Webinar-What-Managers-Need-To-Know-About-Machine-Learning" style="color:  rgb(0, 0, 150)">What Managers Need To Know About Machine Learning</a>, <a href="https://support.datacamp.com/hc/en-us/articles/360006341254-June-2018-Webinar-Inside-the-Data-Science-Workflow" style="color:  rgb(0, 0, 150)">Inside the Data Science Workflow</a> and <a href="https://support.datacamp.com/hc/en-us/articles/360013643274-Dec-2018-Webinar-Data-Literacy-in-the-21st-Century" style="color:  rgb(0, 0, 150)">Data Literacy in the 21st Century</a>.
-                    </p>
-
-                </div>
-            </div>
+      </div>
+      <div class="terminal">
+        <div class="chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <span>~/hugo/stack.txt</span>
         </div>
-    </section>
-
-
-    <section id="writing">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="text-center">
-                        <h2>writing</h2>
-                        <hr class="divider-custom-line">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-2">
-                </div>
-                <div class="col-sm-8 text-left">
-                    <p>
-                    I like to write about data science and AI, with the goals of promoting data literacy and data fluency, along with building communication bridges across different segments of society to discuss the data and AI revolutions and how they impact our lives, along with how they may in the future. Two of my more recent articles from Harvard Business Review are <a href="https://hbr.org/2018/08/what-data-scientists-really-do-according-to-35-data-scientists">What Data Scientists Really Do, According to 35 Data Scientists</a> and <a href="https://hbr.org/2018/10/your-data-literacy-depends-on-understanding-the-types-of-data-and-how-theyre-captured">Your Data Literacy Depends on Understanding the Types of Data and How They’re Captured</a> (Part II coming to a browser near you soon).
-                    </p>
-                    <p>
-                    You can also check out articles I've written on <a href="https://www.datacamp.com/community/blog/python-scientific-computing-case">The Case For Python in Scientific Computing</a>, <a href="https://www.datacamp.com/community/blog/3-things-i-learned-at-jupytercon">3 Things I learned at JupyterCon</a> and <a href="https://www.datacamp.com/community/blog/interview-francois-chollet">An Interview with François Chollet</a>, creator of the deep learning package and Google AI researcher.
-                    </p>
-                    <p>
-                    I am currently writing a great deal and plan to be publishing work soon on a variety of topics, including: data science & AI for executives; the future of data and machine learning products; data science and the art of making business decisions; the possible futures of data science as a service; deep learning democratization.
-                </div>
-            </div>
+        <div class="body">
+<span class="com"># currently using</span><br>
+claude · gemini · qwen · mistral · gemma · pi<br>
+amp-code · codex · agent-skills<br>
+python · typescript · marimo · modal<br>
+pydantic · logfire · chroma · hf · obsidian
         </div>
-    </section>
-    </header>
+      </div>
+    </div>
+  </section>
 
-    <section id="talks" class="success">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    <h2>Selected Talks</h2>
-                    <hr class="divider-custom-line">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vSFWw6n0CZs"></iframe>
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <h3>What Data Scientists Really Do, According to 50 Data Scientists</h3>
-                    <p>This is a talk about what data scientists really do and what they consider to be the most pressing issues in the space. It's a fun talk to give as it's based on 50 conversations that I had on the DataFramed podcast. I have given it several times, including at <a href="https://pydata.org/nyc2018/" style="color: rgb(0, 0, 150)">PyData NYC</a> and the <a href="https://www.meetup.com/nyhackr/" style="color: rgb(0, 0, 150)">New York Open Statistical Programming Meetup</a></p>
-                    <a class="btn btn-primary" href="https://www.slideshare.net/HugoBowneAnderson/what-data-scientists-really-do-according-to-50-data-scientists">slides<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/89ye2hfsAsk"></iframe>
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <h3>Bayesian Data Science Two Ways: Simulation and Probabilistic Programming </h3>
-                    <p>SciPy 2018 Tutorial</p>
-                    <p>This was a tutorial that I co-taught with Eric Ma to build participants’ knowledge of Bayesian inference, workflows and decision making under uncertainty. We started with the basics of probability via simulation and analysis of real-world datasets, building up to an understanding of Bayes’ theorem. We then introduced the use of probabilistic programming to do statistical modelling. Throughout this tutorial, we used a mixture of instructional time and hands-on time. During instructional time, we used a variety of datasets to anchor our instruction; during hands-on time, which immediately followed instructional time, our participants applied the concepts learned to <a href="https://datadryad.org/resource/doi:10.5061/dryad.g6g3h" style="color: rgb(0, 0, 150)">the Darwin’s finches dataset</a>, which permeated the entire tutorial. </p>
-                    <a class="btn btn-primary" href="https://github.com/ericmjl/bayesian-stats-modelling-tutorial">Tutorial material<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/0pZc5u3e884"></iframe>
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <h3>Bayesian Data Science by Simulation</h3>
-                    <p>PyCon 2019 Tutorial</p>
-                    <p>This tutorial was an Introduction to Bayesian data science through the lens of simulation or hacker statistics. Learners became familiar with many common probability distributions through i) matching them to real-world stories & ii) simulating them. They worked with joint/conditional probabilities, Bayes Theorem, prior/posterior distributions and likelihoods, while seeing their applications in real-world data analyses. They then saw the utility of Bayesian inference in parameter estimation and comparing groups and we wrapped up with a dive into the wonderful world of probabilistic programming using PyMC3.</p>
-                    <a class="btn btn-primary" href="https://github.com/ericmjl/bayesian-stats-modelling-tutorial">Tutorial material<span
-                            class="glyphicon glyphicon-chevron-right">
-                    </span></a>
-                </div>
-            </div>
-    </section>
+  <section class="kv">
+    <div class="cell"><div class="k">learners reached</div><div class="v">6<span class="u">M</span>+</div></div>
+    <div class="cell"><div class="k">podcast episodes</div><div class="v">200<span class="u">+</span></div></div>
+    <div class="cell"><div class="k">newsletter subs</div><div class="v">13<span class="u">K</span>+</div></div>
+    <div class="cell"><div class="k">maven grads</div><div class="v">350<span class="u">+</span></div></div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                        <h3>Location</h3>
-                        <p>Vanishing Gradient Labs<br>
-                          Sydney <br>
-                        Australia</p>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>Contact</h3>
-                        <ul class="list-inline">
-                            <li>
-                                <a href="mailto:hugobowne+website@gmail.com" class="btn-social btn-outline"><i class="fa fa-fw fa-envelope"></i></a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/hugobowne" class="btn-social btn-outline"><i class="fa fa-fw fa-github"></i></a>
-                            </li>
-                            <li>
-                                <a href="https://twitter.com/hugobowne" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="https://www.linkedin.com/in/hugo-bowne-anderson-045939a5/" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>conference surprise</h3>
-                        <p>follow <a href="https://github.com/tdhopper/Data-Science-Conference-Bingo" style="color: rgb(0,0,250)"> this link</a> if you’re attending a data science conference and want to do something fun.</p>
-                    </div>
-                </div>
-            </div>
+  <!-- PODCASTS -->
+  <section class="sec" id="podcasts">
+    <h2>Podcasts</h2>
+    <div class="sub">for the people building AI · and the people leading teams that build it</div>
+    <div class="pods">
+      <div class="pod">
+        <div class="head"><div class="t"><a href="https://vanishinggradients.fireside.fm/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Vanishing Gradients</a></div><div class="n">70+ eps · since 2022</div></div>
+        <div class="tl">Everything you wanted to know about data, ML, and AI, but were too afraid to ask. Guests include Jeremy Howard, Wes McKinney, Hamel Husain, Shreya Shankar &amp; more.</div>
+        <div class="ep"><span class="play"></span><div class="ti"><a href="https://hugobowne.substack.com/p/agentic-engineering-and-the-lost" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Agentic engineering and the lost art of verification</a><span class="g">with Wes McKinney, Jeremiah Lowin &amp; Randy Olson</span></div><span class="num">May '26</span><span class="l"></span></div>
+        <div class="ep"><span class="play"></span><div class="ti"><a href="https://hugobowne.substack.com/p/llm-architecture-in-2026-what-you" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">LLM architecture in 2026: what you need to know</a><span class="g">with Sebastian Raschka · author of Build a LLM from Scratch</span></div><span class="num">Apr '26</span><span class="l"></span></div>
+        <div class="ep"><span class="play"></span><div class="ti"><a href="https://hugobowne.substack.com/p/the-rise-of-agentic-search" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">The rise of agentic search</a><span class="g">with Jeff Huber · Chroma</span></div><span class="num">Dec '25</span><span class="l"></span></div>
+      </div>
+      <div class="pod">
+        <div class="head"><div class="t"><a href="https://delphina.ai/podcast" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">High Signal</a></div><div class="n">by Delphina · since 2024</div></div>
+        <div class="tl">Deep conversations with the people shaping data science, ML &amp; AI, for engineering leaders and practitioners.</div>
+        <div class="ep"><span class="play"></span><div class="ti"><a href="https://delphina.ai/podcast/the-100-year-lead-what-baseball-teaches-us-about-the-future-of-ai" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">The 100-year lead: what baseball teaches us about the future of AI</a><span class="g">with Chris Fonnesbeck · PyMC, Yankees &amp; Mets</span></div><span class="num">Ep 39</span><span class="l"></span></div>
+        <div class="ep"><span class="play"></span><div class="ti"><a href="https://delphina.ai/podcast/the-post-coding-era-what-happens-when-ai-writes-the-system" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">The post-coding era: what happens when AI writes the system?</a><span class="g">with Nicholas Moy · Google DeepMind, ex-Windsurf</span></div><span class="num">Ep 32</span><span class="l"></span></div>
+        <div class="ep"><span class="play"></span><div class="ti"><a href="https://delphina.ai/podcast/context-engineering-to-ai-agent-harnesses-the-new-software-discipline" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">From context engineering to AI agent harnesses</a><span class="g">with Lance Martin · LangChain</span></div><span class="num">Ep 28</span><span class="l"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="sec" id="writing">
+    <h2>Writing</h2>
+    <div class="sub">essays, opinion, and research · substack · O'Reilly · HBR</div>
+    <div class="table">
+      <div class="row head"><div>date</div><div>title</div><div>outlet</div><div>tag</div><div></div></div>
+      <div class="row"><div class="dt">2026.04.10</div><div class="ti"><a href="https://hugobowne.substack.com/p/agentops-lessons-from-over-1400-production" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">AgentOps: lessons from over 1,400 production deployments of AI systems</a></div><div class="out">Vanishing Gradients</div><div class="tg">essay</div><div class="ar">→</div></div>
+      <div class="row"><div class="dt">2026.03.24</div><div class="ti"><a href="https://www.oreilly.com/radar/how-to-build-a-general-purpose-ai-agent-in-131-lines-of-python/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">How to build a general-purpose AI agent in 131 lines of Python</a></div><div class="out">O'Reilly Radar</div><div class="tg">tutorial</div><div class="ar">→</div></div>
+      <div class="row"><div class="dt">2026.03.16</div><div class="ti"><a href="https://hugobowne.substack.com/p/build-ai-products-locally-10-hours" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Build AI products locally: 10 hours of free workshops with a Google DeepMind researcher</a></div><div class="out">Vanishing Gradients</div><div class="tg">tutorial</div><div class="ar">→</div></div>
+      <div class="row"><div class="dt">2026.03.11</div><div class="ti"><a href="https://hugobowne.substack.com/p/why-most-ai-projects-fail-before" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Why most AI projects fail before they ship (and the eval-driven approach to fix it)</a></div><div class="out">Vanishing Gradients</div><div class="tg">essay</div><div class="ar">→</div></div>
+      <div class="row"><div class="dt">2026.02.28</div><div class="ti"><a href="https://hugobowne.substack.com/p/building-agents-that-build-themselves" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Building agents that build themselves</a></div><div class="out">Vanishing Gradients</div><div class="tg">workshop</div><div class="ar">→</div></div>
+      <div class="row"><div class="dt">2025.06.27</div><div class="ti"><a href="https://hugobowne.substack.com/p/stop-building-agents" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Stop building agents</a></div><div class="out">Vanishing Gradients</div><div class="tg">opinion</div><div class="ar">→</div></div>
+      <div class="row"><div class="dt">2018.08.15</div><div class="ti"><a href="https://hbr.org/2018/08/what-data-scientists-really-do-according-to-35-data-scientists" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">What data scientists really do, according to 35 data scientists</a></div><div class="out">Harvard Business Review</div><div class="tg">research</div><div class="ar">→</div></div>
+    </div>
+  </section>
+
+  <!-- WORKSHOPS -->
+  <section class="sec" id="workshops">
+    <h2>Workshops &amp; advisory</h2>
+    <div class="sub">cohort courses, livestreams, and advisory engagements · <a href="mailto:contact@vanishinggradients.co" style="color:var(--accent);text-decoration:none;">contact@vanishinggradients.co</a></div>
+    <div class="ws">
+      <a class="c feat" href="https://vanishinggradients.short.gy/data-science-agentic" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">
+        <div class="i">01 · next cohort · jun 2026</div>
+        <div class="t">Master Agentic Data Science</div>
+        <div class="p">PyMC Labs × Vanishing Gradients · with Thomas Wiecki &amp; Luca Fiaschi</div>
+        <div class="foot"><div class="m">Jun 2–11 · Tue &amp; Thu live</div><div class="s">Enroll →</div></div>
+      </a>
+      <a class="c" href="https://maven.com/hugo-stefan/building-ai-apps-ds-and-swe-from-first-principles" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">
+        <div class="i">02 · completed · 2024–2026</div>
+        <div class="t">Building AI Applications from First Principles</div>
+        <div class="p">Maven · with Stefan Krawczyk · final cohort wrapped May 2026</div>
+        <div class="foot"><div class="m">350+ grads · Netflix, Meta, Adobe, Amazon, TikTok</div><div class="s">#9 Maven 100</div></div>
+      </a>
+      <a class="c" href="mailto:contact@vanishinggradients.co?subject=Private%20team%20workshop" style="color:inherit;text-decoration:none;">
+        <div class="i">03 · enquire</div>
+        <div class="t">Private team workshops</div>
+        <div class="p">1 to 3 day sessions on shipping LLM systems, or adopting agentic engineering.</div>
+        <div class="foot"><div class="m">Onsite or remote</div><div class="s">Enquire →</div></div>
+      </a>
+      <a class="c" href="mailto:contact@vanishinggradients.co?subject=Advisory%20enquiry" style="color:inherit;text-decoration:none;">
+        <div class="i">04 · ongoing</div>
+        <div class="t">Advisory &amp; office hours</div>
+        <div class="p">For teams and founders building AI products, or rebuilding how they ship with AI.</div>
+        <div class="foot"><div class="m">Monthly retainer</div><div class="s">Enquire →</div></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- COLLABORATORS -->
+  <section class="sec" id="collabs">
+    <h2>Guests, co-teachers, co-authors</h2>
+    <div class="sub">a partial index · 2022–2026 · podcasts, workshops, essays</div>
+    <div class="collabs">
+      <div class="n">Jeremy Howard<span class="co">fast.ai</span></div>
+      <div class="n">Fei-Fei Li<span class="co">Stanford</span></div>
+      <div class="n">Wes McKinney<span class="co">pandas</span></div>
+      <div class="n">Hamel Husain<span class="co">Parlance Labs</span></div>
+      <div class="n">Hilary Mason<span class="co">data science</span></div>
+      <div class="n">Michael Jordan<span class="co">UC Berkeley</span></div>
+      <div class="n">Andrew Gelman<span class="co">Columbia</span></div>
+      <div class="n">Shreya Shankar<span class="co">UC Berkeley</span></div>
+      <div class="n">Thomas Wiecki<span class="co">PyMC Labs</span></div>
+      <div class="n">Samuel Colvin<span class="co">Pydantic</span></div>
+      <div class="n">Cassie Kozyrkov<span class="co">ex-Google</span></div>
+      <div class="n">Travis Oliphant<span class="co">Anaconda</span></div>
+      <div class="n">Peter Wang<span class="co">Anaconda</span></div>
+      <div class="n">Katharine Jarmul<span class="co">privacy</span></div>
+      <div class="n">Stefan Krawczyk<span class="co">Maven co-teacher</span></div>
+      <div class="n">Matthew Rocklin<span class="co">Dask</span></div>
+      <div class="n">Alan Nichol<span class="co">Rasa</span></div>
+      <div class="n">Charles Frye<span class="co">Modal</span></div>
+      <div class="n">Ravin Kumar<span class="co">DeepMind</span></div>
+      <div class="n">Akshay Agrawal<span class="co">Marimo</span></div>
+    </div>
+  </section>
+
+  <!-- COURSE -->
+  <section class="sec" id="course">
+    <h2>Building AI Agents: the open-source course</h2>
+    <div class="sub">self-paced · free · 6 sections</div>
+    <div class="course-intro"><em>A self-paced course on building agent harnesses.</em> Posts, podcasts, workshops, and code from me and my collaborators — plus links to a few external resources too. <a href="https://open-racer-a67.notion.site/The-agent-harness-reading-list-35e14bb7e4a2805d881ae261573ff76f" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">A more detailed guide here ↗</a><br><br>An agent is just an LLM calling tools in a loop. A harness is everything around it: tools, context, hooks, sandboxes, memory, the loop itself. <em>The LLM is the brain. The harness is the body.</em></div>
+    <div class="crs">
+      <div class="ch">
+        <div class="i">01 · start here</div>
+        <div class="t">Build something</div>
+        <div class="p">Give an LLM read, write, edit, and bash. You have a computer-using agent.</div>
+        <div class="items">
+          <div class="item"><span class="fmt">post</span><a href="https://hugobowne.substack.com/p/how-to-build-a-general-purpose-ai" target="_blank" rel="noopener">How to build a general-purpose AI agent in 131 lines of Python<span class="g">substack · the same 4-step pattern for code &amp; search agents</span></a></div>
+          <div class="item"><span class="fmt">external</span><a href="https://www.oreilly.com/radar/how-to-build-a-general-purpose-ai-agent-in-131-lines-of-python/" target="_blank" rel="noopener">Same piece on O'Reilly Radar<span class="g">oreilly.com</span></a></div>
+          <div class="item"><span class="fmt">code</span><a href="https://github.com/hugobowne/building-with-ai" target="_blank" rel="noopener">hugobowne/building-with-ai<span class="g">github · runnable agent</span></a></div>
         </div>
-        <div class="footer-below">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        Copyright &copy; Hugo Bowne-Anderson 2019
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="ch">
+        <div class="i">02 · next</div>
+        <div class="t">Agents that build themselves</div>
+        <div class="p">Hot-reloading tools, markdown memory, hooks, sandboxes. With Ivan Leo.</div>
+        <div class="items">
+          <div class="item"><span class="fmt">post</span><a href="https://hugobowne.substack.com/p/building-agents-that-build-themselves" target="_blank" rel="noopener">Building Agents That Build Themselves<span class="g">with Ivan Leo · Google DeepMind, ex-Manus</span></a></div>
+          <div class="item"><span class="fmt">workshop</span><a href="https://www.youtube.com/watch?v=dDQ4rKXeHRw" target="_blank" rel="noopener">Livestream: the 2-hour live build<span class="g">youtube</span></a></div>
+          <div class="item"><span class="fmt">workshop</span><a href="https://www.youtube.com/watch?v=LUfqQgz1-Os" target="_blank" rel="noopener">Build Your Own Deep Research Agent<span class="g">Gemini, Exa, parallel subagents, cited reports</span></a></div>
+          <div class="item"><span class="fmt">code</span><a href="https://github.com/hugobowne/build-your-own-ai-assistant" target="_blank" rel="noopener">build-your-own-ai-assistant<span class="g">github</span></a></div>
         </div>
-    </footer>
+      </div>
+      <div class="ch">
+        <div class="i">03 · deepen</div>
+        <div class="t">Harness engineering</div>
+        <div class="p">The deeper conversations. Why context engineering is the new system design.</div>
+        <div class="items">
+          <div class="item"><span class="fmt">podcast</span><a href="https://hugobowne.substack.com/p/harness-engineering-why-agent-context" target="_blank" rel="noopener">Why Agent Context Isn't Enough<span class="g">with Jeff Huber · Chroma</span></a></div>
+          <div class="item"><span class="fmt">podcast</span><a href="https://hugobowne.substack.com/p/ai-agent-harness-3-principles-for" target="_blank" rel="noopener">3 Principles for Context Engineering<span class="g">with Lance Martin · Anthropic · Reduce, Offload, Isolate</span></a></div>
+          <div class="item"><span class="fmt">podcast</span><a href="https://hugobowne.substack.com/p/15-privacy-questions-every-ai-builder" target="_blank" rel="noopener">15 Privacy Questions Every AI Builder Is Asking<span class="g">with Katharine Jarmul · jump to Q4</span></a></div>
+        </div>
+      </div>
+      <div class="ch">
+        <div class="i">04 · specialize</div>
+        <div class="t">Agentic search</div>
+        <div class="p">Where a lot of this is heading. The traditional search stack falls away.</div>
+        <div class="items">
+          <div class="item"><span class="fmt">post</span><a href="https://hugobowne.substack.com/p/how-to-build-your-first-agentic-search" target="_blank" rel="noopener">How to Build Your First Agentic Search Application<span class="g">with Doug Turnbull · +15-30% NDCG, no training</span></a></div>
+          <div class="item"><span class="fmt">podcast</span><a href="https://hugobowne.substack.com/p/episode-68-a-builders-guide-to-agentic" target="_blank" rel="noopener">Ep 68: A Builder's Guide to Agentic Search &amp; Retrieval<span class="g">with Doug Turnbull &amp; John Berryman</span></a></div>
+        </div>
+      </div>
+      <div class="ch">
+        <div class="i">05 · evaluate</div>
+        <div class="t">Evals: please do them</div>
+        <div class="p">End-to-end task success first, then step-level diagnostics.</div>
+        <div class="items">
+          <div class="item"><span class="fmt">external</span><a href="https://hamel.dev/blog/posts/evals-faq/how-do-i-evaluate-agentic-workflows.html" target="_blank" rel="noopener">Evals FAQ: How do I evaluate agentic workflows?<span class="g">Hamel Husain · transition failure matrices</span></a></div>
+          <div class="item"><span class="fmt">external</span><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener">Demystifying Evals for AI Agents<span class="g">Anthropic · tasks, trials, graders, multi-turn</span></a></div>
+        </div>
+      </div>
+      <div class="ch">
+        <div class="i">06 · keep building</div>
+        <div class="t">Show us your agent skills</div>
+        <div class="p">A live series. Builders show their actual workflows. Then a cohort if you want depth.</div>
+        <div class="items">
+          <div class="item"><span class="fmt">workshop</span><a href="https://www.youtube.com/watch?v=Pq3xuChdwxQ" target="_blank" rel="noopener">Show Us Your (Agent) Skills · Ep 1<span class="g">Wes McKinney, Jeremiah Lowin, Randy Olson</span></a></div>
+          <div class="item"><span class="fmt">workshop</span><a href="https://www.youtube.com/watch?v=l37PR-OkYKA" target="_blank" rel="noopener">Show Us Your (Agent) Skills · Ep 2<span class="g">Hilary Mason, Brian Bischof, Tomas Tunguz, Eric Ma</span></a></div>
+          <div class="item"><span class="fmt">survey</span><a href="https://vanishinggradients.short.gy/agents" target="_blank" rel="noopener">Help shape the next agent workshops<span class="g">short survey</span></a></div>
+        </div>
+      </div>
+    </div>
+    <div class="course-outro">Want it taught live? I also run team workshops and cohort courses on building agents, and on building with AI. Email <a href="mailto:workshops@vanishinggradients.co">workshops@vanishinggradients.co</a> to find out more.</div>
+  </section>
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+  <!-- SUBSCRIBE -->
+  <section class="sub-cta" id="subscribe">
+    <div>
+      <h3>subscribe_to(<em>vanishing_gradients</em>)</h3>
+      <p>Essays, a new podcast, and occasional workshop invitations, in your inbox every week. Read by 13,000+ practitioners and leaders.</p>
+      <div class="tiny">13K+ readers · Substack · no spam, ever</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;align-self:center;">
+      <a class="btn primary" href="https://hugobowne.substack.com/subscribe" target="_blank" rel="noopener">subscribe on substack ↗</a>
+      <a class="btn" href="https://hugobowne.substack.com/" target="_blank" rel="noopener">read the archive →</a>
+    </div>
+  </section>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+  <footer class="footer">
+    <div>© 2026 hugo bowne-anderson · darlinghurst · sydney</div>
+    <div class="socials">
+      <a href="https://hugobowne.substack.com/" target="_blank" rel="noopener">substack</a>
+      <a href="https://github.com/hugobowne" target="_blank" rel="noopener">github</a>
+      <a href="https://x.com/hugobowne" target="_blank" rel="noopener">x</a>
+      <a href="https://www.linkedin.com/in/hugo-bowne-anderson-045939a5/" target="_blank" rel="noopener">linkedin</a>
+      <a href="https://www.oreilly.com/people/hugo-bowne-anderson/" target="_blank" rel="noopener">o'reilly</a>
+    </div>
+  </footer>
 
-    <!-- Plugin JavaScript -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="js/classie.js"></script>
-    <script src="js/cbpAnimatedHeader.js"></script>
-
-    <!-- Contact Form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="js/freelancer.js"></script>
-
+</div>
+<script>
+(function(){
+  var saved = localStorage.getItem('hba-theme') || 'dark';
+  var root = document.documentElement;
+  root.setAttribute('data-theme', saved);
+  var btn = document.getElementById('theme-toggle');
+  function render(){ var t = root.getAttribute('data-theme'); btn.textContent = t === 'dark' ? '[ dark ]' : '[ light ]'; }
+  render();
+  btn.addEventListener('click', function(){
+    var t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', t);
+    localStorage.setItem('hba-theme', t);
+    render();
+  });
+})();
+</script>
 </body>
-
 </html>
