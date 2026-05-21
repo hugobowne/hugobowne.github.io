@@ -261,6 +261,7 @@ body::before {
   text-align: right;
 }
 .lineup { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.lineup.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .lcard {
   aspect-ratio: 1 / 1.1;
   background: var(--bg-2);
@@ -402,6 +403,8 @@ body::before {
 }
 .roster { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 28px; }
 .roster.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.roster.wrap { display: flex; flex-wrap: wrap; justify-content: center; }
+.roster.wrap .rcard { flex: 0 0 calc(25% - 9px); }
 .rcard {
   background: var(--bg-2); border: 2px solid var(--line-2);
   aspect-ratio: 1 / 1.05; position: relative; overflow: hidden;
@@ -646,8 +649,9 @@ body::before {
   .hero .season-bar { gap: 18px; font-size: 8px; }
   .hero .lockup { font-size: 11px; gap: 10px; }
   .hero .tag { font-size: 10px; }
-  .lineup { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lineup, .lineup.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .roster, .roster.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .roster.wrap .rcard { flex-basis: calc(50% - 6px); }
   .stats .v { font-size: 20px; }
   .sec h2 { font-size: 16px; }
   .ep .hd .num { font-size: 24px; }
@@ -689,7 +693,7 @@ body::before {
       <a href="agent-skills" class="active">agent skills</a>
       <a href="index.html#course">building agents</a>
     </nav>
-    <div class="status">thu · ep 03 · may 21</div>
+    <div class="status">fri · ep 04 · may 29</div>
   </div>
 </header>
 
@@ -698,8 +702,8 @@ body::before {
   <div class="page">
   <div class="season-bar">
     <span>SEASON</span><span>01</span>
-    <span>SHIPPED</span><span>02</span>
-    <span>UPCOMING</span><span>02</span>
+    <span>SHIPPED</span><span>03</span>
+    <span>UPCOMING</span><span>01</span>
     <span>VENUE</span><span>YOUTUBE LIVE</span>
   </div>
   <h1>
@@ -720,7 +724,7 @@ body::before {
     background reviewers, from people whose software you've been using for years.
   </p>
   <div class="ctas">
-    <a class="btn" href="https://luma.com/le3m0pni" target="_blank" rel="noopener">▶ PRESS START · EP 03</a>
+    <a class="btn" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">▶ PRESS START · EP 04</a>
     <a class="btn cyan" href="#past">▣ WATCH PAST EPISODES</a>
   </div>
   </div>
@@ -730,93 +734,81 @@ body::before {
 <section class="stats">
   <div class="page">
     <div class="c"><div class="k">SEASON</div><div class="v">01</div></div>
-    <div class="c"><div class="k">EPISODES</div><div class="v">02</div></div>
-    <div class="c"><div class="k">BUILDERS</div><div class="v">07</div></div>
+    <div class="c"><div class="k">EPISODES</div><div class="v">03</div></div>
+    <div class="c"><div class="k">BUILDERS</div><div class="v">14</div></div>
     <div class="c"><div class="k">SKILLS · WORKFLOWS</div><div class="v v-sm">12 · 35</div></div>
   </div>
 </section>
 
-<!-- NEXT UP · EP 03 -->
+<!-- NEXT UP · EP 04 -->
 <section class="sec nextup" id="next">
   <div class="page">
   <div class="hd">
     <span class="badge">NEXT EPISODE</span>
-    <span class="date">MAY 21 · 2026</span>
-    <span class="runtime">thursday · live on youtube</span>
+    <span class="date">MAY 29 · 2026</span>
+    <span class="runtime">friday · live on youtube</span>
   </div>
-  <h2>EP 03 · <span class="br">GOING TO EUROPE</span></h2>
-  <div class="sub">Six long-time European builders show their real agent setups</div>
+  <h2>EP 04 · <span class="br">EVALS, SEARCH &amp; SPORTS</span></h2>
+  <div class="sub">Three builders on LLM evals, search relevance, and Bayesian sports modelling</div>
 
-  <div class="lineup">
-    <a class="lcard" href="https://luma.com/le3m0pni" target="_blank" rel="noopener">
-      <img src="show/avatars/paul.png" alt="Paul Iusztin">
-      <div class="lbl">PAUL IUSZTIN<span class="co">decoding ai</span></div>
+  <div class="lineup three">
+    <a class="lcard" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">
+      <img src="show/avatars/hamel.png" alt="Hamel Husain">
+      <div class="lbl">HAMEL HUSAIN<span class="co">parlance labs</span></div>
     </a>
-    <a class="lcard" href="https://luma.com/le3m0pni" target="_blank" rel="noopener">
-      <img src="show/avatars/eleanor.png" alt="Eleanor Berger">
-      <div class="lbl">ELEANOR BERGER<span class="co">elite ai coding</span></div>
+    <a class="lcard" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">
+      <img src="show/avatars/chris.png" alt="Chris Fonnesbeck">
+      <div class="lbl">CHRIS FONNESBECK<span class="co">pymc labs · mets / brewers / yankees</span></div>
     </a>
-    <a class="lcard" href="https://luma.com/le3m0pni" target="_blank" rel="noopener">
-      <img src="show/avatars/alan.png" alt="Alan Nichol">
-      <div class="lbl">ALAN NICHOL<span class="co">rasa</span></div>
+    <a class="lcard" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">
+      <img src="show/avatars/doug.png" alt="Doug Turnbull">
+      <div class="lbl">DOUG TURNBULL<span class="co">search · shopify / reddit</span></div>
     </a>
-    <a class="lcard" href="https://luma.com/le3m0pni" target="_blank" rel="noopener">
-      <img src="show/avatars/vincent.png" alt="Vincent Warmerdam">
-      <div class="lbl">VINCENT WARMERDAM<span class="co">marimo</span></div>
-    </a>
-    <a class="lcard" href="https://luma.com/le3m0pni" target="_blank" rel="noopener">
-      <img src="show/avatars/nicolay.png" alt="Nicolay Gerold">
-      <div class="lbl">NICOLAY GEROLD<span class="co">amp</span></div>
-    </a>
-    <a class="lcard" href="https://luma.com/le3m0pni" target="_blank" rel="noopener">
-      <img src="show/avatars/honnibal.png" alt="Matthew Honnibal">
-      <div class="lbl">MATTHEW HONNIBAL<span class="co">spacy / explosion</span></div>
-    </a>
-  </div>
-
-  <div class="popin">
-    <div class="av"><img src="show/avatars/ines.png" alt="Ines Montani"></div>
-    <div class="txt"><b>INES MONTANI</b> (spaCy / Explosion) may pop in.</div>
-    <div class="badge">SPECIAL GUEST</div>
   </div>
 
   <div class="foot">
     <div class="ho">HOSTS <b>HUGO BOWNE-ANDERSON</b> · <b>THOMAS WIECKI</b></div>
-    <a class="btn sm cyan" href="https://luma.com/le3m0pni" target="_blank" rel="noopener">REGISTER ▶</a>
-  </div>
-  </div>
-</section>
-
-<!-- SOON AFTER — EP 04 -->
-<section class="soonafter">
-  <div class="page">
-  <div class="bar">
-    <span class="label">AND AFTER THAT</span>
-    <span class="date">MAY 29 · 2026</span>
-    <span class="meta">friday · ep 04 · live on youtube</span>
-  </div>
-  <div class="lineup-mini">
-    <a class="gcard" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">
-      <div class="av"><img src="show/avatars/hamel.png" alt="Hamel Husain"></div>
-      <div class="nm">HAMEL HUSAIN<em>parlance labs</em></div>
-    </a>
-    <a class="gcard" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">
-      <div class="av"><img src="show/avatars/chris.png" alt="Chris Fonnesbeck"></div>
-      <div class="nm">CHRIS FONNESBECK<em>pymc labs · mets / brewers / yankees</em></div>
-    </a>
-    <a class="gcard" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">
-      <div class="av"><img src="show/avatars/doug.png" alt="Doug Turnbull"></div>
-      <div class="nm">DOUG TURNBULL<em>search · shopify / reddit</em></div>
-    </a>
-  </div>
-  <div class="soonafter-cta">
-    <a class="btn sm" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">REGISTER ▶</a>
+    <a class="btn sm cyan" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">REGISTER ▶</a>
   </div>
   </div>
 </section>
 
 <!-- PAST EPISODES -->
 <section class="sec ep" id="past">
+  <div class="page">
+  <div class="hd">
+    <div class="num">EP 03</div>
+    <div class="stat">· MAY 2026 · FULL EPISODE ON YOUTUBE · HIGHLIGHT REEL SOON</div>
+  </div>
+  <h3>GOING TO EUROPE</h3>
+  <p class="hub-intro">Long-time European builders show their real agent setups: agent skills, harnesses, and the workflows they actually run.</p>
+  <div class="ytfacade" data-id="ud2WzkKeDZs" data-start="0" role="button" tabindex="0" aria-label="Play EP 03 — Going to Europe">
+    <img src="https://i.ytimg.com/vi/ud2WzkKeDZs/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/ud2WzkKeDZs/hqdefault.jpg'" alt="" loading="lazy">
+    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
+    <div class="ytcap"><b>EP 03 · GOING TO EUROPE</b> — long-time European builders on their real agent setups</div>
+  </div>
+  <div class="roster wrap">
+    <div class="rcard"><img src="show/avatars/paul.png" alt="Paul Iusztin"><div class="lbl">PAUL IUSZTIN<span class="co">decoding ai</span></div></div>
+    <div class="rcard"><img src="show/avatars/eleanor.png" alt="Eleanor Berger"><div class="lbl">ELEANOR BERGER<span class="co">elite ai coding</span></div></div>
+    <div class="rcard"><img src="show/avatars/alan.png" alt="Alan Nichol"><div class="lbl">ALAN NICHOL<span class="co">rasa</span></div></div>
+    <div class="rcard"><img src="show/avatars/vincent.png" alt="Vincent Warmerdam"><div class="lbl">VINCENT WARMERDAM<span class="co">marimo</span></div></div>
+    <div class="rcard"><img src="show/avatars/nicolay.png" alt="Nicolay Gerold"><div class="lbl">NICOLAY GEROLD<span class="co">amp</span></div></div>
+    <div class="rcard"><img src="show/avatars/honnibal.png" alt="Matthew Honnibal"><div class="lbl">MATTHEW HONNIBAL<span class="co">spacy / explosion</span></div></div>
+    <div class="rcard"><img src="show/avatars/ines.png" alt="Ines Montani"><div class="lbl">INES MONTANI<span class="co">spacy / explosion</span></div></div>
+  </div>
+  <div class="skillz">
+    <div class="hd2">▣ HIGHLIGHT REEL</div>
+    <div class="coming">
+      <b>Coming soon:</b> the skills and workflows from this episode, packaged into the companion repo with repo links and timestamps — same as EP 01 &amp; EP 02. <i>Subscribe to get them when they land.</i>
+    </div>
+  </div>
+  <div class="actions">
+    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=ud2WzkKeDZs" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
+  </div>
+  </div>
+</section>
+
+<section class="sec ep">
   <div class="page">
   <div class="hd">
     <div class="num">EP 02</div>
