@@ -261,7 +261,8 @@ body::before {
   text-align: right;
 }
 .lineup { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-.lineup.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.lineup.three { display: flex; flex-wrap: wrap; justify-content: center; }
+.lineup.three .lcard { flex: 0 0 calc(33.333% - 8px); }
 .lcard {
   aspect-ratio: 1 / 1.1;
   background: var(--bg-2);
@@ -652,6 +653,7 @@ body::before {
   .lineup, .lineup.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .roster, .roster.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .roster.wrap .rcard { flex-basis: calc(50% - 6px); }
+  .lineup.three .lcard { flex-basis: calc(50% - 6px); }
   .stats .v { font-size: 20px; }
   .sec h2 { font-size: 16px; }
   .ep .hd .num { font-size: 24px; }
@@ -736,7 +738,7 @@ body::before {
     <div class="c"><div class="k">SEASON</div><div class="v">01</div></div>
     <div class="c"><div class="k">EPISODES</div><div class="v">03</div></div>
     <div class="c"><div class="k">BUILDERS</div><div class="v">14</div></div>
-    <div class="c"><div class="k">SKILLS · WORKFLOWS</div><div class="v v-sm">12 · 35</div></div>
+    <div class="c"><div class="k">SKILLS · WORKFLOWS</div><div class="v v-sm">34 · 68</div></div>
   </div>
 </section>
 
@@ -778,7 +780,7 @@ body::before {
   <div class="page">
   <div class="hd">
     <div class="num">EP 03</div>
-    <div class="stat">· MAY 2026 · FULL EPISODE ON YOUTUBE · HIGHLIGHT REEL SOON</div>
+    <div class="stat">· MAY 2026 · RUNTIME 3H 18M · 22 SKILLS · 30 WORKFLOWS</div>
   </div>
   <h3>GOING TO EUROPE</h3>
   <p class="hub-intro">Long-time European builders show their real agent setups: agent skills, harnesses, and the workflows they actually run.</p>
@@ -798,12 +800,85 @@ body::before {
   </div>
   <div class="skillz">
     <div class="hd2">▣ HIGHLIGHT REEL</div>
+    <div class="item">
+      <div class="idx">01</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/try-except" target="_blank" rel="noopener">try-except</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Reads a Python codebase and tightens every <i>try/except</i> so the <i>try</i> covers only what can fail and the <i>except</i> catches the right exception. · Matthew Honnibal</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=729s" target="_blank" rel="noopener">00:12:09</a>
+    </div>
+    <div class="item">
+      <div class="idx">02</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/pre-mortem" target="_blank" rel="noopener">pre-mortem</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Reads production code, finds where it is fragile, and writes post-mortems for bugs that have not happened yet but a plausible change could introduce. · Matthew Honnibal</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=850s" target="_blank" rel="noopener">00:14:10</a>
+    </div>
+    <div class="item">
+      <div class="idx">03</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/mutation-testing" target="_blank" rel="noopener">mutation-testing</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Measures test-suite strength by introducing deliberate bugs one at a time and reporting which ones no test caught. · Matthew Honnibal</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=850s" target="_blank" rel="noopener">00:14:10</a>
+    </div>
+    <div class="item">
+      <div class="idx">04</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/here-now" target="_blank" rel="noopener">here-now</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Publishes HTML pages, files, and whole sites to live URLs without leaving the terminal. · Eleanor Berger</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=2755s" target="_blank" rel="noopener">00:45:55</a>
+    </div>
+    <div class="item">
+      <div class="idx">05</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/anki-connect" target="_blank" rel="noopener">anki-connect</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Drives Anki through the AnkiConnect API, gating every note- or card-modifying operation behind explicit confirmation. · Eleanor Berger</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=2986s" target="_blank" rel="noopener">00:49:46</a>
+    </div>
+    <div class="item">
+      <div class="idx">06</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/impeccable" target="_blank" rel="noopener">impeccable</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Hands a coding agent a full frontend design language so it builds production-grade interfaces instead of generic ones. · Eleanor Berger</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=3002s" target="_blank" rel="noopener">00:50:02</a>
+    </div>
+    <div class="item">
+      <div class="idx">07</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/youtube-watch-later-gist-summaries" target="_blank" rel="noopener">youtube-watch-later-gist-summaries</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Reads your YouTube Watch Later playlist, summarises every video from its transcript, and publishes each summary as a secret gist. · Eleanor Berger</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=3177s" target="_blank" rel="noopener">00:52:57</a>
+    </div>
+    <div class="item">
+      <div class="idx">08</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/thread-postmortem" target="_blank" rel="noopener">thread-postmortem</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Introspects a thread that went sideways, traces each misstep to the instruction behind it, and proposes edits biased toward deletion. · Nicolay Gerold</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=7144s" target="_blank" rel="noopener">01:59:04</a>
+    </div>
+    <div class="item">
+      <div class="idx">09</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/remotion-video" target="_blank" rel="noopener">remotion-video</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Encodes a builder's design judgment for programmatic video, so Claude turns a few minutes of recorded audio into a finished explainer. · Alan Nichol</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=9960s" target="_blank" rel="noopener">02:46:00</a>
+    </div>
     <div class="coming">
-      <b>Coming soon:</b> the skills and workflows from this episode, packaged into the companion repo with repo links and timestamps — same as EP 01 &amp; EP 02. <i>Subscribe to get them when they land.</i>
+      <b>Still to come from this episode:</b> Paul Iusztin's <i>writing loop</i> — diff a hand-edit against the agent's draft, extract the signal, and fold it back into a markdown style profile the agent reads next time — plus Vincent Warmerdam on <i>notebooks as a shared canvas</i> for humans and agents (his marimo-pair skill already shipped in EP 02).
     </div>
   </div>
   <div class="actions">
     <a class="btn sm cyan" href="https://www.youtube.com/watch?v=ud2WzkKeDZs" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
+    <a class="btn sm" href="#hub">$ INSTALL SKILLS</a>
   </div>
   </div>
 </section>
@@ -812,7 +887,7 @@ body::before {
   <div class="page">
   <div class="hd">
     <div class="num">EP 02</div>
-    <div class="stat">· MAY 2026 · RUNTIME 2H 14M · 05 SKILLS · 25 WORKFLOWS</div>
+    <div class="stat">· MAY 2026 · RUNTIME 2H 14M · 05 SKILLS · 28 WORKFLOWS</div>
   </div>
   <h3>HIDDEN DOORS, EVAL-DRIVEN CHARTS &amp; LOCAL-FIRST INFERENCE</h3>
   <p class="hub-intro">Not vibe coding — four builders, four ways to put scaffolding around an agent. Hilary's weekly gremlins, Bryan's eval-driven chart library, Eric's human-in-the-loop EDA in Marimo, and Tom's local-first inference at 120 t/s on Qwen 35B.</p>
