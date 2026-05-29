@@ -292,6 +292,23 @@ body::before {
   border-top: 2px solid var(--cyan);
 }
 .lcard .lbl .co { color: var(--magenta); display: block; margin-top: 2px; }
+/* text-only lineup (guests without avatars yet) */
+.lineup.text { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.lineup.text .tcard {
+  flex: 0 0 calc(33.333% - 8px);
+  background: var(--bg-2); border: 2px solid var(--line-2);
+  padding: 22px 14px; text-align: center;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .15s, transform .15s, box-shadow .15s;
+}
+.lineup.text .tcard:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 6px 0 var(--magenta); }
+.lineup.text .tcard .nm {
+  font-family: "Press Start 2P", monospace; font-size: 10px; color: var(--fg); line-height: 1.6;
+}
+.lineup.text .tcard .co {
+  display: block; margin-top: 10px;
+  font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--magenta); letter-spacing: 0;
+}
 .popin {
   margin-top: 20px;
   background: var(--bg-2);
@@ -653,6 +670,7 @@ body::before {
   .lineup, .lineup.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .roster, .roster.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .roster.wrap .rcard { flex-basis: calc(50% - 6px); }
+  .lineup.text .tcard { flex-basis: calc(50% - 6px); }
   .lineup.three .lcard { flex-basis: calc(50% - 6px); }
   .stats .v { font-size: 20px; }
   .sec h2 { font-size: 16px; }
@@ -695,7 +713,7 @@ body::before {
       <a href="agent-skills" class="active">agent skills</a>
       <a href="index.html#course">building agents</a>
     </nav>
-    <div class="status">fri · ep 04 · may 29</div>
+    <div class="status">thu · ep 05 · jun 18</div>
   </div>
 </header>
 
@@ -704,7 +722,7 @@ body::before {
   <div class="page">
   <div class="season-bar">
     <span>SEASON</span><span>01</span>
-    <span>SHIPPED</span><span>03</span>
+    <span>SHIPPED</span><span>04</span>
     <span>UPCOMING</span><span>01</span>
     <span>VENUE</span><span>YOUTUBE LIVE</span>
   </div>
@@ -726,7 +744,7 @@ body::before {
     background reviewers, from people whose software you've been using for years.
   </p>
   <div class="ctas">
-    <a class="btn" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">▶ PRESS START · EP 04</a>
+    <a class="btn" href="https://luma.com/0t8kiodw" target="_blank" rel="noopener">▶ PRESS START · EP 05</a>
     <a class="btn cyan" href="#past">▣ WATCH PAST EPISODES</a>
   </div>
   </div>
@@ -736,47 +754,74 @@ body::before {
 <section class="stats">
   <div class="page">
     <div class="c"><div class="k">SEASON</div><div class="v">01</div></div>
-    <div class="c"><div class="k">EPISODES</div><div class="v">03</div></div>
-    <div class="c"><div class="k">BUILDERS</div><div class="v">14</div></div>
+    <div class="c"><div class="k">EPISODES</div><div class="v">04</div></div>
+    <div class="c"><div class="k">BUILDERS</div><div class="v">17</div></div>
     <div class="c"><div class="k">SKILLS · WORKFLOWS</div><div class="v v-sm">34 · 68</div></div>
   </div>
 </section>
 
-<!-- NEXT UP · EP 04 -->
+<!-- NEXT UP · EP 05 -->
 <section class="sec nextup" id="next">
   <div class="page">
   <div class="hd">
     <span class="badge">NEXT EPISODE</span>
-    <span class="date">MAY 29 · 2026</span>
-    <span class="runtime">friday · live on youtube</span>
+    <span class="date">JUN 18 · 2026</span>
+    <span class="runtime">thursday · live on youtube</span>
   </div>
-  <h2>EP 04 · <span class="br">EVALS, SEARCH &amp; SPORTS</span></h2>
-  <div class="sub">Three builders on LLM evals, search relevance, and Bayesian sports modelling</div>
+  <h2>EP 05 · <span class="br">COPILOTS &amp; CODING AGENTS</span></h2>
+  <div class="sub">Three builders on coding agents, search, and context engineering</div>
 
-  <div class="lineup three">
-    <a class="lcard" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">
-      <img src="show/avatars/hamel.png" alt="Hamel Husain">
-      <div class="lbl">HAMEL HUSAIN<span class="co">parlance labs</span></div>
+  <div class="lineup text">
+    <a class="tcard" href="https://luma.com/0t8kiodw" target="_blank" rel="noopener">
+      <div class="nm">JOHN BERRYMAN<span class="co">arcturus labs · ex-github copilot</span></div>
     </a>
-    <a class="lcard" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">
-      <img src="show/avatars/chris.png" alt="Chris Fonnesbeck">
-      <div class="lbl">CHRIS FONNESBECK<span class="co">pymc labs · mets / brewers / yankees</span></div>
+    <a class="tcard" href="https://luma.com/0t8kiodw" target="_blank" rel="noopener">
+      <div class="nm">ISAAC FLATH<span class="co">kentro tech · ex-answer.ai</span></div>
     </a>
-    <a class="lcard" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">
-      <img src="show/avatars/doug.png" alt="Doug Turnbull">
-      <div class="lbl">DOUG TURNBULL<span class="co">search · shopify / reddit</span></div>
+    <a class="tcard" href="https://luma.com/0t8kiodw" target="_blank" rel="noopener">
+      <div class="nm">MATT PALMER<span class="co">conductor · ex-replit</span></div>
     </a>
   </div>
 
   <div class="foot">
     <div class="ho">HOSTS <b>HUGO BOWNE-ANDERSON</b> · <b>THOMAS WIECKI</b></div>
-    <a class="btn sm cyan" href="https://luma.com/ltpzpqgw" target="_blank" rel="noopener">REGISTER ▶</a>
+    <a class="btn sm cyan" href="https://luma.com/0t8kiodw" target="_blank" rel="noopener">REGISTER ▶</a>
   </div>
   </div>
 </section>
 
 <!-- PAST EPISODES -->
 <section class="sec ep" id="past">
+  <div class="page">
+  <div class="hd">
+    <div class="num">EP 04</div>
+    <div class="stat">· MAY 2026 · FULL EPISODE ON YOUTUBE · HIGHLIGHT REEL SOON</div>
+  </div>
+  <h3>EVALS, SEARCH &amp; SPORTS</h3>
+  <p class="hub-intro">Three builders on LLM evals, search relevance, and Bayesian sports modelling — the real workflows they run.</p>
+  <div class="ytfacade" data-id="XaYQFtca798" data-start="0" role="button" tabindex="0" aria-label="Play EP 04 — Evals, Search &amp; Sports">
+    <img src="https://i.ytimg.com/vi/XaYQFtca798/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/XaYQFtca798/hqdefault.jpg'" alt="" loading="lazy">
+    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
+    <div class="ytcap"><b>EP 04 · EVALS, SEARCH &amp; SPORTS</b> — three builders on evals, search relevance, and Bayesian sports modelling</div>
+  </div>
+  <div class="roster three">
+    <div class="rcard"><img src="show/avatars/hamel.png" alt="Hamel Husain"><div class="lbl">HAMEL HUSAIN<span class="co">parlance labs</span></div></div>
+    <div class="rcard"><img src="show/avatars/chris.png" alt="Chris Fonnesbeck"><div class="lbl">CHRIS FONNESBECK<span class="co">pymc labs · mets / brewers / yankees</span></div></div>
+    <div class="rcard"><img src="show/avatars/doug.png" alt="Doug Turnbull"><div class="lbl">DOUG TURNBULL<span class="co">search · shopify / reddit</span></div></div>
+  </div>
+  <div class="skillz">
+    <div class="hd2">▣ HIGHLIGHT REEL</div>
+    <div class="coming">
+      <b>Coming soon:</b> the skills and workflows from this episode, packaged into the companion repo with repo links and timestamps — same as EP 01 &amp; EP 02. <i>Subscribe to get them when they land.</i>
+    </div>
+  </div>
+  <div class="actions">
+    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=XaYQFtca798" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
+  </div>
+  </div>
+</section>
+
+<section class="sec ep">
   <div class="page">
   <div class="hd">
     <div class="num">EP 03</div>
