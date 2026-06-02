@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chris Fonnesbeck · Show Us Your Agent Skills</title>
+<meta name="description" content="Chris Fonnesbeck's Show Us Your Agent Skills dossier: Pi skills, plan review, implementation review, PyMC workflows, Zed, and model routing for data-science agents.">
+<meta name="author" content="Hugo Bowne-Anderson">
+<link rel="canonical" href="https://hugobowne.github.io/agent-skills/guests/chris-fonnesbeck/">
+
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://hugobowne.github.io/agent-skills/guests/chris-fonnesbeck/">
+<meta property="og:title" content="Chris Fonnesbeck · Show Us Your Agent Skills">
+<meta property="og:description" content="Plan review, implementation review, Pi skills, PyMC workflows, Zed, and model routing for data-science agents.">
+<meta property="og:site_name" content="hugo-bowne-anderson.ai">
+<meta property="og:image" content="https://hugobowne.github.io/show/avatars/chris.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@hugobowne">
+<meta name="twitter:creator" content="@hugobowne">
+<meta name="twitter:title" content="Chris Fonnesbeck · Show Us Your Agent Skills">
+<meta name="twitter:description" content="Plan review, implementation review, Pi skills, PyMC workflows, Zed, and model routing for data-science agents.">
+<meta name="twitter:image" content="https://hugobowne.github.io/show/avatars/chris.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../shared/shared.css">
+<style>
+:root {
+  --bg: #0a0a10;
+  --bg-2: #14141e;
+  --bg-3: #1c1c2a;
+  --line: #2a2a3a;
+  --line-2: #3a3a55;
+  --fg: #f1f0ff;
+  --fg-2: #b4b0d4;
+  --fg-3: #6e6a8a;
+  --cyan: #43fafb;
+  --magenta: #de21e9;
+  --purple-deep: #422074;
+}
+html, body { background: var(--bg); color: var(--fg); margin: 0; }
+body {
+  font-family: "Geist", -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 3px);
+  pointer-events: none;
+  z-index: 100;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+.page { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+.topbar {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+.topbar > .page {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+}
+.logo .dot, .topbar nav a.active, .status { color: var(--cyan); }
+.topbar nav { display: flex; gap: 22px; flex-wrap: wrap; }
+.topbar nav a { color: var(--fg-2); }
+.topbar nav a:hover { color: var(--fg); }
+.status { white-space: nowrap; }
+.status::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+}
+.hero {
+  padding: 56px 0;
+  border-bottom: 2px solid var(--magenta);
+  background:
+    radial-gradient(ellipse 720px 480px at 82% 20%, rgba(67,250,251,0.12), transparent 62%),
+    radial-gradient(ellipse 720px 480px at 20% 12%, rgba(222,33,233,0.18), transparent 62%),
+    var(--bg);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
+  gap: 34px;
+  align-items: center;
+}
+.crumb {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--fg-3);
+  margin-bottom: 24px;
+}
+.crumb a { color: var(--cyan); border-bottom: 1px dotted var(--line-2); }
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 22px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  color: var(--fg-3);
+}
+.mini-avatar {
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--cyan);
+  box-shadow: 3px 3px 0 var(--magenta);
+  overflow: hidden;
+  background: var(--bg-3);
+  flex: 0 0 auto;
+}
+.mini-avatar img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+.chip {
+  border: 2px solid var(--line-2);
+  padding: 8px 10px;
+  background: rgba(20,20,30,.82);
+}
+.chip.cyan { color: #0a0a10; background: var(--cyan); border-color: var(--cyan); }
+.hero h1 {
+  margin: 0 0 18px;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(30px, 5.2vw, 58px);
+  line-height: 1.18;
+  letter-spacing: 0;
+  text-shadow: -4px 0 var(--magenta), 4px 0 var(--cyan);
+}
+.hero h1 span { color: var(--cyan); text-shadow: none; }
+.dek {
+  max-width: 68ch;
+  color: var(--fg-2);
+  font-size: 17px;
+  line-height: 1.65;
+}
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
+.btn {
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  padding: 15px 18px;
+  background: var(--magenta);
+  color: #fff;
+  box-shadow: 0 5px 0 var(--purple-deep), 0 0 26px rgba(222,33,233,.35);
+}
+.btn.cyan { background: var(--cyan); color: #0a0a10; box-shadow: 0 5px 0 #1e8a8b, 0 0 26px rgba(67,250,251,.35); }
+.portrait {
+  background: var(--bg-2);
+  border: 2px solid var(--cyan);
+  box-shadow: 8px 8px 0 var(--magenta);
+  padding: 14px;
+}
+.portrait-media {
+  aspect-ratio: 1 / 1;
+  background:
+    repeating-linear-gradient(45deg, transparent 0, transparent 10px, rgba(67,250,251,.05) 10px, rgba(67,250,251,.05) 11px),
+    var(--bg-3);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.portrait-media img, .portrait-media video { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+.portrait-caption {
+  margin-top: 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--fg-2);
+  display: grid;
+  gap: 6px;
+}
+.portrait-caption b {
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: var(--cyan);
+  font-weight: 400;
+}
+.sec { padding: 48px 0; border-bottom: 2px solid var(--line); }
+.sec h2 {
+  margin: 0 0 10px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 22px;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+.sec h2 span { color: var(--cyan); }
+.sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--fg-3);
+  margin-bottom: 28px;
+}
+.sub::before { content: "// "; }
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: 18px;
+}
+.panel, .card, .quote, .moment, .tool, .step {
+  background: var(--bg-2);
+  border: 2px solid var(--line);
+}
+.panel { padding: 24px; }
+.panel p { margin: 0 0 14px; color: var(--fg-2); }
+.panel p:last-child { margin-bottom: 0; }
+.list { display: grid; gap: 10px; }
+.moment {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
+  padding: 14px 16px;
+}
+.moment .ts {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  color: var(--cyan);
+}
+.moment .ti { color: var(--fg); font-weight: 500; }
+.moment .de {
+  display: block;
+  margin-top: 4px;
+  color: var(--fg-3);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.card { padding: 18px 20px; }
+.card .tag {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 5px 7px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 7px;
+  letter-spacing: 0;
+  background: var(--cyan);
+  color: #0a0a10;
+}
+.card .tag.workflow { background: var(--magenta); color: #fff; }
+.card h3 { margin: 0 0 10px; font-size: 17px; line-height: 1.3; }
+.card p { margin: 0; color: var(--fg-2); font-size: 13.5px; }
+.steps {
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.step {
+  counter-increment: step;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 12px;
+}
+.step::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: var(--magenta);
+  padding-top: 3px;
+}
+.step b { display: block; margin-bottom: 5px; color: var(--fg); }
+.step span { color: var(--fg-2); font-size: 13.5px; }
+.tools {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+.tool {
+  padding: 14px 12px;
+  text-align: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--fg-2);
+}
+.tool b {
+  display: block;
+  margin-bottom: 5px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  color: var(--cyan);
+  font-weight: 400;
+}
+.quotes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.quote { padding: 20px; color: var(--fg-2); }
+.quote p { margin: 0 0 12px; font-size: 15px; line-height: 1.55; }
+.quote a { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--cyan); }
+.footer {
+  padding: 28px 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  color: var(--fg-3);
+}
+.footer > .page { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer a { color: var(--fg-2); }
+.footer a:hover { color: var(--cyan); }
+.footer .socials { display: flex; gap: 18px; flex-wrap: wrap; }
+@media (max-width: 980px) {
+  .hero-grid, .split { grid-template-columns: minmax(0, 1fr); }
+  .portrait { max-width: 460px; }
+  .steps, .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .topbar > .page { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+  .topbar nav { order: 3; flex: 1 1 100%; gap: 14px; }
+  .status { margin-left: auto; }
+  .hero { padding: 38px 0 44px; }
+  .hero h1 { text-shadow: -2px 0 var(--magenta), 2px 0 var(--cyan); }
+  .cards, .quotes, .steps { grid-template-columns: minmax(0, 1fr); }
+  .moment { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="page">
+    <div class="logo"><a href="../../../index.html">hugo-bowne-anderson<span class="dot">.</span>ai</a></div>
+    <nav>
+      <a href="../../../index.html#podcasts">podcasts</a>
+      <a href="../../../index.html#writing">writing</a>
+      <a href="../../../agent-skills" class="active">agent skills</a>
+      <a href="../../../agent-skills#hub">skills hub</a>
+    </nav>
+    <div class="status">ep 04 field notes</div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="page hero-grid">
+      <div>
+        <div class="crumb"><a href="../../../agent-skills#past">Show Us Your Agent Skills</a> / EP 04 / guest dossier</div>
+        <div class="eyebrow">
+          <span class="mini-avatar"><img src="../../../show/avatars/chris.png" alt=""></span>
+          <span class="chip cyan">CHRIS FONNESBECK</span>
+          <span class="chip">PYMC LABS</span>
+          <span class="chip">PI</span>
+          <span class="chip">PLAN REVIEW</span>
+        </div>
+        <h1>CHRIS <span>FONNESBECK</span></h1>
+        <p class="dek">
+          Chris turns a repeated data-science review ritual into Pi skills: make the first artifact a plan, audit that plan, hand it back to an implementation agent, then review the resulting code with the same discipline.
+        </p>
+        <div class="hero-actions">
+          <a class="btn cyan" href="https://www.youtube.com/watch?v=XaYQFtca798&t=3624s" target="_blank" rel="noopener">▶ WATCH SEGMENT</a>
+          <a class="btn" href="https://github.com/hugobowne/show-us-your-agent-skills/tree/ep-4-playground/workflows/plan-review-implementation-review" target="_blank" rel="noopener">$ WORKFLOW WRITE-UP</a>
+        </div>
+      </div>
+      <aside class="portrait" aria-label="Chris Fonnesbeck portrait">
+        <div class="portrait-media">
+          <video poster="../../../show/avatars/chris.png" autoplay muted loop playsinline controls preload="metadata" aria-label="8-bit Chris Fonnesbeck intro video">
+            <source src="chris-fonnesbeck-8bit.mp4" type="video/mp4">
+            <img src="../../../show/avatars/chris.png" alt="Chris Fonnesbeck">
+          </video>
+        </div>
+        <div class="portrait-caption">
+          <b>8-BIT VIDEO</b>
+          <span>Chris's baseball-themed intro clip for the Show Us Your Agent Skills arcade treatment.</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page split">
+      <div class="panel">
+        <h2>WHAT HE <span>SHOWED</span></h2>
+        <p>Chris showed an agentic plan-review loop for data-science code, with the human inserted at the decision points. The concrete task was a PyMC distribution change: ask an agent for a plan, review the plan, hand the reviewed plan to an implementation agent, then review the implementation.</p>
+        <p>The loop keeps planning, review findings, implementation, and implementation review as separate artifacts, so the human can inspect and steer the work instead of trusting a single agent pass.</p>
+      </div>
+      <div class="list">
+        <a class="moment" href="https://youtube.com/live/XaYQFtca798?t=3807" target="_blank" rel="noopener">
+          <span class="ts">01:03:27</span>
+          <span><span class="ti">Start with a plan</span><span class="de">The first agent job is to produce an implementation plan for the PyMC distribution change.</span></span>
+        </a>
+        <a class="moment" href="https://youtube.com/live/XaYQFtca798?t=3624" target="_blank" rel="noopener">
+          <span class="ts">01:00:24</span>
+          <span><span class="ti">Socratic Review</span><span class="de">The agent asks clarification questions until the plan is ready to build.</span></span>
+        </a>
+        <a class="moment" href="https://youtube.com/live/XaYQFtca798?t=3835" target="_blank" rel="noopener">
+          <span class="ts">01:03:55</span>
+          <span><span class="ti">Review plans</span><span class="de">A Pi skill audits an implementation plan and writes findings to markdown.</span></span>
+        </a>
+        <a class="moment" href="https://youtube.com/live/XaYQFtca798?t=3953" target="_blank" rel="noopener">
+          <span class="ts">01:05:53</span>
+          <span><span class="ti">Review implementation</span><span class="de">After code is written, a second skill runs the same discipline over the implementation.</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>WORKFLOW <span>MOVES</span></h2>
+      <div class="sub">the portable parts of Chris's plan-review and implementation-review loop</div>
+      <div class="steps">
+        <div class="step"><span><b>Make the first artifact a plan</b><span>For the PyMC half-flat distribution demo, the first agent job is to produce an implementation plan, not start editing code.</span></span></div>
+        <div class="step"><span><b>Turn repeated review into a skill</b><span>Chris made `review plans` because he kept asking for the same audit in the same way.</span></span></div>
+        <div class="step"><span><b>Write review findings to markdown</b><span>The review skill writes a local report with red and yellow flags instead of leaving feedback trapped in chat.</span></span></div>
+        <div class="step"><span><b>Send the reviewed plan back</b><span>The review report becomes input to the implementation stage, either for the original agent or another instance.</span></span></div>
+        <div class="step"><span><b>Route models by taste</b><span>Chris chooses review and implementation models from experience rather than hard-coding one model for every role.</span></span></div>
+        <div class="step"><span><b>Review the implementation too</b><span>After code is written, `review implementation` audits the finished work against the plan and project expectations.</span></span></div>
+        <div class="step"><span><b>Keep the skills in a living repo</b><span>Chris saves the skills in `cutie-pi` so the review ritual can stay current with his projects.</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>SKILLS &amp; <span>WORKFLOWS</span></h2>
+      <div class="sub">the reusable pieces from Chris's setup</div>
+      <div class="cards">
+        <article class="card">
+          <span class="tag">skill</span>
+          <h3>review plans</h3>
+          <p>Reads an implementation plan, finds red and yellow flags, and writes review findings to a local markdown file.</p>
+        </article>
+        <article class="card">
+          <span class="tag">skill</span>
+          <h3>review implementation</h3>
+          <p>Audits the implemented code after the plan has passed review and the coding agent has made changes.</p>
+        </article>
+        <article class="card">
+          <span class="tag">skill</span>
+          <h3>Socratic Review</h3>
+          <p>Asks questions before implementation so the agent clarifies uncertainty instead of building too early.</p>
+        </article>
+        <article class="card">
+          <span class="tag workflow">workflow</span>
+          <h3>model routing by task</h3>
+          <p>Chris switches instances and models by experience: review, data science, and coding can each use different strengths.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>TOOLS <span>MENTIONED</span></h2>
+      <div class="sub">the stack around the demo</div>
+      <div class="tools">
+        <a class="tool" href="https://pi.dev/" target="_blank" rel="noopener"><b>Pi</b>local harness</a>
+        <a class="tool" href="https://github.com/fonnesbeck/cutie-pi" target="_blank" rel="noopener"><b>cutie-pi</b>skills repo</a>
+        <a class="tool" href="https://www.pymc.io/" target="_blank" rel="noopener"><b>PyMC</b>modeling</a>
+        <a class="tool" href="https://zed.dev/ai" target="_blank" rel="noopener"><b>Zed</b>agent workspace</a>
+        <a class="tool" href="https://marimo.io/blog/marimo-pair" target="_blank" rel="noopener"><b>marimo</b>notebooks</a>
+        <a class="tool" href="https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md" target="_blank" rel="noopener"><b>grill-me</b>review pattern</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>PULL <span>QUOTES</span></h2>
+      <div class="sub">short excerpts from Chris's segment</div>
+      <div class="quotes">
+        <blockquote class="quote">
+          <p>"You start by asking your agent to generate a plan to do that."</p>
+          <a href="https://youtube.com/live/XaYQFtca798?t=3807" target="_blank" rel="noopener">01:03:27</a>
+        </blockquote>
+        <blockquote class="quote">
+          <p>"It allows you to do almost infinite experimentation."</p>
+          <a href="https://youtube.com/live/XaYQFtca798?t=2978" target="_blank" rel="noopener">00:49:38</a>
+        </blockquote>
+        <blockquote class="quote">
+          <p>"Created a Pi skill that is called review plans."</p>
+          <a href="https://youtube.com/live/XaYQFtca798?t=3835" target="_blank" rel="noopener">01:03:55</a>
+        </blockquote>
+        <blockquote class="quote">
+          <p>"I like to go back and forth between different instances and sometimes even different models."</p>
+          <a href="https://youtube.com/live/XaYQFtca798?t=3914" target="_blank" rel="noopener">01:05:14</a>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="page">
+    <div>© 2026 hugo bowne-anderson · show us your agent skills · chris fonnesbeck field notes</div>
+    <div class="socials">
+      <a href="../../../agent-skills">show page</a>
+      <a href="https://github.com/hugobowne/show-us-your-agent-skills/blob/ep-4-playground/episode-field-notes/ep-4/chris.md" target="_blank" rel="noopener">full field notes</a>
+      <a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/ep-4-playground/workflows/plan-review-implementation-review" target="_blank" rel="noopener">workflow write-up</a>
+      <a href="https://www.youtube.com/watch?v=XaYQFtca798" target="_blank" rel="noopener">episode 04</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
