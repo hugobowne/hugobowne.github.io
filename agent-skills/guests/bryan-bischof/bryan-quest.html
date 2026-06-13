@@ -1,0 +1,2514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Bryan Quest: Cosmic Run V5</title>
+<style>
+  :root {
+    --bg: #0a0e27;
+    --panel: #1a1f3a;
+    --accent: #ffd23f;
+    --text: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    width: 100%;
+    background: radial-gradient(circle at 50% 30%, #1a1f3a 0%, #0a0e27 70%);
+    font-family: 'Courier New', monospace;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  h1 {
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-shadow: 3px 3px 0 #000, 0 0 20px rgba(255,210,63,0.4);
+    text-transform: uppercase;
+  }
+  .game-container {
+    position: relative;
+    border: 4px solid #000;
+    box-shadow: 0 0 0 2px var(--accent), 0 0 0 7px #070816, 0 18px 60px rgba(0,0,0,0.7);
+    background: #000;
+    width: min(100vw - 8px, (100vh - 100px) * 1.6);
+    aspect-ratio: 768 / 480;
+    max-width: 768px;
+    overflow: hidden;
+  }
+  .game-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 11;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,0.035), transparent 10%, transparent 90%, rgba(255,255,255,0.025)),
+      repeating-linear-gradient(to bottom, rgba(255,255,255,0.035) 0, rgba(255,255,255,0.035) 1px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+    opacity: 0.72;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+  .hud {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    font-size: 16px;
+    text-shadow: 2px 2px 0 #000;
+    letter-spacing: 2px;
+    z-index: 10;
+  }
+  .hud span { color: var(--accent); }
+  .hud .mute {
+    pointer-events: auto;
+    cursor: pointer;
+    color: var(--accent);
+    user-select: none;
+    padding: 0 4px;
+  }
+  .hud .mute.muted { color: #666; }
+  .controls {
+    color: #aab;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+  .controls kbd {
+    background: var(--panel);
+    border: 1px solid #444;
+    padding: 2px 8px;
+    border-radius: 3px;
+    color: var(--accent);
+    font-family: inherit;
+    margin: 0 2px;
+  }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 20;
+  }
+  .overlay.show { display: flex; }
+  .start-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    filter: saturate(1.2);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .start-veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(4,0,26,0.55) 0%, rgba(4,0,26,0.8) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  #startScreen > h2, #startScreen > p, #startScreen > button { position: relative; z-index: 2; }
+  .overlay h2 {
+    font-size: 36px;
+    letter-spacing: 6px;
+    color: var(--accent);
+    text-shadow: 4px 4px 0 #000;
+  }
+  .overlay p { color: #ccc; font-size: 14px; letter-spacing: 1px; }
+  .overlay button {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 12px 28px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0 #000;
+    transition: transform 0.1s;
+  }
+  .overlay button:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000; }
+  .overlay button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #000; }
+
+  /* ───────── Touch controls ───────── */
+  .touch-controls {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100px;
+    pointer-events: none;
+    z-index: 100;
+    display: none;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .touch-pad, .touch-actions {
+    position: absolute;
+    bottom: 12px;
+    display: flex;
+    gap: 14px;
+    pointer-events: none;
+  }
+  .touch-pad { left: 14px; }
+  .touch-actions { right: 14px; align-items: flex-end; }
+  .touch-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255, 210, 63, 0.7);
+    border: 3px solid rgba(0, 0, 0, 0.8);
+    color: #000;
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    cursor: pointer;
+    pointer-events: auto;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .touch-btn.active {
+    background: rgba(255, 107, 53, 0.95);
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+  }
+  .touch-btn.jump {
+    width: 64px;
+    height: 64px;
+    background: rgba(231, 76, 60, 0.75);
+    font-size: 24px;
+  }
+  .touch-btn.jump.active { background: rgba(231, 76, 60, 1); }
+  .touch-btn.run {
+    background: rgba(52, 152, 219, 0.7);
+  }
+  .touch-btn.run.active { background: rgba(52, 152, 219, 1); }
+
+  /* On touch devices, show controls and reserve space at body bottom
+     so the canvas doesn't render underneath them. */
+  @media (pointer: coarse) {
+    .touch-controls { display: block; }
+    body { padding-bottom: 100px; align-items: center; }
+    .game-container {
+      width: min(100vw - 8px, (100vh - 110px) * 1.6);
+    }
+  }
+
+  /* Compact layout for small / landscape screens */
+  @media (max-width: 900px), (max-height: 600px) {
+    h1 { font-size: 14px; letter-spacing: 2px; }
+    .controls { display: none; }
+    .wrap { gap: 4px; }
+    .hud { font-size: 12px; }
+  }
+  @media (max-height: 450px) {
+    h1 { display: none; }
+    .wrap { gap: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>◆ Bryan Quest: Cosmic Run ◆</h1>
+  <div class="game-container">
+    <canvas id="game" width="768" height="480"></canvas>
+    <div class="hud">
+      <div>SCORE <span id="score">0</span></div>
+      <div>◆ <span id="coins">0</span></div>
+      <div>♥ <span id="lives">3</span></div>
+      <div>SECTOR <span id="world">1-1</span></div>
+      <div id="muteBtn" class="mute" role="button" aria-label="Toggle sound" onclick="toggleMute()">♪</div>
+    </div>
+    <div class="overlay" id="startScreen">
+      <video id="startVideo" class="start-video" src="bryan-b_8bit_v7.mp4" autoplay muted loop playsinline></video>
+      <div class="start-veil"></div>
+      <h2>BRYAN QUEST</h2>
+      <p style="color:#ffd23f; letter-spacing:3px;">★ COSMIC RUN ★</p>
+      <p>← → MOVE &nbsp;&nbsp; ↑ / SPACE JUMP &nbsp;&nbsp; SHIFT RUN</p>
+      <p>collect gems • stomp enemies • reach the flag</p>
+      <button onclick="startGame()">PRESS START</button>
+    </div>
+    <div class="overlay" id="endScreen">
+      <h2 id="endTitle">GAME OVER</h2>
+      <p id="endMessage">Better luck next time!</p>
+      <button onclick="resetGame()">TRY AGAIN</button>
+    </div>
+  </div>
+  <div class="controls">
+    <kbd>←</kbd><kbd>→</kbd> move &nbsp;|&nbsp; <kbd>↑</kbd> or <kbd>SPACE</kbd> jump &nbsp;|&nbsp; <kbd>SHIFT</kbd> run
+  </div>
+</div>
+<div class="touch-controls" id="touchControls">
+  <div class="touch-pad">
+    <button class="touch-btn" data-key="ArrowLeft" aria-label="Move left">◀</button>
+    <button class="touch-btn" data-key="ArrowRight" aria-label="Move right">▶</button>
+  </div>
+  <div class="touch-actions">
+    <button class="touch-btn run" data-key="ShiftLeft" aria-label="Run">B</button>
+    <button class="touch-btn jump" data-key="Space" aria-label="Jump">A</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  PIXEL QUEST - A Retro Platformer
+// ============================================================
+
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+const W = canvas.width;
+const H = canvas.height;
+const TILE = 32;
+const GRAVITY = 0.55;
+const JUMP_VEL = -11.5;
+const MAX_FALL = 14;
+const MOVE_ACCEL = 0.6;
+const RUN_MAX = 5.5;
+const WALK_MAX = 3.2;
+const FRICTION = 0.82;
+const AIR_FRICTION = 0.94;
+
+// ============================================================
+//  LEVEL DESIGN
+//  G = ground, g = grass top, B = brick, ? = question block (coin)
+//  M = question block (mushroom), C = coin, P = pipe top
+//  p = pipe body, E = goomba, K = koopa-like, F = flag, X = end pole base
+//  H = hard block (stone), . = empty
+// ============================================================
+
+// Build a clean, consistent-width level programmatically.
+// Coordinates: (x=col, y=row) with top-left at (0,0).
+const LEVEL_WIDTH = 200;
+const LEVEL_HEIGHT = 15;
+const GROUND_Y = 13;
+
+function buildLevelStrings() {
+  const grid = Array.from({length: LEVEL_HEIGHT}, () => new Array(LEVEL_WIDTH).fill('.'));
+  const set = (x, y, ch) => { if (x>=0 && x<LEVEL_WIDTH && y>=0 && y<LEVEL_HEIGHT) grid[y][x] = ch; };
+  const fill = (x1, y1, x2, y2, ch) => {
+    for (let y = y1; y <= y2; y++) for (let x = x1; x <= x2; x++) set(x, y, ch);
+  };
+
+  // Continuous ground with two pits
+  for (let x = 0; x < LEVEL_WIDTH; x++) {
+    if ((x >= 60 && x <= 63) || (x >= 110 && x <= 113)) continue;
+    set(x, GROUND_Y, 'G');
+    set(x, GROUND_Y+1, 'G');
+  }
+
+  // --- Section 1: intro (warm-up) ---
+  set(15, 9, 'C');
+  fill(20, 10, 22, 10, 'B');
+  set(28, 12, 'E');
+
+  // --- Section 2: ? blocks tutorial ---
+  set(34, 7, 'C'); set(35, 7, 'C'); set(36, 7, 'C');
+  set(34, 8, '?');
+  set(36, 8, 'M'); // mushroom power-up
+  set(38, 8, '?');
+  // Cosmic launchpad — stomp it for a hyperspace ride.
+  set(40, GROUND_Y - 1, 'L');
+  set(42, 12, 'E');
+
+  // --- Section 3: stairs ---
+  set(50, 11, 'C'); set(51, 11, 'C'); set(52, 11, 'C');
+  fill(48, 12, 48, 12, 'H');
+  fill(49, 11, 49, 12, 'H');
+  fill(50, 10, 50, 12, 'H');
+  fill(51, 9, 51, 12, 'H');
+  set(56, 12, 'E');
+
+  // --- Pit 1 (cols 60-63) with floating coins ---
+  set(60, 9, 'C'); set(61, 9, 'C'); set(62, 9, 'C'); set(63, 9, 'C');
+
+  // --- Section 4: pipe ---
+  set(68, 12, 'P'); set(69, 12, 'P');
+
+  // --- Section 5: brick row + koopa ---
+  fill(74, 8, 80, 8, 'B');
+  set(76, 8, '?');
+  set(78, 12, 'E');
+  set(82, 12, 'K');
+
+  // --- Section 6: high platform with coins ---
+  fill(86, 7, 94, 7, 'B');
+  set(88, 6, 'C'); set(90, 6, 'C'); set(92, 6, 'C');
+  set(95, 12, 'E');
+
+  // --- Section 7: tall pipe + double enemies ---
+  set(100, 11, 'P'); set(100, 12, 'p');
+  set(101, 11, 'P'); set(101, 12, 'p');
+  set(98, 12, 'E');
+  set(104, 12, 'E');
+
+  // --- Pit 2 (cols 110-113) with brick path overhead ---
+  set(110, 6, 'C'); set(111, 6, 'C'); set(112, 6, 'C'); set(113, 6, 'C');
+  fill(110, 7, 113, 7, 'B');
+
+  // --- Section 8: stair pyramid ---
+  fill(118, 12, 118, 12, 'H');
+  fill(119, 11, 119, 12, 'H');
+  fill(120, 10, 120, 12, 'H');
+  fill(121, 9, 121, 12, 'H');
+  fill(122, 9, 122, 12, 'H');
+  fill(123, 10, 123, 12, 'H');
+  fill(124, 11, 124, 12, 'H');
+
+  // --- Section 9: enemy gauntlet + coin row ---
+  set(130, 12, 'E');
+  set(135, 12, 'E');
+  set(140, 12, 'K');
+  set(145, 12, 'E');
+  for (let x = 130; x <= 148; x += 2) set(x, 8, 'C');
+  fill(132, 9, 134, 9, 'B');
+  set(133, 9, '?');
+
+  // --- Section 10: final approach ---
+  set(158, 12, 'E');
+  set(163, 12, 'E');
+  fill(160, 9, 165, 9, 'B');
+  set(162, 9, '?');
+  set(170, 12, 'E');
+
+  // --- Flag staircase + flag pole ---
+  for (let i = 0; i < 7; i++) {
+    fill(178 + i, 12 - i, 178 + i, 12, 'H');
+  }
+  const flagCol = 188;
+  for (let y = 6; y <= 12; y++) set(flagCol, y, 'F');
+
+  return grid.map(row => row.join(''));
+}
+
+const LEVEL = buildLevelStrings();
+
+const LEVEL_W = LEVEL[0].length;
+const LEVEL_H = LEVEL.length;
+const WORLD_W = LEVEL_W * TILE;
+const WORLD_H = LEVEL_H * TILE;
+
+// ============================================================
+//  GAME STATE
+// ============================================================
+
+let player, enemies, coins, particles, blocks, flag, launchpads = [];
+let cosmicMode = 0;
+const COSMIC_DURATION = 260;
+let cosmicGemSpawnT = 0;
+let camera = { x: 0, y: 0 };
+let score = 0, coinCount = 0, lives = 3;
+let gameRunning = false, gameWon = false;
+let cameraShake = 0;
+let levelTime = 0;
+
+const keys = {};
+
+window.addEventListener('keydown', e => {
+  keys[e.code] = true;
+  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)) e.preventDefault();
+});
+window.addEventListener('keyup', e => { keys[e.code] = false; });
+
+// ───────── Touch controls ─────────
+// Each button maps to a key in the `keys` object via data-key.
+// Uses pointer events so it works for both touch and mouse, and supports
+// multi-touch (e.g., holding right + jump simultaneously).
+document.querySelectorAll('.touch-btn').forEach(btn => {
+  const key = btn.dataset.key;
+  const press = (e) => {
+    e.preventDefault();
+    keys[key] = true;
+    btn.classList.add('active');
+    if (e.pointerId !== undefined && btn.setPointerCapture) {
+      try { btn.setPointerCapture(e.pointerId); } catch(_) {}
+    }
+  };
+  const release = (e) => {
+    e.preventDefault();
+    keys[key] = false;
+    btn.classList.remove('active');
+  };
+  // Pointer events (modern, handles touch + mouse + pen)
+  btn.addEventListener('pointerdown', press);
+  btn.addEventListener('pointerup', release);
+  btn.addEventListener('pointercancel', release);
+  btn.addEventListener('pointerleave', release);
+  // Fallback for older browsers
+  btn.addEventListener('touchstart', press, { passive: false });
+  btn.addEventListener('touchend', release, { passive: false });
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+});
+
+// ============================================================
+//  AUDIO  —  Web Audio synthesis (no external files)
+// ============================================================
+// Strategy:
+//   - One AudioContext, lazily created on first user gesture (browser policy).
+//   - SFX are short oscillator + envelope blips; built from scratch each call.
+//   - Music is a scheduled note loop that runs ahead of the audio clock by
+//     ~150ms so timing stays rock-solid even if the main game loop hiccups.
+// ============================================================
+
+const Audio = {
+  ctx: null,
+  master: null,
+  musicGain: null,
+  sfxGain: null,
+  muted: false,
+  musicPlaying: false,
+  nextNoteTime: 0,
+  noteIndex: 0,
+  schedulerTimer: null,
+};
+
+function audioInit() {
+  if (Audio.ctx) return;
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!Ctx) return; // no audio support
+  Audio.ctx = new Ctx();
+  Audio.master = Audio.ctx.createGain();
+  Audio.master.gain.value = 0.5;
+  Audio.master.connect(Audio.ctx.destination);
+  Audio.musicGain = Audio.ctx.createGain();
+  Audio.musicGain.gain.value = 0.132;
+  Audio.musicGain.connect(Audio.master);
+  Audio.sfxGain = Audio.ctx.createGain();
+  Audio.sfxGain.gain.value = 0.5;
+  Audio.sfxGain.connect(Audio.master);
+}
+
+function audioResume() {
+  if (Audio.ctx && Audio.ctx.state === 'suspended') Audio.ctx.resume();
+}
+
+// --- SFX primitives --------------------------------------------------------
+
+// Play an oscillator tone with an envelope.
+// freq can be a [start, end] pair to glide.
+function tone(freq, duration, type = 'square', vol = 0.3, attack = 0.005, release = 0.05) {
+  if (!Audio.ctx || Audio.muted) return;
+  const t0 = Audio.ctx.currentTime;
+  const osc = Audio.ctx.createOscillator();
+  const gain = Audio.ctx.createGain();
+  osc.type = type;
+  if (Array.isArray(freq)) {
+    osc.frequency.setValueAtTime(freq[0], t0);
+    osc.frequency.linearRampToValueAtTime(freq[1], t0 + duration);
+  } else {
+    osc.frequency.setValueAtTime(freq, t0);
+  }
+  gain.gain.setValueAtTime(0, t0);
+  gain.gain.linearRampToValueAtTime(vol, t0 + attack);
+  gain.gain.setValueAtTime(vol, t0 + Math.max(attack, duration - release));
+  gain.gain.linearRampToValueAtTime(0, t0 + duration);
+  osc.connect(gain);
+  gain.connect(Audio.sfxGain);
+  osc.start(t0);
+  osc.stop(t0 + duration + 0.02);
+}
+
+// Short white-noise burst (for brick break, explosion-ish effects).
+function noiseBurst(duration, vol = 0.3, filterFreq = 2000) {
+  if (!Audio.ctx || Audio.muted) return;
+  const t0 = Audio.ctx.currentTime;
+  const bufSize = Math.floor(Audio.ctx.sampleRate * duration);
+  const buf = Audio.ctx.createBuffer(1, bufSize, Audio.ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+  const src = Audio.ctx.createBufferSource();
+  src.buffer = buf;
+  const filter = Audio.ctx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = filterFreq;
+  const gain = Audio.ctx.createGain();
+  gain.gain.setValueAtTime(vol, t0);
+  gain.gain.exponentialRampToValueAtTime(0.001, t0 + duration);
+  src.connect(filter);
+  filter.connect(gain);
+  gain.connect(Audio.sfxGain);
+  src.start(t0);
+}
+
+// --- SFX library -----------------------------------------------------------
+
+const SFX = {
+  jump:    () => tone([440, 880], 0.15, 'square', 0.25),
+  coin:    () => { tone(988, 0.05, 'square', 0.3); setTimeout(() => tone(1319, 0.15, 'square', 0.3), 50); },
+  stomp:   () => tone([200, 80], 0.12, 'square', 0.3),
+  bump:    () => tone([180, 120], 0.08, 'square', 0.25),
+  brick:   () => noiseBurst(0.18, 0.4, 1500),
+  power:   () => {
+    // Ascending arpeggio (E-G-B-E)
+    const notes = [659, 784, 988, 1319];
+    notes.forEach((f, i) => setTimeout(() => tone(f, 0.1, 'square', 0.25), i * 60));
+  },
+  hurt:    () => tone([440, 110], 0.3, 'sawtooth', 0.3),
+  death:   () => {
+    const notes = [659, 622, 587, 554, 523, 466, 392, 330, 262];
+    notes.forEach((f, i) => setTimeout(() => tone(f, 0.12, 'square', 0.25), i * 80));
+  },
+  win:     () => {
+    // Quick victory fanfare
+    const seq = [
+      [523, 0.12, 0],   [659, 0.12, 120], [784, 0.12, 240],
+      [1047, 0.12, 360],[784, 0.12, 480], [1047, 0.4, 600]
+    ];
+    seq.forEach(([f, d, t]) => setTimeout(() => tone(f, d, 'square', 0.3), t));
+  },
+  oneUp:   () => {
+    const notes = [659, 784, 1047, 1319];
+    notes.forEach((f, i) => setTimeout(() => tone(f, 0.1, 'square', 0.3), i * 70));
+  },
+  cosmicLaunch: () => {
+    tone([100, 60], 0.4, 'sawtooth', 0.35);
+    tone([220, 1800], 0.6, 'sawtooth', 0.25);
+    noiseBurst(0.5, 0.35, 4000);
+    const notes = [523, 659, 784, 1047, 1319, 1568, 2093];
+    notes.forEach((f, i) => setTimeout(() => tone(f, 0.12, 'square', 0.28), i * 55));
+  },
+};
+
+// --- Music: 90s action-anthem (v2) ----------------------------------------
+// Four voices, all 128 beats, all aligned to a 0.25-beat (16th-note) grid:
+//   LEAD  — square-wave hook
+//   ARP   — fast 16th-note pulse arpeggios outlining the chord progression
+//   BASS  — driving 8th-note octave bass on triangle wave
+//   DRUM  — noise-synth kick / snare / hat groove (snare fill on bar 4)
+// Form: VERSE × 3 + BRIDGE × 1   (32 beats each, 128 total)
+// Verse progression:  Am — F — C — G
+// Bridge progression: C — G — Am — F   (C-major lift)
+// Extras: octave-up arp on the G chord of every verse, sidechain duck on
+// the arp when a kick fires, snare fill on the final 4 beats of each 32-bar.
+// Format for melodic tracks: [midi, beats], midi 0 = rest.
+// Format for DRUM track: ['K'|'S'|'s'|'H'|'.', beats].
+
+const MUSIC_BPM = 152;
+
+// MIDI helpers: C4 = 60. Use this to keep the data legible.
+const N = { C:0,Cs:1,D:2,Ds:3,E:4,F:5,Fs:6,G:7,Gs:8,A:9,As:10,B:11 };
+const m = (octave, name) => 12 * (octave + 1) + N[name];
+
+// --- VERSE (Am — F — C — G) -----------------------------------------------
+const VERSE_LEAD = [
+  // Bar 1 (Am, 8 beats) — punchy ascending hook
+  [m(5,'E'), 0.5], [m(5,'A'), 0.5], [m(5,'G'), 0.5], [m(5,'E'), 0.5],
+  [m(5,'C'), 1],   [m(5,'E'), 1],
+  [m(5,'D'), 0.5], [m(5,'C'), 0.5], [m(4,'A'), 3],
+  // Bar 2 (F, 8 beats) — falling answer
+  [m(5,'C'), 0.5], [m(5,'F'), 0.5], [m(5,'E'), 0.5], [m(5,'C'), 0.5],
+  [m(4,'A'), 1],   [m(5,'C'), 1],
+  [m(4,'A'), 0.5], [m(4,'G'), 0.5], [m(4,'F'), 3],
+  // Bar 3 (C, 8 beats) — climb
+  [m(4,'G'), 0.5], [m(5,'C'), 0.5], [m(5,'E'), 0.5], [m(5,'G'), 0.5],
+  [m(5,'E'), 1],   [m(5,'G'), 1],
+  [m(5,'C'), 0.5], [m(4,'B'), 0.5], [m(5,'C'), 3],
+  // Bar 4 (G, 8 beats) — drive home
+  [m(5,'D'), 0.5], [m(5,'G'), 0.5], [m(5,'F'), 0.5], [m(5,'D'), 0.5],
+  [m(4,'B'), 1],   [m(5,'D'), 1],
+  [m(4,'A'), 0.5], [m(4,'G'), 0.5], [m(4,'B'), 3],
+];
+
+// Build a 16th-note arpeggio for each chord — 32 sixteenths per 8-beat bar.
+// `octaveShift` is a signed semitone offset (e.g. +12 for one octave up).
+const ARP_PATTERNS = {
+  Am: [m(4,'A'), m(5,'E'), m(5,'C'), m(5,'E')],
+  F:  [m(4,'F'), m(5,'C'), m(4,'A'), m(5,'C')],
+  C:  [m(4,'C'), m(4,'G'), m(4,'E'), m(4,'G')],
+  G:  [m(3,'G'), m(4,'D'), m(3,'B'), m(4,'D')],
+};
+function buildArpBar(chord, octaveShift = 0) {
+  const p = ARP_PATTERNS[chord];
+  const out = [];
+  for (let i = 0; i < 32; i++) out.push([p[i % 4] + octaveShift, 0.25]);
+  return out;
+}
+const VERSE_ARP = [
+  ...buildArpBar('Am'),
+  ...buildArpBar('F'),
+  ...buildArpBar('C'),
+  ...buildArpBar('G', 12),   // (C) Octave-up arp on the G chord (bar 4)
+];
+
+// Driving octave bass — 8th notes (root, root-up-octave) per chord
+function buildBassBar(rootLow, rootHigh) {
+  const out = [];
+  for (let i = 0; i < 8; i++) {
+    out.push([rootLow, 0.5]);
+    out.push([rootHigh, 0.5]);
+  }
+  return out;
+}
+const VERSE_BASS = [
+  ...buildBassBar(m(2,'A'), m(3,'A')),  // Am
+  ...buildBassBar(m(2,'F'), m(3,'F')),  // F
+  ...buildBassBar(m(3,'C'), m(4,'C')),  // C
+  ...buildBassBar(m(2,'G'), m(3,'G')),  // G
+];
+
+// Drum pattern, 4 beats per "measure," 8 measures = 32 beats.
+// Per 4-beat measure: kick on 1 + 3, snare on 2 + 4, hat every 8th, plus a
+// snare ghost on the "and" of 4 for momentum.
+function buildDrumBar() {
+  // One 4-beat measure as 8 eighth notes
+  // Beat: 1   1.5 2   2.5 3   3.5 4   4.5
+  return [
+    ['K', 0.5], ['H', 0.5],
+    ['S', 0.5], ['H', 0.5],
+    ['K', 0.5], ['H', 0.5],
+    ['S', 0.5], ['s', 0.5],   // 's' = snare ghost
+  ];
+}
+// (A) Snare fill on the LAST 4 beats of the 32-beat loop (under the G chord).
+// Kick on 1, a rolling 16th-note snare run, then accented snares to land.
+// Total beats: 0.5 + (4 × 0.25) + 0.5 + 0.5 + 0.5 + 0.5 + 0.5 = 4.0
+function buildDrumFill() {
+  return [
+    ['K', 0.5],
+    ['s', 0.25], ['s', 0.25], ['s', 0.25], ['s', 0.25],
+    ['S', 0.5],
+    ['s', 0.5],
+    ['S', 0.5],
+    ['s', 0.5],
+    ['S', 0.5],
+  ];
+}
+const VERSE_DRUM = [
+  ...buildDrumBar(), ...buildDrumBar(),  // Am bar = 2 drum measures
+  ...buildDrumBar(), ...buildDrumBar(),  // F
+  ...buildDrumBar(), ...buildDrumBar(),  // C
+  ...buildDrumBar(), ...buildDrumFill(), // G — fill on the final measure
+];
+
+// --- BRIDGE (C — G — Am — F, C-major feel) --------------------------------
+// (D) Bridge in C major, uplifting major-key counterpart to the Am verse.
+const BRIDGE_LEAD = [
+  // Bar 1 (C, 8 beats) — bright opening
+  [m(5,'G'), 0.5], [m(5,'C'), 0.5], [m(5,'E'), 0.5], [m(5,'G'), 0.5],
+  [m(5,'E'), 1],   [m(5,'G'), 1],
+  [m(5,'F'), 0.5], [m(5,'E'), 0.5], [m(5,'C'), 3],
+  // Bar 2 (G, 8 beats) — answer
+  [m(5,'D'), 0.5], [m(5,'G'), 0.5], [m(5,'B'), 0.5], [m(5,'G'), 0.5],
+  [m(5,'D'), 1],   [m(5,'G'), 1],
+  [m(5,'A'), 0.5], [m(5,'G'), 0.5], [m(5,'D'), 3],
+  // Bar 3 (Am, 8 beats) — momentary minor pivot (still C-major diatonic)
+  [m(5,'E'), 0.5], [m(5,'A'), 0.5], [m(5,'C'), 0.5], [m(5,'A'), 0.5],
+  [m(5,'E'), 1],   [m(5,'A'), 1],
+  [m(5,'G'), 0.5], [m(5,'E'), 0.5], [m(5,'C'), 3],
+  // Bar 4 (F, 8 beats) — lift back home
+  [m(5,'F'), 0.5], [m(6,'C'), 0.5], [m(5,'A'), 0.5], [m(5,'F'), 0.5],
+  [m(5,'C'), 1],   [m(5,'F'), 1],
+  [m(5,'E'), 0.5], [m(5,'D'), 0.5], [m(5,'C'), 3],
+];
+const BRIDGE_ARP = [
+  ...buildArpBar('C'),
+  ...buildArpBar('G'),
+  ...buildArpBar('Am'),
+  ...buildArpBar('F', 12),   // octave-up on the final bar for symmetry with verse
+];
+const BRIDGE_BASS = [
+  ...buildBassBar(m(3,'C'), m(4,'C')),  // C
+  ...buildBassBar(m(2,'G'), m(3,'G')),  // G
+  ...buildBassBar(m(2,'A'), m(3,'A')),  // Am
+  ...buildBassBar(m(2,'F'), m(3,'F')),  // F
+];
+const BRIDGE_DRUM = [
+  ...buildDrumBar(), ...buildDrumBar(),  // C
+  ...buildDrumBar(), ...buildDrumBar(),  // G
+  ...buildDrumBar(), ...buildDrumBar(),  // Am
+  ...buildDrumBar(), ...buildDrumFill(), // F — final fill before loop reset
+];
+
+// (D) Full song: verse × 3, then bridge × 1, then back to verse — 128 beats.
+const MUSIC_LEAD = [...VERSE_LEAD, ...VERSE_LEAD, ...VERSE_LEAD, ...BRIDGE_LEAD];
+const MUSIC_ARP  = [...VERSE_ARP,  ...VERSE_ARP,  ...VERSE_ARP,  ...BRIDGE_ARP];
+const MUSIC_BASS = [...VERSE_BASS, ...VERSE_BASS, ...VERSE_BASS, ...BRIDGE_BASS];
+const MUSIC_DRUM = [...VERSE_DRUM, ...VERSE_DRUM, ...VERSE_DRUM, ...BRIDGE_DRUM];
+
+function midiToFreq(m) {
+  return m === 0 ? 0 : 440 * Math.pow(2, (m - 69) / 12);
+}
+
+function scheduleNote(midi, startTime, beats, type, gainNode, vol) {
+  if (midi === 0) return;
+  const dur = beats * 60 / MUSIC_BPM;
+  const osc = Audio.ctx.createOscillator();
+  const gain = Audio.ctx.createGain();
+  osc.type = type;
+  osc.frequency.value = midiToFreq(midi);
+  const attack = 0.005;
+  const release = 0.03;
+  gain.gain.setValueAtTime(0, startTime);
+  gain.gain.linearRampToValueAtTime(vol, startTime + attack);
+  gain.gain.setValueAtTime(vol, startTime + Math.max(attack, dur - release));
+  gain.gain.linearRampToValueAtTime(0, startTime + dur);
+  osc.connect(gain);
+  gain.connect(gainNode);
+  osc.start(startTime);
+  osc.stop(startTime + dur + 0.05);
+}
+
+// Schedule a drum hit at startTime, routed through musicGain so it respects
+// mute and the music volume slider.
+function scheduleDrum(kind, startTime) {
+  if (!Audio.ctx) return;
+  if (kind === 'K') {
+    // Kick: short sine sweep 120 -> 40 Hz
+    const osc = Audio.ctx.createOscillator();
+    const gain = Audio.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(140, startTime);
+    osc.frequency.exponentialRampToValueAtTime(45, startTime + 0.12);
+    gain.gain.setValueAtTime(0.0001, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.7, startTime + 0.005);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.14);
+    osc.connect(gain); gain.connect(Audio.musicGain);
+    osc.start(startTime); osc.stop(startTime + 0.16);
+  } else if (kind === 'S' || kind === 's') {
+    // Snare: noise burst + a tonal body around 200 Hz
+    const dur = kind === 'S' ? 0.12 : 0.06;
+    const vol = kind === 'S' ? 0.45 : 0.18;
+    const bufSize = Math.max(1, Math.floor(Audio.ctx.sampleRate * dur));
+    const buf = Audio.ctx.createBuffer(1, bufSize, Audio.ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+    const src = Audio.ctx.createBufferSource(); src.buffer = buf;
+    const hp = Audio.ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 1200;
+    const gain = Audio.ctx.createGain();
+    gain.gain.setValueAtTime(vol, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, startTime + dur);
+    src.connect(hp); hp.connect(gain); gain.connect(Audio.musicGain);
+    src.start(startTime);
+    if (kind === 'S') {
+      // Tonal body for full snare hits
+      const osc = Audio.ctx.createOscillator();
+      const g2 = Audio.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(220, startTime);
+      osc.frequency.exponentialRampToValueAtTime(140, startTime + dur);
+      g2.gain.setValueAtTime(0.25, startTime);
+      g2.gain.exponentialRampToValueAtTime(0.001, startTime + dur);
+      osc.connect(g2); g2.connect(Audio.musicGain);
+      osc.start(startTime); osc.stop(startTime + dur + 0.02);
+    }
+  } else if (kind === 'H') {
+    // Hat: very short high-passed noise
+    const dur = 0.04;
+    const bufSize = Math.max(1, Math.floor(Audio.ctx.sampleRate * dur));
+    const buf = Audio.ctx.createBuffer(1, bufSize, Audio.ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+    const src = Audio.ctx.createBufferSource(); src.buffer = buf;
+    const hp = Audio.ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 7000;
+    const gain = Audio.ctx.createGain();
+    gain.gain.setValueAtTime(0.18, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, startTime + dur);
+    src.connect(hp); hp.connect(gain); gain.connect(Audio.musicGain);
+    src.start(startTime);
+  }
+}
+
+function trackBeats(track) {
+  return track.reduce((s, n) => s + n[1], 0);
+}
+const LOOP_BEATS = 128;  // (D) 3 verses (3×32) + 1 bridge (32) = 128 beats
+
+// Look up which event in a track starts exactly at `beat` (within epsilon).
+// Returns the event or null. Both tracks loop over LOOP_BEATS.
+function noteAtBeat(track, beat) {
+  let acc = 0;
+  const target = ((beat % LOOP_BEATS) + LOOP_BEATS) % LOOP_BEATS;
+  for (const ev of track) {
+    if (Math.abs(acc - target) < 0.001) return ev;
+    acc += ev[1];
+    if (acc > LOOP_BEATS + 0.001) break;
+  }
+  return null;
+}
+
+function musicScheduler() {
+  if (!Audio.ctx || !Audio.musicPlaying) return;
+  const lookahead = 0.15; // seconds
+  const beatDur = 60 / MUSIC_BPM;
+  const step = 0.25; // 16th-note grid
+
+  while (Audio.nextNoteTime < Audio.ctx.currentTime + lookahead) {
+    const t = Audio.nextNoteTime;
+    const beat = Audio.noteIndex;
+
+    const leadEv = noteAtBeat(MUSIC_LEAD, beat);
+    if (leadEv) scheduleNote(leadEv[0], t, leadEv[1], 'square', Audio.musicGain, 0.32);
+
+    const drumEv = noteAtBeat(MUSIC_DRUM, beat);
+    if (drumEv && drumEv[0] !== '.') scheduleDrum(drumEv[0], t);
+
+    // (B) Sidechain duck: if a kick fires on this beat, drop the arp voice.
+    const arpEv = noteAtBeat(MUSIC_ARP, beat);
+    if (arpEv) {
+      const kickHere = drumEv && drumEv[0] === 'K';
+      const arpVol = kickHere ? 0.04 : 0.12;
+      scheduleNote(arpEv[0], t, arpEv[1] * 0.85, 'square', Audio.musicGain, arpVol);
+    }
+
+    const bassEv = noteAtBeat(MUSIC_BASS, beat);
+    if (bassEv) scheduleNote(bassEv[0], t, bassEv[1] * 0.9, 'triangle', Audio.musicGain, 0.38);
+
+    Audio.nextNoteTime += step * beatDur;
+    Audio.noteIndex = (Audio.noteIndex + step) % LOOP_BEATS;
+  }
+}
+
+function musicStart() {
+  if (!Audio.ctx || Audio.musicPlaying || Audio.muted) return;
+  Audio.musicPlaying = true;
+  Audio.nextNoteTime = Audio.ctx.currentTime + 0.05;
+  Audio.noteIndex = 0;
+  if (Audio.schedulerTimer) clearInterval(Audio.schedulerTimer);
+  Audio.schedulerTimer = setInterval(musicScheduler, 50);
+}
+
+function musicStop() {
+  Audio.musicPlaying = false;
+  if (Audio.schedulerTimer) clearInterval(Audio.schedulerTimer);
+  Audio.schedulerTimer = null;
+}
+
+function toggleMute() {
+  Audio.muted = !Audio.muted;
+  const btn = document.getElementById('muteBtn');
+  if (Audio.muted) {
+    btn.textContent = '♪̸';
+    btn.classList.add('muted');
+    if (Audio.master) Audio.master.gain.value = 0;
+    musicStop();
+  } else {
+    btn.textContent = '♪';
+    btn.classList.remove('muted');
+    audioInit();
+    audioResume();
+    if (Audio.master) Audio.master.gain.value = 0.5;
+    if (gameRunning) musicStart();
+  }
+}
+
+// ============================================================
+//  PARSE LEVEL
+// ============================================================
+
+function buildLevel() {
+  enemies = [];
+  coins = [];
+  particles = [];
+  launchpads = [];
+  blocks = []; // dynamic blocks (bricks, ? blocks)
+  flag = null;
+  const solid = []; // grid of solid tiles for fast collision
+  for (let y = 0; y < LEVEL_H; y++) {
+    solid[y] = [];
+    for (let x = 0; x < LEVEL_W; x++) {
+      const ch = LEVEL[y][x];
+      solid[y][x] = null;
+      if (ch === 'G') solid[y][x] = { type: 'ground' };
+      else if (ch === 'H') solid[y][x] = { type: 'stone' };
+      else if (ch === 'P') solid[y][x] = { type: 'pipeTop' };
+      else if (ch === 'p') solid[y][x] = { type: 'pipeBody' };
+      else if (ch === 'B') {
+        solid[y][x] = { type: 'brick' };
+        blocks.push({ gx: x, gy: y, kind: 'brick', bumping: 0, broken: false, contains: null });
+      } else if (ch === '?') {
+        solid[y][x] = { type: 'qblock' };
+        blocks.push({ gx: x, gy: y, kind: 'qblock', bumping: 0, used: false, contains: 'coin' });
+      } else if (ch === 'M') {
+        solid[y][x] = { type: 'qblock' };
+        blocks.push({ gx: x, gy: y, kind: 'qblock', bumping: 0, used: false, contains: 'mushroom' });
+      } else if (ch === 'C') {
+        coins.push({ x: x*TILE+8, y: y*TILE+8, w: 16, h: 16, t: Math.random()*Math.PI*2, collected: false });
+      } else if (ch === 'E') {
+        enemies.push(makeEnemy(x*TILE, y*TILE - 4, 'goomba'));
+      } else if (ch === 'K') {
+        enemies.push(makeEnemy(x*TILE, y*TILE - 16, 'koopa'));
+      } else if (ch === 'F') {
+        if (!flag) flag = { x: x*TILE + 12, y: y*TILE, h: 0 };
+        else flag.h = (y*TILE + TILE) - flag.y;
+      } else if (ch === 'L') {
+        solid[y][x] = { type: 'launchpad' };
+        launchpads.push({ gx: x, gy: y, t: 0 });
+      }
+    }
+  }
+  return solid;
+}
+
+function makeEnemy(x, y, type) {
+  if (type === 'goomba') {
+    return { x, y, w: 28, h: 28, vx: -1.0, vy: 0, type, alive: true, squashed: 0, animT: 0 };
+  } else {
+    return { x, y, w: 28, h: 44, vx: -1.2, vy: 0, type, alive: true, squashed: 0, animT: 0 };
+  }
+}
+
+let solidGrid;
+
+// ============================================================
+//  PLAYER
+// ============================================================
+
+function makePlayer() {
+  return {
+    x: 64, y: WORLD_H - 6*TILE,
+    w: 24, h: 32,
+    vx: 0, vy: 0,
+    onGround: false,
+    facing: 1,
+    big: false,
+    invuln: 0,
+    animT: 0,
+    jumpHeld: false,
+    coyote: 0,
+    jumpBuffer: 0,
+    dead: false,
+    deadT: 0,
+    win: false,
+    winT: 0,
+  };
+}
+
+// ============================================================
+//  COLLISION
+// ============================================================
+
+function tileAt(px, py) {
+  const gx = Math.floor(px / TILE);
+  const gy = Math.floor(py / TILE);
+  if (gx < 0 || gx >= LEVEL_W || gy < 0 || gy >= LEVEL_H) return null;
+  return solidGrid[gy][gx];
+}
+
+function isSolid(gx, gy) {
+  if (gx < 0 || gx >= LEVEL_W || gy < 0 || gy >= LEVEL_H) return false;
+  const t = solidGrid[gy][gx];
+  if (!t) return false;
+  // bricks that have been broken aren't solid
+  if (t.type === 'brick') {
+    const b = blocks.find(b => b.gx === gx && b.gy === gy);
+    if (b && b.broken) return false;
+  }
+  return true;
+}
+
+function moveAndCollide(obj, isPlayer = false) {
+  // X axis
+  obj.x += obj.vx;
+  let left = Math.floor(obj.x / TILE);
+  let right = Math.floor((obj.x + obj.w - 1) / TILE);
+  let top = Math.floor(obj.y / TILE);
+  let bottom = Math.floor((obj.y + obj.h - 1) / TILE);
+  if (obj.vx > 0) {
+    for (let gy = top; gy <= bottom; gy++) {
+      if (isSolid(right, gy)) {
+        obj.x = right * TILE - obj.w;
+        obj.vx = 0;
+        if (!isPlayer) obj.hitWall = true;
+        break;
+      }
+    }
+  } else if (obj.vx < 0) {
+    for (let gy = top; gy <= bottom; gy++) {
+      if (isSolid(left, gy)) {
+        obj.x = (left + 1) * TILE;
+        obj.vx = 0;
+        if (!isPlayer) obj.hitWall = true;
+        break;
+      }
+    }
+  }
+
+  // Y axis
+  obj.y += obj.vy;
+  left = Math.floor(obj.x / TILE);
+  right = Math.floor((obj.x + obj.w - 1) / TILE);
+  top = Math.floor(obj.y / TILE);
+  bottom = Math.floor((obj.y + obj.h - 1) / TILE);
+  obj.onGround = false;
+  if (obj.vy > 0) {
+    for (let gx = left; gx <= right; gx++) {
+      if (isSolid(gx, bottom)) {
+        obj.y = bottom * TILE - obj.h;
+        obj.vy = 0;
+        obj.onGround = true;
+        break;
+      }
+    }
+  } else if (obj.vy < 0) {
+    for (let gx = left; gx <= right; gx++) {
+      if (isSolid(gx, top)) {
+        obj.y = (top + 1) * TILE;
+        obj.vy = 0;
+        // bumped a block from below
+        if (isPlayer) bumpBlock(gx, top);
+        break;
+      }
+    }
+  }
+}
+
+function bumpBlock(gx, gy) {
+  const b = blocks.find(b => b.gx === gx && b.gy === gy && !b.broken);
+  if (!b) { SFX.bump(); return; }
+  b.bumping = 8;
+  if (b.kind === 'qblock' && !b.used) {
+    b.used = true;
+    if (b.contains === 'coin') {
+      SFX.coin();
+      score += 200;
+      coinCount++;
+      if (coinCount >= 100) { coinCount -= 100; lives++; SFX.oneUp(); }
+      spawnParticle(gx*TILE + TILE/2, gy*TILE - 8, '#ffd23f', '+200');
+    } else if (b.contains === 'mushroom') {
+      SFX.bump();
+      spawnMushroom(gx*TILE, gy*TILE - TILE);
+    }
+  } else if (b.kind === 'brick') {
+    if (player.big) {
+      // shatter
+      SFX.brick();
+      b.broken = true;
+      score += 50;
+      for (let i = 0; i < 6; i++) {
+        particles.push({
+          x: gx*TILE + TILE/2, y: gy*TILE + TILE/2,
+          vx: (Math.random()-0.5) * 6,
+          vy: -3 - Math.random() * 4,
+          life: 40, color: '#c44', size: 4, gravity: 0.4
+        });
+      }
+    } else {
+      SFX.bump();
+    }
+  } else {
+    SFX.bump();
+  }
+}
+
+let mushrooms = [];
+function spawnMushroom(x, y) {
+  mushrooms.push({ x, y, w: 28, h: 28, vx: 0, vy: 0, emerging: 28, alive: true });
+}
+
+function spawnParticle(x, y, color, text) {
+  particles.push({ x, y, vx: 0, vy: -1.5, life: 50, maxLife: 50, text, color, size: 12, gravity: 0 });
+}
+
+function triggerCosmicLaunch(padX, padY) {
+  player.vy = -29;
+  player.vx *= 0.4;
+  player.onGround = false;
+  cosmicMode = COSMIC_DURATION;
+  cameraShake = 14;
+  SFX.cosmicLaunch();
+  for (let i = 0; i < 28; i++) {
+    const ang = -Math.PI/2 + (Math.random() - 0.5) * 1.4;
+    const spd = 3 + Math.random() * 5;
+    const colors = ['#ffd23f', '#ff5aa0', '#5ad8ff', '#b86aff', '#fff'];
+    particles.push({
+      x: padX + 16, y: padY + 12,
+      vx: Math.cos(ang) * spd,
+      vy: Math.sin(ang) * spd,
+      life: 40, maxLife: 40,
+      color: colors[(Math.random() * colors.length) | 0],
+      size: 3 + ((Math.random() * 3) | 0),
+      gravity: 0.18, fade: true,
+    });
+  }
+  score += 500;
+  spawnParticle(padX + 16, padY - 8, '#ffd23f', 'COSMIC LAUNCH!');
+}
+
+function spawnCosmicSparkle(cx, cy) {
+  const colors = ['#ff5aa0', '#5ad8ff', '#ffd23f', '#b86aff', '#fff', '#5fff8a'];
+  const ang = Math.random() * Math.PI * 2;
+  const spd = Math.random() * 2.5;
+  const life = 22 + ((Math.random() * 14) | 0);
+  particles.push({
+    x: cx + (Math.random() - 0.5) * 24,
+    y: cy + (Math.random() - 0.5) * 24,
+    vx: Math.cos(ang) * spd,
+    vy: Math.sin(ang) * spd - 1,
+    life, maxLife: life,
+    color: colors[(Math.random() * colors.length) | 0],
+    size: 2 + ((Math.random() * 3) | 0),
+    gravity: 0,
+    fade: true,
+  });
+}
+
+function spawnFallingGem() {
+  const colors = ['#ff5aa0', '#5ad8ff', '#ffd23f', '#b86aff'];
+  const c = colors[(Math.random() * colors.length) | 0];
+  const sx = camera.x + Math.random() * W;
+  const sy = camera.y - 20;
+  const life = 90;
+  particles.push({
+    x: sx, y: sy,
+    vx: (Math.random() - 0.5) * 1.2,
+    vy: 2 + Math.random() * 2.5,
+    life, maxLife: life,
+    color: c, size: 4 + ((Math.random() * 3) | 0),
+    gravity: 0.04, fade: true,
+  });
+}
+
+function spawnCometTrail(px, py, pvx, pvy) {
+  // One streak particle behind Bryan, drifting opposite his motion
+  const colors = ['#ffd23f', '#ff8a2e', '#ff5a1a', '#ffe080', '#fff'];
+  const color = colors[(Math.random() * colors.length) | 0];
+  const jitter = (Math.random() - 0.5) * 6;
+  const life = 18 + ((Math.random() * 10) | 0);
+  particles.push({
+    x: px + (Math.random() - 0.5) * 8,
+    y: py + jitter,
+    vx: -pvx * 0.25 + (Math.random() - 0.5) * 0.6,
+    vy: -pvy * 0.15 + (Math.random() - 0.5) * 0.6,
+    life, maxLife: life,
+    color,
+    size: 3 + ((Math.random() * 3) | 0),
+    gravity: 0,
+    fade: true,
+  });
+}
+
+// ============================================================
+//  UPDATE
+// ============================================================
+
+function update() {
+  if (!gameRunning) return;
+  levelTime++;
+
+  // Player input
+  if (!player.dead && !player.win) {
+    const left = keys['ArrowLeft'] || keys['KeyA'];
+    const right = keys['ArrowRight'] || keys['KeyD'];
+    const jump = keys['ArrowUp'] || keys['Space'] || keys['KeyW'];
+    const run = keys['ShiftLeft'] || keys['ShiftRight'];
+    const maxSpeed = run ? RUN_MAX : WALK_MAX;
+
+    if (left) { player.vx -= MOVE_ACCEL; player.facing = -1; }
+    if (right) { player.vx += MOVE_ACCEL; player.facing = 1; }
+    if (!left && !right) {
+      player.vx *= player.onGround ? FRICTION : AIR_FRICTION;
+      if (Math.abs(player.vx) < 0.1) player.vx = 0;
+    }
+    player.vx = Math.max(-maxSpeed, Math.min(maxSpeed, player.vx));
+
+    // Coyote time + jump buffer
+    if (player.onGround) player.coyote = 6; else player.coyote--;
+    if (jump && !player.jumpHeld) player.jumpBuffer = 8;
+    else player.jumpBuffer--;
+
+    if (player.jumpBuffer > 0 && player.coyote > 0) {
+      player.vy = JUMP_VEL;
+      player.coyote = 0;
+      player.jumpBuffer = 0;
+      player.onGround = false;
+      SFX.jump();
+    }
+    // Variable jump height
+    if (!jump && player.vy < -4) player.vy = -4;
+    player.jumpHeld = jump;
+
+    // Gravity (reduced while in cosmic mode)
+    const g = cosmicMode > 0 ? GRAVITY * 0.35 : GRAVITY;
+    player.vy = Math.min(MAX_FALL, player.vy + g);
+    if (cosmicMode > 0 && player.jumpHeld && player.vy > -6) {
+      player.vy -= 0.45;
+    }
+    const wasOnGround = player.onGround;
+    moveAndCollide(player, true);
+
+    // Update player size hitbox if big
+    player.h = player.big ? 44 : 32;
+
+    // Cosmic launchpad — did Bryan just land on one?
+    if (!wasOnGround && player.onGround) {
+      const padGy = Math.floor((player.y + player.h) / TILE);
+      const padGxL = Math.floor((player.x + 2) / TILE);
+      const padGxR = Math.floor((player.x + player.w - 3) / TILE);
+      for (let gx = padGxL; gx <= padGxR; gx++) {
+        const t = solidGrid[padGy] && solidGrid[padGy][gx];
+        if (t && t.type === 'launchpad') {
+          triggerCosmicLaunch(gx * TILE, padGy * TILE);
+          break;
+        }
+      }
+    }
+
+    // Cosmic mode tick: rainbow trail + gem rain
+    if (cosmicMode > 0) {
+      cosmicMode--;
+      for (let i = 0; i < 3; i++) spawnCosmicSparkle(player.x + player.w/2, player.y + player.h/2);
+      cosmicGemSpawnT++;
+      if (cosmicGemSpawnT % 6 === 0) spawnFallingGem();
+    }
+
+    if (player.invuln > 0) player.invuln--;
+    player.animT++;
+
+    // Death from falling
+    if (player.y > WORLD_H + 100) killPlayer();
+
+    // Check coins
+    for (const c of coins) {
+      if (!c.collected && rectOverlap(player, c)) {
+        c.collected = true;
+        SFX.coin();
+        score += 100;
+        coinCount++;
+        if (coinCount >= 100) { coinCount -= 100; lives++; SFX.oneUp(); }
+        spawnParticle(c.x, c.y - 8, '#ffd23f', '+100');
+      }
+    }
+
+    // Check enemies
+    for (const e of enemies) {
+      if (!e.alive) continue;
+      if (rectOverlap(player, e)) {
+        // jumped on?
+        if (player.vy > 0 && player.y + player.h - e.y < 16) {
+          e.alive = false;
+          e.squashed = 30;
+          score += 100;
+          player.vy = JUMP_VEL * 0.7;
+          spawnParticle(e.x + e.w/2, e.y, '#ff6b35', '+100');
+          cameraShake = 4;
+          SFX.stomp();
+        } else if (player.invuln === 0) {
+          if (player.big) {
+            player.big = false;
+            player.invuln = 90;
+            player.h = 32;
+            cameraShake = 8;
+            SFX.hurt();
+          } else {
+            killPlayer();
+          }
+        }
+      }
+    }
+
+    // Check mushrooms
+    for (const m of mushrooms) {
+      if (!m.alive) continue;
+      if (m.emerging <= 0 && rectOverlap(player, m)) {
+        m.alive = false;
+        if (!player.big) {
+          player.big = true;
+          player.y -= 12;
+        }
+        score += 1000;
+        spawnParticle(m.x + m.w/2, m.y, '#ff6b35', '+1000');
+        SFX.power();
+      }
+    }
+
+    // Flag
+    if (flag && player.x + player.w > flag.x && player.x < flag.x + 8 &&
+        player.y + player.h > flag.y && player.y < flag.y + flag.h) {
+      winLevel();
+    }
+  } else if (player.dead) {
+    player.deadT++;
+    if (player.deadT < 30) {
+      // pause briefly
+    } else {
+      player.vy += GRAVITY * 0.6;
+      player.y += player.vy;
+    }
+    if (player.deadT > 120) {
+      lives--;
+      if (lives <= 0) endGame(false);
+      else respawn();
+    }
+  } else if (player.win) {
+    player.winT++;
+    if (player.winT < 60) {
+      // slide down flag
+      player.y = Math.min(player.y + 2, flag.y + flag.h - player.h);
+    } else if (player.winT < 120) {
+      // walk right
+      player.x += 1.5;
+      player.vy += GRAVITY;
+      moveAndCollide(player, true);
+      player.animT++;
+    } else {
+      endGame(true);
+    }
+  }
+
+  // Update enemies
+  for (const e of enemies) {
+    if (!e.alive) {
+      if (e.squashed > 0) e.squashed--;
+      continue;
+    }
+    e.animT++;
+    e.hitWall = false;
+    e.vy = Math.min(MAX_FALL, e.vy + GRAVITY);
+    moveAndCollide(e);
+    if (e.hitWall) e.vx = -e.vx;
+    // Edge detection - turn around at cliffs
+    if (e.onGround) {
+      const aheadX = e.vx > 0 ? e.x + e.w + 2 : e.x - 2;
+      const belowY = e.y + e.h + 2;
+      if (!isSolid(Math.floor(aheadX/TILE), Math.floor(belowY/TILE))) {
+        e.vx = -e.vx;
+      }
+    }
+    // Off-screen kill
+    if (e.y > WORLD_H + 50) e.alive = false;
+  }
+
+  // Update mushrooms
+  for (const m of mushrooms) {
+    if (!m.alive) continue;
+    if (m.emerging > 0) {
+      m.emerging--;
+      m.y -= 1;
+      if (m.emerging === 0) m.vx = 1.5;
+    } else {
+      m.hitWall = false;
+      m.vy = Math.min(MAX_FALL, m.vy + GRAVITY);
+      moveAndCollide(m);
+      if (m.hitWall) m.vx = -m.vx;
+      if (m.y > WORLD_H + 50) m.alive = false;
+    }
+  }
+
+  // Comet trail when Bryan is moving fast or airborne
+  if (!player.dead && !player.win && (Math.abs(player.vx) > 3.4 || !player.onGround)) {
+    if (levelTime % 2 === 0) {
+      const tx = player.x + player.w/2 - player.facing * (player.w/2 + 2);
+      const ty = player.y + player.h * 0.55;
+      spawnCometTrail(tx, ty, player.vx, player.vy);
+    }
+  }
+
+  // Update particles
+  for (const p of particles) {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.gravity) p.vy += p.gravity;
+    p.life--;
+  }
+  particles = particles.filter(p => p.life > 0);
+
+  // Update blocks (bump animation)
+  for (const b of blocks) {
+    if (b.bumping > 0) b.bumping--;
+  }
+  for (const lp of launchpads) lp.t++;
+
+  // Camera follows player
+  const targetX = player.x + player.w/2 - W/2;
+  camera.x += (targetX - camera.x) * 0.12;
+  camera.x = Math.max(0, Math.min(WORLD_W - W, camera.x));
+  const restY = WORLD_H - H;
+  let targetY = restY;
+  if (cosmicMode > 0 || player.y < restY - 40) {
+    targetY = Math.min(restY, player.y - H * 0.45);
+  }
+  camera.y += (targetY - camera.y) * 0.1;
+  camera.y = Math.min(restY, camera.y);
+
+  if (cameraShake > 0) cameraShake--;
+
+  updateHUD();
+}
+
+function rectOverlap(a, b) {
+  return a.x < b.x + (b.w || 16) && a.x + a.w > b.x &&
+         a.y < b.y + (b.h || 16) && a.y + a.h > b.y;
+}
+
+function killPlayer() {
+  if (player.dead) return;
+  if (player.big) {
+    player.big = false;
+    player.invuln = 90;
+    player.h = 32;
+    SFX.hurt();
+    return;
+  }
+  player.dead = true;
+  player.deadT = 0;
+  player.vy = -10;
+  cameraShake = 10;
+  cosmicMode = 0;
+  musicStop();
+  SFX.death();
+}
+
+function respawn() {
+  const wasLives = lives;
+  const wasScore = score;
+  const wasCoins = coinCount;
+  player = makePlayer();
+  // rebuild level for fresh state of enemies/coins
+  solidGrid = buildLevel();
+  mushrooms = [];
+  particles = [];
+  cameraShake = 0;
+  camera.x = 0;
+  lives = wasLives;
+  score = wasScore;
+  coinCount = wasCoins;
+  if (!Audio.muted) musicStart();
+}
+
+function winLevel() {
+  if (player.win) return;
+  player.win = true;
+  player.winT = 0;
+  player.vx = 0;
+  player.vy = 0;
+  score += 2000;
+  musicStop();
+  SFX.win();
+}
+
+function endGame(won) {
+  gameRunning = false;
+  gameWon = won;
+  musicStop();
+  const screen = document.getElementById('endScreen');
+  document.getElementById('endTitle').textContent = won ? 'BRYAN TRIUMPHS!' : 'BRYAN DOWN';
+  document.getElementById('endMessage').textContent = won
+    ? `Final Score: ${score}  •  Gems: ${coinCount}`
+    : `Final Score: ${score}  •  The cosmos is unforgiving.`;
+  screen.classList.add('show');
+}
+
+function updateHUD() {
+  document.getElementById('score').textContent = String(score).padStart(6, '0');
+  document.getElementById('coins').textContent = coinCount;
+  document.getElementById('lives').textContent = lives;
+}
+
+// ============================================================
+//  RENDERING
+// ============================================================
+
+function render() {
+  drawCosmicBackdrop();
+
+  // Large-to-small parallax keeps the screen rich without crowding gameplay.
+  drawMegaPlanets();
+  drawStarfield();
+  drawNebulaSheets();
+  drawOrbits();
+  drawPlanets();
+  drawDistantRuins();
+
+  ctx.save();
+  let shakeX = 0, shakeY = 0;
+  if (cameraShake > 0) {
+    shakeX = (Math.random()-0.5) * cameraShake;
+    shakeY = (Math.random()-0.5) * cameraShake;
+  }
+  ctx.translate(-Math.floor(camera.x) + shakeX, -Math.floor(camera.y) + shakeY);
+
+  drawMidgroundRelics();
+
+  // Draw tiles
+  const startX = Math.floor(camera.x / TILE);
+  const endX = Math.ceil((camera.x + W) / TILE);
+  for (let gy = 0; gy < LEVEL_H; gy++) {
+    for (let gx = startX; gx < endX && gx < LEVEL_W; gx++) {
+      const t = solidGrid[gy] && solidGrid[gy][gx];
+      if (!t) continue;
+      // Skip bricks (drawn as blocks) and launchpads (drawn separately)
+      if (t.type === 'brick' || t.type === 'qblock' || t.type === 'launchpad') continue;
+      drawTile(gx*TILE, gy*TILE, t.type);
+    }
+  }
+
+  // Draw flag pole
+  if (flag) drawFlag();
+
+  // Draw blocks (with bump animation)
+  for (const b of blocks) {
+    if (b.broken) continue;
+    let bumpOffset = 0;
+    if (b.bumping > 0) bumpOffset = -Math.sin((8 - b.bumping) / 8 * Math.PI) * 8;
+    drawBlock(b.gx*TILE, b.gy*TILE + bumpOffset, b);
+  }
+
+  // Launchpads (animated)
+  for (const lp of launchpads) {
+    drawLaunchpad(lp.gx * TILE, lp.gy * TILE, lp.t);
+  }
+
+  // Coins
+  for (const c of coins) {
+    if (c.collected) continue;
+    c.t += 0.15;
+    drawCoin(c.x, c.y + Math.sin(c.t) * 2);
+  }
+
+  // Mushrooms
+  for (const m of mushrooms) {
+    if (!m.alive) continue;
+    drawMushroom(m.x, m.y);
+  }
+
+  // Enemies
+  for (const e of enemies) {
+    if (e.alive) {
+      if (e.type === 'goomba') drawGoomba(e);
+      else drawKoopa(e);
+    } else if (e.squashed > 0) {
+      drawSquashed(e);
+    }
+  }
+
+  // Player
+  drawPlayer();
+
+  // Particles
+  for (const p of particles) {
+    if (p.text) {
+      ctx.fillStyle = p.color;
+      ctx.font = 'bold 14px Courier New';
+      ctx.textAlign = 'center';
+      const a = Math.min(1, p.life / 50);
+      ctx.globalAlpha = a;
+      ctx.fillText(p.text, p.x, p.y);
+      ctx.globalAlpha = 1;
+    } else {
+      const a = p.fade ? Math.max(0, p.life / (p.maxLife || 50)) : 1;
+      if (a < 1) ctx.globalAlpha = a;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
+      if (a < 1) ctx.globalAlpha = 1;
+    }
+  }
+
+  ctx.restore();
+
+  // Hyperspace overlay during cosmic mode (screen-space, drawn last)
+  if (cosmicMode > 0) drawHyperspaceOverlay();
+}
+
+function drawHyperspaceOverlay() {
+  const t = COSMIC_DURATION - cosmicMode;
+  let intensity = 1;
+  if (t < 20) intensity = t / 20;
+  else if (cosmicMode < 30) intensity = cosmicMode / 30;
+  intensity = Math.max(0, Math.min(1, intensity));
+
+  ctx.save();
+  ctx.globalAlpha = 0.18 * intensity;
+  ctx.fillStyle = '#ff44cc';
+  ctx.fillRect(0, 0, W, H);
+  ctx.globalAlpha = 1;
+
+  const cx = W / 2;
+  const cy = H / 2;
+  const streakCount = 36;
+  for (let i = 0; i < streakCount; i++) {
+    const angle = (i / streakCount) * Math.PI * 2 + (i % 3) * 0.07;
+    const phase = ((t * 18) + i * 47) % 600;
+    const dist = phase;
+    const len = 30 + (phase / 6);
+    const x1 = cx + Math.cos(angle) * dist;
+    const y1 = cy + Math.sin(angle) * dist;
+    const x2 = cx + Math.cos(angle) * (dist + len);
+    const y2 = cy + Math.sin(angle) * (dist + len);
+    const alpha = Math.max(0, 1 - dist / 600) * intensity;
+    if (alpha <= 0.02) continue;
+    const palette = ['#ffffff', '#ffd23f', '#ff5aa0', '#5ad8ff', '#b86aff'];
+    ctx.strokeStyle = palette[i % palette.length];
+    ctx.globalAlpha = alpha;
+    ctx.lineWidth = 1 + (i % 3 === 0 ? 1 : 0);
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  // Pixel warp bands: chunky, readable 90s arcade energy without hiding play.
+  ctx.globalAlpha = 0.22 * intensity;
+  for (let y = 34; y < H; y += 36) {
+    const off = ((t * 7 + y * 3) % 96) - 48;
+    ctx.fillStyle = y % 72 === 0 ? '#5ad8ff' : '#ff5aa0';
+    ctx.fillRect(off, y, 120, 3);
+    ctx.fillRect(W - off - 120, y + 15, 120, 3);
+  }
+  ctx.globalAlpha = 1;
+
+  if (cosmicMode > COSMIC_DURATION - 60) {
+    const ba = Math.min(1, (COSMIC_DURATION - cosmicMode) / 30);
+    ctx.globalAlpha = ba;
+    ctx.font = 'bold 28px Courier New';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#000';
+    ctx.fillText('★ COSMIC RUN ★', cx + 3, 76);
+    ctx.fillStyle = '#ffd23f';
+    ctx.fillText('★ COSMIC RUN ★', cx, 73);
+    ctx.globalAlpha = 1;
+  }
+  ctx.restore();
+}
+
+// Pre-generated star table so the field is stable across frames but parallaxes
+const STARS = (() => {
+  const arr = [];
+  // Deterministic pseudo-random
+  let s = 1337;
+  const rnd = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+  for (let i = 0; i < 220; i++) {
+    arr.push({
+      x: rnd() * 4000,
+      y: rnd() * H,
+      size: rnd() < 0.85 ? 1 : 2,
+      layer: rnd() < 0.5 ? 0.15 : (rnd() < 0.7 ? 0.35 : 0.6),
+      twinkle: rnd() * Math.PI * 2,
+      color: rnd() < 0.85 ? '#ffffff' : (rnd() < 0.5 ? '#ffd2ff' : '#aef'),
+    });
+  }
+  return arr;
+})();
+
+function drawCosmicBackdrop() {
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0,   '#081632');
+  grad.addColorStop(0.45,'#171249');
+  grad.addColorStop(1,   '#310b37');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.globalAlpha = 0.22;
+  ctx.fillStyle = '#5ad8ff';
+  ctx.fillRect(0, H - 112, W, 5);
+  ctx.globalAlpha = 0.08;
+  ctx.fillRect(0, H - 106, W, 36);
+  ctx.globalAlpha = 1;
+}
+
+function drawMegaPlanets() {
+  const px = camera.x * 0.06;
+  drawPixelOrb(Math.floor(104 - px % 980), 116, 64, '#ffdc86', '#703056', false);
+  drawPixelOrb(Math.floor(604 - (px * 1.4) % 1180), 82, 46, '#b07aff', '#35205f', true);
+}
+
+function drawPixelOrb(cx, cy, r, light, dark, ring) {
+  if (cx < -r * 2 || cx > W + r * 2) return;
+  ctx.save();
+  ctx.globalAlpha = 0.9;
+  ctx.fillStyle = dark;
+  for (let dy = -r; dy <= r; dy += 2) {
+    const w = Math.floor(Math.sqrt(r*r - dy*dy));
+    ctx.fillRect(cx - w, cy + dy, w * 2, 2);
+  }
+  ctx.fillStyle = light;
+  for (let dy = -r; dy <= r; dy += 4) {
+    const w = Math.floor(Math.sqrt(r*r - dy*dy) * 0.62);
+    ctx.fillRect(cx - w, cy + dy, Math.max(2, w), 4);
+  }
+  ctx.fillStyle = 'rgba(0,0,0,0.18)';
+  ctx.fillRect(cx - r * 0.12, cy - r * 0.28, r * 0.52, 8);
+  ctx.fillRect(cx - r * 0.38, cy + r * 0.18, r * 0.36, 7);
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(cx - r * 0.44, cy - r * 0.42, 5, 5);
+  if (ring) {
+    ctx.strokeStyle = 'rgba(255,232,170,0.78)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, r + 18, r * 0.34, -0.08, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawStarfield() {
+  const t = (typeof levelTime === 'number' ? levelTime : 0);
+  for (const st of STARS) {
+    const px = ((st.x - camera.x * st.layer) % 4000 + 4000) % 4000;
+    if (px > W + 4) continue;
+    // Twinkle: skip a frame occasionally for the small stars
+    const tw = (Math.sin(t * 0.08 + st.twinkle) + 1) * 0.5;
+    if (st.size === 1 && tw < 0.18) continue;
+    ctx.fillStyle = st.color;
+    ctx.fillRect(px, st.y, st.size, st.size);
+  }
+}
+
+function drawNebulaSheets() {
+  const px = camera.x * 0.13;
+  const bands = [
+    { x: 250, y: 150, w: 230, c: '#ff5aa0' },
+    { x: 760, y: 124, w: 270, c: '#5ad8ff' },
+    { x: 1300, y: 184, w: 220, c: '#ffd23f' },
+  ];
+  ctx.save();
+  ctx.globalAlpha = 0.14;
+  for (const b of bands) {
+    const x = ((b.x - px) % 1700 + 1700) % 1700 - 150;
+    ctx.fillStyle = b.c;
+    ctx.fillRect(x, b.y, b.w, 14);
+    ctx.fillRect(x + 34, b.y + 15, b.w * 0.7, 10);
+    ctx.fillRect(x + 82, b.y - 11, b.w * 0.36, 8);
+  }
+  ctx.restore();
+}
+
+function drawOrbits() {
+  const px = camera.x * 0.25;
+  ctx.save();
+  ctx.strokeStyle = 'rgba(180,120,255,0.18)';
+  ctx.lineWidth = 1;
+  const centers = [
+    { x:  200, y: H + 60, rx: 280, ry: 70 },
+    { x:  900, y: H + 40, rx: 360, ry: 90 },
+    { x: 1600, y: H + 80, rx: 240, ry: 60 },
+    { x: 2400, y: H + 50, rx: 340, ry: 85 },
+  ];
+  for (const c of centers) {
+    const cx = ((c.x - px) % (WORLD_W + 800) + (WORLD_W + 800)) % (WORLD_W + 800) - 400;
+    ctx.beginPath();
+    ctx.ellipse(cx, c.y, c.rx, c.ry, 0, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawPlanets() {
+  const px = camera.x * 0.4;
+  // Planet table: x, y, r, palette, ring?
+  const planets = [
+    { x:  120, y:  90, r: 22, c1:'#ff6a2e', c2:'#a02810', ring: false },
+    { x:  520, y: 130, r: 14, c1:'#6affd6', c2:'#108a6a', ring: false },
+    { x:  900, y:  70, r: 28, c1:'#b86aff', c2:'#5a1aa0', ring: true,  rc:'#e0a0ff' },
+    { x: 1400, y: 110, r: 18, c1:'#ffd23f', c2:'#a07010', ring: false },
+    { x: 1800, y:  60, r: 12, c1:'#ff5aa0', c2:'#80205a', ring: false },
+    { x: 2300, y: 120, r: 30, c1:'#5aa0ff', c2:'#1a3a80', ring: true,  rc:'#90c0ff' },
+    { x: 2750, y:  80, r: 16, c1:'#ff8a2e', c2:'#a04010', ring: false },
+  ];
+  for (const p of planets) {
+    const cx = ((p.x - px) % (WORLD_W + 600) + (WORLD_W + 600)) % (WORLD_W + 600) - 300;
+    if (cx < -p.r - 60 || cx > W + p.r + 60) continue;
+    drawPixelPlanet(Math.floor(cx), p.y, p.r, p.c1, p.c2, p.ring, p.rc);
+  }
+}
+
+function drawDistantRuins() {
+  const px = camera.x * 0.22;
+  ctx.save();
+  ctx.globalAlpha = 0.46;
+  for (let i = -1; i < 6; i++) {
+    const x = Math.floor(i * 190 - (px % 190));
+    const y = H - 146;
+    ctx.fillStyle = '#101a34';
+    ctx.fillRect(x + 10, y + 50, 72, 82);
+    ctx.fillRect(x + 38, y + 24, 42, 108);
+    ctx.fillRect(x + 86, y + 62, 58, 70);
+    ctx.fillStyle = '#253b5e';
+    ctx.fillRect(x + 18, y + 56, 26, 5);
+    ctx.fillRect(x + 48, y + 32, 16, 5);
+    ctx.fillStyle = '#4fe4ff';
+    if (i % 2 === 0) ctx.fillRect(x + 96, y + 70, 8, 8);
+  }
+  ctx.restore();
+}
+
+function drawMidgroundRelics() {
+  const baseY = GROUND_Y * TILE;
+  const start = Math.floor((camera.x - 160) / 420) * 420;
+  ctx.save();
+  ctx.globalAlpha = 0.68;
+  for (let x = start; x < camera.x + W + 460; x += 420) {
+    const y = baseY - 104 - (Math.abs(Math.floor(x / 420)) % 2) * 18;
+    ctx.fillStyle = '#14213f';
+    ctx.fillRect(x + 48, y + 28, 88, 104);
+    ctx.fillStyle = '#2c4a72';
+    ctx.fillRect(x + 60, y + 18, 62, 14);
+    ctx.fillRect(x + 70, y + 48, 42, 8);
+    ctx.fillStyle = '#5ad8ff';
+    ctx.fillRect(x + 66, y + 22, 22, 4);
+    ctx.fillStyle = '#ff5aa0';
+    ctx.fillRect(x + 106, y + 64, 8, 8);
+  }
+  ctx.restore();
+}
+
+function drawPixelPlanet(cx, cy, r, c1, c2, ring, rc) {
+  // Dithered disk
+  ctx.fillStyle = c2;
+  for (let dy = -r; dy <= r; dy++) {
+    const w = Math.floor(Math.sqrt(r*r - dy*dy));
+    if (w <= 0) continue;
+    ctx.fillRect(cx - w, cy + dy, w * 2, 1);
+  }
+  // Lit side
+  ctx.fillStyle = c1;
+  for (let dy = -r; dy <= r; dy++) {
+    const w = Math.floor(Math.sqrt(r*r - dy*dy));
+    if (w <= 0) continue;
+    const litW = Math.max(0, Math.floor(w * 0.75) - 1);
+    ctx.fillRect(cx - w, cy + dy, litW, 1);
+  }
+  // Highlight speck
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(cx - Math.floor(r*0.55), cy - Math.floor(r*0.55), 2, 2);
+  // Ring
+  if (ring) {
+    ctx.strokeStyle = rc;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, r + 10, Math.max(3, r * 0.35), 0, 0, Math.PI * 2);
+    ctx.stroke();
+    // Front arc highlight
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, r + 10, Math.max(3, r * 0.35), 0, Math.PI * 0.15, Math.PI * 0.85);
+    ctx.stroke();
+  }
+}
+
+function drawLaunchpad(x, y, t) {
+  const colors = ['#5ad8ff', '#ff5aff', '#ffd23f'];
+  const c = colors[Math.floor(t / 14) % colors.length];
+  const pulse = 0.5 + 0.5 * Math.sin(t * 0.18);
+
+  // Short beacon beam (~2 tiles tall)
+  const beamH = TILE * 2;
+  const beamX = x + TILE / 2 - 1;
+  ctx.globalAlpha = 0.25 + 0.2 * pulse;
+  ctx.fillStyle = c;
+  ctx.fillRect(beamX - 3, y - beamH, 8, beamH);
+  ctx.globalAlpha = 0.7;
+  ctx.fillRect(beamX - 1, y - beamH, 4, beamH);
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(beamX, y - beamH, 2, beamH);
+
+  for (let i = 0; i < 3; i++) {
+    const phase = (t * 1.2 + i * 22) % beamH;
+    ctx.fillStyle = i % 2 ? c : '#fff';
+    ctx.fillRect(beamX - 2 + i * 2, y - phase, 2, 3);
+  }
+
+  // Pad chassis
+  ctx.fillStyle = c;
+  ctx.fillRect(x + 2, y + 16, TILE - 4, 4);
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(x + 4, y + 17, TILE - 8, 2);
+  ctx.fillStyle = '#3a3a5a';
+  ctx.fillRect(x + 1, y + 20, TILE - 2, 8);
+  ctx.fillStyle = '#6a6a8a';
+  ctx.fillRect(x + 1, y + 20, TILE - 2, 2);
+  ctx.fillStyle = '#0a0a14';
+  ctx.fillRect(x + 1, y + 28, TILE - 2, 2);
+  ctx.fillStyle = '#ffd23f';
+  ctx.fillRect(x + 4, y + 23, 2, 2);
+  ctx.fillRect(x + TILE - 6, y + 23, 2, 2);
+
+  ctx.globalAlpha = 0.25 + 0.2 * pulse;
+  ctx.fillStyle = c;
+  ctx.fillRect(x - 2, y + TILE - 2, TILE + 4, 2);
+  ctx.globalAlpha = 1;
+}
+
+function drawTile(x, y, type) {
+  if (type === 'ground') {
+    const gx = Math.floor(x / TILE);
+    const gy = Math.floor(y / TILE);
+    const variant = Math.abs((gx * 11 + gy * 5) % 6);
+    const above = solidGrid[gy-1] && solidGrid[gy-1][gx];
+    // Crystal asteroid platform: strong playable top, faceted rock body.
+    ctx.fillStyle = '#2b1730';
+    ctx.fillRect(x, y, TILE, TILE);
+    ctx.fillStyle = variant % 2 ? '#4b2350' : '#3d1e49';
+    ctx.fillRect(x, y + 7, TILE, TILE - 7);
+    ctx.fillStyle = '#1a1026';
+    ctx.fillRect(x + 3, y + 21, 12, 4);
+    ctx.fillRect(x + 19, y + 14, 9, 3);
+    ctx.fillStyle = '#70416b';
+    ctx.fillRect(x + 6, y + 12, 6, 3);
+    ctx.fillRect(x + 18, y + 25, 7, 3);
+    ctx.fillStyle = variant === 2 ? '#ffd23f' : '#5ad8ff';
+    if (variant === 0) ctx.fillRect(x + 8, y + 17, 3, 3);
+    if (variant === 2) ctx.fillRect(x + 23, y + 20, 3, 3);
+    if (variant === 4) ctx.fillRect(x + 14, y + 12, 3, 7);
+    if (!above) {
+      ctx.fillStyle = '#35f0ff';
+      ctx.fillRect(x, y, TILE, 5);
+      ctx.fillStyle = '#ecffff';
+      ctx.fillRect(x + 2, y, TILE - 4, 1);
+      ctx.fillStyle = '#ff5aa0';
+      ctx.fillRect(x, y + 5, TILE, 2);
+      ctx.fillStyle = '#ffd23f';
+      if (variant === 1) ctx.fillRect(x + 5, y - 3, 6, 3);
+      if (variant === 5) ctx.fillRect(x + 19, y - 4, 5, 4);
+    } else {
+      ctx.fillStyle = '#241535';
+      ctx.fillRect(x, y, TILE, 4);
+    }
+    // Dark border
+    ctx.fillStyle = '#10091c';
+    ctx.fillRect(x+TILE-2, y, 2, TILE);
+    ctx.fillRect(x, y+TILE-2, TILE, 2);
+  } else if (type === 'stone') {
+    // Moonstone step block with bold bevels.
+    ctx.fillStyle = '#223044';
+    ctx.fillRect(x, y, TILE, TILE);
+    ctx.fillStyle = '#6e8ca0';
+    ctx.fillRect(x + 2, y + 2, TILE - 5, 6);
+    ctx.fillRect(x + 2, y + 8, 5, TILE - 10);
+    ctx.fillStyle = '#3c5b72';
+    ctx.fillRect(x + 8, y + 9, TILE - 12, TILE - 13);
+    ctx.fillStyle = '#9fefff';
+    ctx.fillRect(x+11, y+13, 5, 2);
+    ctx.fillRect(x+21, y+22, 4, 2);
+    ctx.fillStyle = '#0e1b2a';
+    ctx.fillRect(x+TILE-3, y, 3, TILE);
+    ctx.fillRect(x, y+TILE-3, TILE, 3);
+  } else if (type === 'pipeTop') {
+    // Sci-fi conduit.
+    ctx.fillStyle = '#071528';
+    ctx.fillRect(x-6, y-3, TILE+12, TILE+5);
+    ctx.fillStyle = '#0f7e8a';
+    ctx.fillRect(x-4, y, TILE+8, TILE);
+    ctx.fillStyle = '#62f1ff';
+    ctx.fillRect(x-4, y+4, TILE+8, 6);
+    ctx.fillStyle = '#ffd23f';
+    ctx.fillRect(x+6, y+13, 4, 3);
+    ctx.fillRect(x+TILE-10, y+13, 4, 3);
+    ctx.fillStyle = '#073744';
+    ctx.fillRect(x-4, y+TILE-4, TILE+8, 4);
+  } else if (type === 'pipeBody') {
+    ctx.fillStyle = '#0f7e8a';
+    ctx.fillRect(x, y, TILE, TILE);
+    ctx.fillStyle = '#62f1ff';
+    ctx.fillRect(x+2, y, 6, TILE);
+    ctx.fillStyle = '#0b5663';
+    ctx.fillRect(x+14, y+2, 4, TILE-4);
+    ctx.fillStyle = '#073744';
+    ctx.fillRect(x+TILE-4, y, 4, TILE);
+  }
+}
+
+function drawBlock(x, y, b) {
+  if (b.kind === 'brick') {
+    ctx.fillStyle = '#5b1b2e';
+    ctx.fillRect(x - 1, y - 1, TILE + 2, TILE + 2);
+    ctx.fillStyle = '#c44';
+    ctx.fillRect(x, y, TILE, TILE);
+    ctx.fillStyle = '#e66';
+    ctx.fillRect(x, y, TILE, 4);
+    ctx.fillStyle = '#922';
+    // brick lines
+    ctx.fillRect(x, y+TILE/2, TILE, 2);
+    ctx.fillRect(x+TILE/2, y, 2, TILE/2);
+    ctx.fillRect(x+TILE/4, y+TILE/2, 2, TILE/2);
+    ctx.fillRect(x+3*TILE/4, y+TILE/2, 2, TILE/2);
+    ctx.fillStyle = '#ffb0a0';
+    ctx.fillRect(x+5, y+7, 5, 2);
+    ctx.fillRect(x+19, y+20, 6, 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    ctx.fillRect(x+TILE-2, y, 2, TILE);
+    ctx.fillRect(x, y+TILE-2, TILE, 2);
+  } else if (b.kind === 'qblock') {
+    if (b.used) {
+      ctx.fillStyle = '#8b5a2b';
+      ctx.fillRect(x, y, TILE, TILE);
+      ctx.fillStyle = '#6b3a1b';
+      ctx.fillRect(x+TILE-2, y, 2, TILE);
+      ctx.fillRect(x, y+TILE-2, TILE, 2);
+    } else {
+      // pulsing question block
+      const pulse = Math.sin(levelTime * 0.15) * 20;
+      ctx.fillStyle = '#4a2500';
+      ctx.fillRect(x - 1, y - 1, TILE + 2, TILE + 2);
+      ctx.fillStyle = `rgb(${230+pulse}, ${165+pulse}, 30)`;
+      ctx.fillRect(x, y, TILE, TILE);
+      ctx.fillStyle = '#fff5b8';
+      ctx.fillRect(x, y, TILE, 4);
+      ctx.fillRect(x, y, 4, TILE);
+      ctx.fillStyle = '#ffe066';
+      ctx.fillRect(x+5, y+5, TILE-10, 3);
+      ctx.fillStyle = '#7a4a05';
+      ctx.fillRect(x+TILE-3, y, 3, TILE);
+      ctx.fillRect(x, y+TILE-3, TILE, 3);
+      // "?" mark
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(x+10, y+8, 12, 4);
+      ctx.fillRect(x+18, y+12, 4, 4);
+      ctx.fillRect(x+14, y+16, 4, 4);
+      ctx.fillRect(x+14, y+22, 4, 4);
+    }
+  }
+}
+
+function drawCoin(x, y) {
+  // Color cycles per-gem based on position so the level has variety
+  const palettes = [
+    { base: '#ff5aa0', hi: '#ffc0e0', shade: '#a02868' }, // pink
+    { base: '#5ad8ff', hi: '#c0f0ff', shade: '#286a90' }, // cyan
+    { base: '#ffd23f', hi: '#fff5b8', shade: '#a07010' }, // yellow
+    { base: '#b86aff', hi: '#e0c0ff', shade: '#5a2890' }, // violet
+  ];
+  const p = palettes[((Math.floor(x / 32) + Math.floor(y / 32)) % palettes.length + palettes.length) % palettes.length];
+
+  const t = Math.floor(performance.now() / 100) % 4;
+  const widths = [16, 10, 4, 10];
+  const w = widths[t];
+  const offX = (16 - w) / 2;
+
+  // Diamond shape: top half wider at center, bottom tapers to point
+  // Build the gem from a few horizontal slices
+  ctx.globalAlpha = 0.32;
+  ctx.fillStyle = p.base;
+  ctx.fillRect(x + 3, y + 3, 10, 10);
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = p.shade;
+  ctx.fillRect(x + offX,           y + 2,  w,     2);
+  ctx.fillRect(x + offX,           y + 12, w,     2);
+  ctx.fillStyle = p.base;
+  ctx.fillRect(x + offX,           y + 4,  w,     8);
+  // Inner facet highlight
+  ctx.fillStyle = p.hi;
+  ctx.fillRect(x + offX + 2,       y + 4,  Math.max(1, w - 4), 2);
+  ctx.fillRect(x + offX + 1,       y + 6,  2, 4);
+  // Top + bottom points
+  ctx.fillStyle = p.base;
+  if (w >= 4) {
+    ctx.fillRect(x + offX + w/2 - 1, y,      2, 2);
+    ctx.fillRect(x + offX + w/2 - 1, y + 14, 2, 2);
+  }
+  // Sparkle tip
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(x + offX + w/2 - 1, y, 1, 1);
+  if (w >= 10) ctx.fillRect(x + offX + w - 3, y + 5, 1, 1);
+}
+
+function drawMushroom(x, y) {
+  // cap
+  ctx.fillStyle = '#e74c3c';
+  ctx.fillRect(x+2, y+4, 24, 12);
+  ctx.fillRect(x, y+8, 28, 8);
+  // spots
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(x+6, y+8, 4, 4);
+  ctx.fillRect(x+18, y+8, 4, 4);
+  ctx.fillRect(x+12, y+4, 4, 4);
+  // stem
+  ctx.fillStyle = '#fff5b8';
+  ctx.fillRect(x+4, y+16, 20, 12);
+  ctx.fillStyle = '#c89000';
+  ctx.fillRect(x+4, y+16, 20, 2);
+  // eyes
+  ctx.fillStyle = '#000';
+  ctx.fillRect(x+8, y+20, 3, 4);
+  ctx.fillRect(x+17, y+20, 3, 4);
+}
+
+function drawGoomba(e) {
+  const x = Math.floor(e.x), y = Math.floor(e.y);
+  const wobble = Math.floor(e.animT / 8) % 2;
+  // body
+  ctx.fillStyle = '#7a3e1d';
+  ctx.fillRect(x+2, y+4, 24, 8);
+  ctx.fillRect(x, y+12, 28, 12);
+  // feet
+  ctx.fillStyle = '#3d1f0e';
+  if (wobble) {
+    ctx.fillRect(x, y+24, 12, 4);
+    ctx.fillRect(x+18, y+24, 10, 4);
+  } else {
+    ctx.fillRect(x+2, y+24, 10, 4);
+    ctx.fillRect(x+16, y+24, 12, 4);
+  }
+  // eyes
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(x+6, y+12, 5, 5);
+  ctx.fillRect(x+17, y+12, 5, 5);
+  ctx.fillStyle = '#000';
+  ctx.fillRect(x+8, y+13, 3, 4);
+  ctx.fillRect(x+19, y+13, 3, 4);
+  // angry brows
+  ctx.fillStyle = '#3d1f0e';
+  ctx.fillRect(x+5, y+10, 7, 2);
+  ctx.fillRect(x+16, y+10, 7, 2);
+}
+
+function drawKoopa(e) {
+  const x = Math.floor(e.x), y = Math.floor(e.y);
+  const wobble = Math.floor(e.animT / 6) % 2;
+  // shell
+  ctx.fillStyle = '#0a8a0a';
+  ctx.fillRect(x+2, y+12, 24, 24);
+  ctx.fillStyle = '#3ac43a';
+  ctx.fillRect(x+4, y+14, 20, 6);
+  ctx.fillStyle = '#0a5a0a';
+  ctx.fillRect(x+2, y+34, 24, 4);
+  // shell pattern
+  ctx.fillStyle = '#fff5b8';
+  ctx.fillRect(x+6, y+22, 16, 8);
+  ctx.fillStyle = '#0a5a0a';
+  ctx.fillRect(x+6, y+22, 16, 2);
+  // head
+  ctx.fillStyle = '#fff5b8';
+  ctx.fillRect(x+8, y+2, 12, 12);
+  // beak
+  ctx.fillStyle = '#ffaa30';
+  const beakX = e.vx > 0 ? x+18 : x+6;
+  ctx.fillRect(beakX, y+8, 4, 4);
+  // eye
+  ctx.fillStyle = '#000';
+  const eyeX = e.vx > 0 ? x+15 : x+11;
+  ctx.fillRect(eyeX, y+5, 2, 3);
+  // feet
+  ctx.fillStyle = '#ffaa30';
+  if (wobble) {
+    ctx.fillRect(x+2, y+38, 10, 6);
+    ctx.fillRect(x+18, y+40, 8, 4);
+  } else {
+    ctx.fillRect(x+4, y+40, 8, 4);
+    ctx.fillRect(x+16, y+38, 10, 6);
+  }
+}
+
+function drawSquashed(e) {
+  const x = Math.floor(e.x), y = Math.floor(e.y) + e.h - 8;
+  ctx.fillStyle = '#7a3e1d';
+  ctx.fillRect(x+2, y, 24, 8);
+  ctx.fillStyle = '#3d1f0e';
+  ctx.fillRect(x+4, y+2, 20, 2);
+}
+
+function drawPlayer() {
+  const x = Math.floor(player.x);
+  const y = Math.floor(player.y);
+  const flip = player.facing < 0;
+
+  // Flicker if invulnerable
+  if (player.invuln > 0 && Math.floor(player.invuln / 4) % 2 === 0) return;
+
+  ctx.fillStyle = 'rgba(0,0,0,0.26)';
+  ctx.fillRect(x + 1, y + player.h - 2, player.w + 6, 3);
+
+  ctx.save();
+  if (flip) {
+    // Mirror around the player's vertical center axis
+    ctx.translate(x + player.w/2, 0);
+    ctx.scale(-1, 1);
+    ctx.translate(-(x + player.w/2), 0);
+  }
+
+  if (player.dead) {
+    drawHero(x, y, 'dead');
+  } else {
+    const moving = Math.abs(player.vx) > 0.5;
+    const inAir = !player.onGround;
+    let pose = 'idle';
+    if (inAir) pose = 'jump';
+    else if (moving) pose = Math.floor(player.animT / (player.vx > 4 || player.vx < -4 ? 4 : 8)) % 2 ? 'run1' : 'run2';
+    drawHero(x, y, pose);
+  }
+
+  ctx.restore();
+}
+
+function drawHero(x, y, pose) {
+  const big = player.big;
+  const yOff = big ? 0 : 12;
+
+  // Bryan palette
+  const HAIR = '#d04a1a';        // burnt-orange hair
+  const HAIR_DARK = '#8a2e0e';
+  const SKIN = '#f4c8a0';
+  const SKIN_SHADE = '#c89472';
+  const SHADES = '#0a0a0a';
+  const SHADES_HI = '#3a3a3a';
+  const JACKET = '#1a1a1a';
+  const JACKET_HI = '#2c2c2c';
+  const SHIRT = '#ff5a2e';       // bright orange tee
+  const SHIRT_HI = '#ffa040';
+  const PANTS = '#2a2a36';
+  const PANTS_HI = '#45465e';
+  const SHOE = '#0a0a0a';
+
+  // ---- HEAD ----
+  // Hair top (slight side-part shape)
+  ctx.fillStyle = HAIR;
+  ctx.fillRect(x+6, y+yOff,   12, 2);
+  ctx.fillRect(x+4, y+yOff+2, 16, 4);
+  ctx.fillStyle = HAIR_DARK;
+  ctx.fillRect(x+18, y+yOff+4, 3, 4);
+  // Hair highlight
+  ctx.fillStyle = '#ff7a3a';
+  ctx.fillRect(x+6, y+yOff+2, 4, 2);
+
+  // Face
+  ctx.fillStyle = SKIN;
+  ctx.fillRect(x+6, y+yOff+6, 12, 6);
+  // Cheek shading
+  ctx.fillStyle = SKIN_SHADE;
+  ctx.fillRect(x+16, y+yOff+8, 2, 4);
+
+  // Sunglasses (one continuous bar)
+  ctx.fillStyle = SHADES;
+  ctx.fillRect(x+5, y+yOff+8, 14, 3);
+  // Bridge gap
+  ctx.fillStyle = SKIN;
+  ctx.fillRect(x+11, y+yOff+9, 2, 1);
+  // Lens highlight
+  ctx.fillStyle = SHADES_HI;
+  ctx.fillRect(x+7,  y+yOff+8, 1, 1);
+  ctx.fillRect(x+14, y+yOff+8, 1, 1);
+
+  // Beard — fills lower face, slightly wider than head
+  ctx.fillStyle = HAIR;
+  ctx.fillRect(x+5, y+yOff+12, 14, 4);
+  ctx.fillStyle = HAIR_DARK;
+  ctx.fillRect(x+5, y+yOff+15, 14, 1);
+  // Beard sideburns
+  ctx.fillStyle = HAIR;
+  ctx.fillRect(x+4, y+yOff+8, 2, 6);
+  ctx.fillRect(x+18, y+yOff+8, 2, 6);
+
+  // ---- BODY ----
+  if (pose === 'jump') {
+    // Superman flying pose: arms outstretched horizontally, legs together
+    // Jacket torso
+    ctx.fillStyle = JACKET;
+    ctx.fillRect(x+5, y+yOff+16, 14, 10);
+    ctx.fillStyle = JACKET_HI;
+    ctx.fillRect(x+5, y+yOff+16, 14, 1);
+    // Open jacket / shirt V
+    ctx.fillStyle = SHIRT;
+    ctx.fillRect(x+10, y+yOff+16, 4, 8);
+    ctx.fillStyle = SHIRT_HI;
+    ctx.fillRect(x+11, y+yOff+18, 2, 2);
+
+    // Outstretched arms (jacket sleeves) — extend past sprite box
+    ctx.fillStyle = JACKET;
+    ctx.fillRect(x-6, y+yOff+17, 11, 4);   // left arm
+    ctx.fillRect(x+19, y+yOff+17, 11, 4);  // right arm
+    // Fists
+    ctx.fillStyle = SKIN;
+    ctx.fillRect(x-8, y+yOff+17, 3, 4);
+    ctx.fillRect(x+29, y+yOff+17, 3, 4);
+
+    if (big) {
+      // Legs trailing back (straight, together)
+      ctx.fillStyle = PANTS;
+      ctx.fillRect(x+8, y+yOff+26, 8, 14);
+      ctx.fillStyle = PANTS_HI;
+      ctx.fillRect(x+8, y+yOff+27, 2, 10);
+      ctx.fillStyle = SHOE;
+      ctx.fillRect(x+8, y+yOff+38, 8, 4);
+    } else {
+      ctx.fillStyle = PANTS;
+      ctx.fillRect(x+8, y+yOff+26, 8, 4);
+      ctx.fillStyle = SHOE;
+      ctx.fillRect(x+8, y+yOff+30, 8, 2);
+    }
+  } else {
+    // Standing / running — leather jacket open over orange tee
+    ctx.fillStyle = JACKET;
+    ctx.fillRect(x+4, y+yOff+16, 16, 10);
+    // Lapels (V-neck of open jacket)
+    ctx.fillStyle = SHIRT;
+    ctx.fillRect(x+9,  y+yOff+16, 6, 10);
+    ctx.fillStyle = SHIRT_HI;
+    ctx.fillRect(x+10, y+yOff+18, 4, 3);
+    // Jacket collar highlight
+    ctx.fillStyle = JACKET_HI;
+    ctx.fillRect(x+4, y+yOff+16, 5, 1);
+    ctx.fillRect(x+15, y+yOff+16, 5, 1);
+
+    // Arms (jacket sleeves)
+    ctx.fillStyle = JACKET;
+    ctx.fillRect(x,    y+yOff+17, 4, 8);
+    ctx.fillRect(x+20, y+yOff+17, 4, 8);
+    // Hands
+    ctx.fillStyle = SKIN;
+    ctx.fillRect(x,    y+yOff+24, 4, 2);
+    ctx.fillRect(x+20, y+yOff+24, 4, 2);
+
+    if (big) {
+      // Pants
+      ctx.fillStyle = PANTS;
+      if (pose === 'run1') {
+        ctx.fillRect(x+4,  y+yOff+26, 7, 14);
+        ctx.fillRect(x+13, y+yOff+26, 7, 14);
+      } else if (pose === 'run2') {
+        ctx.fillRect(x+6,  y+yOff+26, 6, 14);
+        ctx.fillRect(x+12, y+yOff+26, 6, 14);
+      } else {
+        ctx.fillRect(x+5,  y+yOff+26, 6, 14);
+        ctx.fillRect(x+13, y+yOff+26, 6, 14);
+      }
+      ctx.fillStyle = PANTS_HI;
+      ctx.fillRect(x+6, y+yOff+27, 2, 10);
+      ctx.fillRect(x+14, y+yOff+27, 2, 9);
+      // Shoes
+      ctx.fillStyle = SHOE;
+      if (pose === 'run1') {
+        ctx.fillRect(x+2,  y+yOff+40, 9, 4);
+        ctx.fillRect(x+13, y+yOff+40, 9, 4);
+      } else if (pose === 'run2') {
+        ctx.fillRect(x+4,  y+yOff+40, 8, 4);
+        ctx.fillRect(x+12, y+yOff+40, 8, 4);
+      } else {
+        ctx.fillRect(x+3,  y+yOff+40, 8, 4);
+        ctx.fillRect(x+13, y+yOff+40, 8, 4);
+      }
+    } else {
+      ctx.fillStyle = PANTS;
+      if (pose === 'run1') {
+        ctx.fillRect(x+3,  y+yOff+26, 8, 4);
+        ctx.fillRect(x+13, y+yOff+26, 8, 4);
+      } else if (pose === 'run2') {
+        ctx.fillRect(x+5,  y+yOff+26, 8, 4);
+        ctx.fillRect(x+11, y+yOff+26, 8, 4);
+      } else {
+        ctx.fillRect(x+4,  y+yOff+26, 7, 4);
+        ctx.fillRect(x+13, y+yOff+26, 7, 4);
+      }
+      ctx.fillStyle = PANTS_HI;
+      ctx.fillRect(x+5, y+yOff+26, 2, 3);
+      ctx.fillStyle = SHOE;
+      if (pose === 'run1') {
+        ctx.fillRect(x+2,  y+yOff+30, 9, 2);
+        ctx.fillRect(x+13, y+yOff+30, 9, 2);
+      } else if (pose === 'run2') {
+        ctx.fillRect(x+4,  y+yOff+30, 8, 2);
+        ctx.fillRect(x+12, y+yOff+30, 8, 2);
+      } else {
+        ctx.fillRect(x+3,  y+yOff+30, 8, 2);
+        ctx.fillRect(x+13, y+yOff+30, 8, 2);
+      }
+    }
+  }
+
+  if (pose === 'dead') {
+    // Knocked-off sunglasses gag — show X eyes over the shades area
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(x+5, y+yOff+8, 14, 3);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(x+7,  y+yOff+8, 2, 1); ctx.fillRect(x+8,  y+yOff+9, 2, 1); ctx.fillRect(x+7,  y+yOff+10, 2, 1);
+    ctx.fillRect(x+14, y+yOff+8, 2, 1); ctx.fillRect(x+15, y+yOff+9, 2, 1); ctx.fillRect(x+14, y+yOff+10, 2, 1);
+  }
+}
+
+function drawFlag() {
+  // Pole
+  ctx.fillStyle = '#888';
+  ctx.fillRect(flag.x, flag.y, 4, flag.h);
+  ctx.fillStyle = '#bbb';
+  ctx.fillRect(flag.x, flag.y, 1, flag.h);
+  // Top ball
+  ctx.fillStyle = '#ffd23f';
+  ctx.fillRect(flag.x-4, flag.y-8, 12, 8);
+  ctx.fillStyle = '#fff5b8';
+  ctx.fillRect(flag.x-3, flag.y-7, 4, 2);
+  // Flag fabric (animated)
+  const wave = Math.sin(levelTime * 0.1) * 2;
+  ctx.fillStyle = '#e74c3c';
+  ctx.beginPath();
+  ctx.moveTo(flag.x + 4, flag.y + 4);
+  ctx.lineTo(flag.x + 28 + wave, flag.y + 12);
+  ctx.lineTo(flag.x + 4, flag.y + 20);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(flag.x + 10, flag.y + 10, 4, 4);
+}
+
+// ============================================================
+//  MAIN LOOP
+// ============================================================
+
+function loop() {
+  update();
+  render();
+  requestAnimationFrame(loop);
+}
+
+function startGame() {
+  document.getElementById('startScreen').classList.remove('show');
+  document.getElementById('endScreen').classList.remove('show');
+  // Audio must be initialized from a user gesture; PRESS START is one.
+  audioInit();
+  audioResume();
+  score = 0;
+  coinCount = 0;
+  lives = 3;
+  mushrooms = [];
+  solidGrid = buildLevel();
+  player = makePlayer();
+  camera.x = 0;
+  camera.y = WORLD_H - H;
+  cosmicMode = 0;
+  gameRunning = true;
+  gameWon = false;
+  if (!Audio.muted) musicStart();
+}
+
+function resetGame() {
+  startGame();
+}
+
+// Show start screen on load
+document.getElementById('startScreen').classList.add('show');
+solidGrid = buildLevel();
+player = makePlayer();
+loop();
+</script>
+</body>
+</html>
