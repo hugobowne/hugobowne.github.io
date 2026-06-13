@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wes McKinney · Show Us Your Agent Skills</title>
+<meta name="description" content="Wes McKinney's Show Us Your Agent Skills dossier: the agentic software factory: RoboRev background review, commit-every-turn checkpoints, parallel Superpowers runs, and auditing structure instead of lines.">
+<meta name="author" content="Hugo Bowne-Anderson">
+<link rel="canonical" href="https://hugobowne.github.io/agent-skills/guests/wes-mckinney/">
+
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://hugobowne.github.io/agent-skills/guests/wes-mckinney/">
+<meta property="og:title" content="Wes McKinney · Show Us Your Agent Skills">
+<meta property="og:description" content="The agentic software factory: a background reviewer reads every commit, agents drain the fix queue, and the human audits structure instead of lines.">
+<meta property="og:site_name" content="hugo-bowne-anderson.ai">
+<meta property="og:image" content="https://hugobowne.github.io/show/avatars/wes.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@hugobowne">
+<meta name="twitter:creator" content="@hugobowne">
+<meta name="twitter:title" content="Wes McKinney · Show Us Your Agent Skills">
+<meta name="twitter:description" content="The agentic software factory: a background reviewer reads every commit, agents drain the fix queue, and the human audits structure instead of lines.">
+<meta name="twitter:image" content="https://hugobowne.github.io/show/avatars/wes.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Wes McKinney",
+    "url": "https://wesmckinney.com/",
+    "sameAs": ["https://github.com/wesm", "https://wesmckinney.com/"],
+    "worksFor": { "@type": "Organization", "name": "Posit" }
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../shared/shared.css">
+<link rel="stylesheet" href="../guest.css">
+<style>
+/* Wes's preferred 8-bit video is a 16:9 side-scroller; show it uncropped */
+.portrait-media { aspect-ratio: 16 / 9; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="page">
+    <div class="logo"><a href="../../../index.html">hugo-bowne-anderson<span class="dot">.</span>ai</a></div>
+    <nav>
+      <a href="../../../index.html#podcasts">podcasts</a>
+      <a href="../../../index.html#writing">writing</a>
+      <a href="../../../agent-skills" class="active">agent skills</a>
+      <a href="../../../agent-skills#hub">skills hub</a>
+    </nav>
+    <div class="status">ep 01 field notes</div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="page hero-grid">
+      <div>
+        <div class="crumb"><a href="../../../agent-skills#past">Show Us Your Agent Skills</a> / EP 01 / guest dossier</div>
+        <div class="eyebrow">
+          <span class="mini-avatar"><img src="../../../show/avatars/wes.jpg" alt=""></span>
+          <span class="chip cyan">WES MCKINNEY</span>
+          <span class="chip">POSIT · PANDAS</span>
+          <span class="chip">ROBOREV</span>
+          <span class="chip">SOFTWARE FACTORY</span>
+          <span class="chip">TOKENMAXXER NO.1</span>
+        </div>
+        <h1>WES <span>MCKINNEY</span></h1>
+        <p class="dek">
+          Wes has loved writing code for decades. His favorite thing about agents? "Not having to write code anymore." In his factory, agents commit every turn, RoboRev reads every commit, fix skills drain the queue, and Wes audits structure, not lines.
+        </p>
+        <div class="hero-actions">
+          <a class="btn cyan" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=1634s" target="_blank" rel="noopener">▶ WATCH SEGMENT</a>
+          <a class="btn" href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/agentic-software-factory" target="_blank" rel="noopener">$ FACTORY WRITE-UP</a>
+        </div>
+      </div>
+      <aside class="portrait" aria-label="Wes McKinney portrait">
+        <div class="portrait-media">
+          <video poster="../../../show/avatars/wes.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="8-bit Wes McKinney intro video">
+            <source src="wes-mckinney-8bit.mp4" type="video/mp4">
+            <img src="../../../show/avatars/wes.jpg" alt="Wes McKinney">
+          </video>
+        </div>
+        <div class="portrait-caption">
+          <b>"SEE YOU ALL IN THE TOKEN MINES"</b>
+          <span>Wes's sign-off at the end of EP 01, and his 8-bit arcade intro. <a href="https://youtube.com/live/Pq3xuChdwxQ?t=1960" target="_blank" rel="noopener" style="color:var(--cyan)">00:32:40</a></span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="scoreboard-sec">
+    <div class="page">
+      <div class="scoreboard">
+        <a class="stat" href="https://youtube.com/live/Pq3xuChdwxQ?t=666" target="_blank" rel="noopener"><span class="n">1.4B</span><span class="l">tokens a day, prior week</span></a>
+        <a class="stat" href="https://youtube.com/live/Pq3xuChdwxQ?t=592" target="_blank" rel="noopener"><span class="n">1M</span><span class="l">lines of code in six months</span></a>
+        <a class="stat" href="https://youtube.com/live/Pq3xuChdwxQ?t=973" target="_blank" rel="noopener"><span class="n">$21.7K</span><span class="l">per month at API rates</span></a>
+        <a class="stat" href="https://youtube.com/live/Pq3xuChdwxQ?t=1667" target="_blank" rel="noopener"><span class="n">4-5X</span><span class="l">each commit read by agents before merge</span></a>
+        <a class="stat" href="https://youtube.com/live/Pq3xuChdwxQ?t=1283" target="_blank" rel="noopener"><span class="n">14H</span><span class="l">longest unattended superpowers run</span></a>
+        <a class="stat" href="https://youtube.com/live/Pq3xuChdwxQ?t=777" target="_blank" rel="noopener"><span class="n">4-5</span><span class="l">projects in parallel</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <div class="ytfacade" data-id="Pq3xuChdwxQ" data-start="1634" role="button" tabindex="0" aria-label="Play Wes McKinney's EP 01 segment" style="max-width:880px;margin:0 auto;">
+        <img src="https://i.ytimg.com/vi/Pq3xuChdwxQ/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/Pq3xuChdwxQ/hqdefault.jpg'" alt="" loading="lazy">
+        <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
+        <div class="ytcap"><b>EP 01 · WES MCKINNEY</b> · the software factory, live on stream</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>THE SOFTWARE <span>FACTORY</span></h2>
+      <div class="sub">from the <a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/agentic-software-factory" target="_blank" rel="noopener">agentic-software-factory write-up</a>. fork it</div>
+      <div class="split">
+        <div class="panel">
+          <p><b>"The difference between vibe coding and agentic engineering is planning, architecture, and caring about the output."</b> Jesse Vincent's line, Wes's operating principle. Typing prompts into a terminal stops working once quality and scale matter. The factory is his answer.</p>
+          <p>The <a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/agentic-software-factory" target="_blank" rel="noopener">agentic-software-factory write-up</a> captures Wes's production loop as one system: agents commit every turn, a <b>RoboRev</b> daemon reviews every commit in the background, review feedback accumulates in a ledger, and agents invoke a fix skill to drain it. Around that core, <b>Superset</b> gives every project worktree the same terminal stack, <b>Middleman</b> is a single pane of glass over GitHub activity, <b>kata</b> tracks issues locally, and <b>AgentsView</b> makes past agent sessions searchable.</p>
+          <p>Inside <a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/agentic-software-factory" target="_blank" rel="noopener">the write-up</a>: the six rules below, a session walkthrough, anti-patterns, and a "what you need" list to assemble the stack yourself. The demo target on stream was <a href="https://www.spicytakes.org/" target="_blank" rel="noopener">Spicy Takes</a>, his AI-summarized blog reader.</p>
+        </div>
+        <figure class="figure">
+          <a href="https://youtube.com/live/Pq3xuChdwxQ?t=974" target="_blank" rel="noopener"><img src="images/1-widget.jpg" alt="Wes's macOS widget showing his Claude / Codex usage split and projected API cost"></a>
+          <figcaption>Wes's macOS widget on stream: roughly three-quarters Claude Code, one-quarter Codex over 30 days, and $21,765.80/month at API rates. <a href="https://youtube.com/live/Pq3xuChdwxQ?t=974" target="_blank" rel="noopener">[00:16:14]</a></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"Each day you wake up and you fire up Claude Code, it's what kind of Claude am I going to get today? Is it going to be smart Claude or dumb Claude?"</p>
+      <div class="cap">His sharpest frustration with agents: "they don't listen, they lie" and "they make the same mistakes over and over again." <a href="https://youtube.com/live/Pq3xuChdwxQ?t=437" target="_blank" rel="noopener">00:07:17</a></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>HOW THE FACTORY <span>RUNS</span></h2>
+      <div class="sub">six rules. every timestamp opens the segment</div>
+      <div class="steps">
+        <div class="step"><span><b>Commit every turn</b><span>A hard rule in every CLAUDE.md / AGENTS.md. Post-commit hooks give the review daemon something to fire on, and intermediate states stay inspectable. <a class="ts" href="https://youtube.com/live/Pq3xuChdwxQ?t=949" target="_blank" rel="noopener">00:15:49</a></span></span></div>
+        <div class="step"><span><b>Review every commit in the background</b><span>RoboRev runs Codex with GPT-5.5 at high reasoning on each commit, "the strongest code reviewer out there." Reviews never block generation. <a class="ts" href="https://youtube.com/live/Pq3xuChdwxQ?t=1122" target="_blank" rel="noopener">00:18:42</a></span></span></div>
+        <div class="step"><span><b>Drain the ledger explicitly</b><span>The RoboRev fix skill picks up open reviews, fixes them, and commits the fixes. On large plans it runs every five tasks so review debt never piles up. <a class="ts" href="https://youtube.com/live/Pq3xuChdwxQ?t=1177" target="_blank" rel="noopener">00:19:37</a></span></span></div>
+        <div class="step"><span><b>Run parallel spec interviews</b><span>Four or five <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener" style="color:var(--cyan)">Superpowers</a> planning sessions across projects in a day; one implementation ran fourteen hours without stopping. <a class="ts" href="https://youtube.com/live/Pq3xuChdwxQ?t=1236" target="_blank" rel="noopener">00:20:36</a></span></span></div>
+        <div class="step"><span><b>Watch the factory, not the code</b><span>AgentsView for session search and token analytics, Middleman for cross-repo GitHub activity, kata for local issues, Superset for worktrees. <a class="ts" href="https://youtube.com/live/Pq3xuChdwxQ?t=1323" target="_blank" rel="noopener">00:22:03</a></span></span></div>
+        <div class="step"><span><b>Audit structure, not lines</b><span>Wes's attention goes to complexity, scope creep, and "is it doing the right thing". Line-level reading is the agents' job. <a class="ts" href="https://youtube.com/live/Pq3xuChdwxQ?t=1672" target="_blank" rel="noopener">00:27:52</a></span></span></div>
+      </div>
+      <div class="split" style="margin-top:12px">
+        <figure class="figure">
+          <a href="https://youtube.com/live/Pq3xuChdwxQ?t=1130" target="_blank" rel="noopener"><img src="images/3-codex-review-prompt.jpg" alt="The review prompt RoboRev sends to Codex, with GPT-5.5 high-reasoning configuration visible"></a>
+          <figcaption>The literal review prompt RoboRev sends to Codex: "you are a code reviewer" with the diff inlined, run at high reasoning effort. <a href="https://youtube.com/live/Pq3xuChdwxQ?t=1130" target="_blank" rel="noopener">[00:18:50]</a></figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="https://youtube.com/live/Pq3xuChdwxQ?t=1337" target="_blank" rel="noopener"><img src="images/4-middleman.jpg" alt="Middleman's threaded activity feed across pull requests"></a>
+          <figcaption>Middleman, Wes's local GitHub dashboard: a threaded activity feed of pushes, comments, commits, and RoboRev reviews across all projects. <a href="https://youtube.com/live/Pq3xuChdwxQ?t=1337" target="_blank" rel="noopener">[00:22:17]</a></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"I'm already at my decision-making bandwidth. I can't make any more decisions."</p>
+      <div class="cap">The ceiling on the factory isn't agent capacity. Wes wants to push toward a more automated factory, but human judgment about what the software should do is the bottleneck. <a href="https://youtube.com/live/Pq3xuChdwxQ?t=1816" target="_blank" rel="noopener">00:30:16</a></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>THE <span>STACK</span></h2>
+      <div class="sub">roborev, middleman &amp; kata are wes's own builds. superpowers is jesse vincent's</div>
+      <div class="tools">
+        <a class="tool" href="https://www.roborev.io/" target="_blank" rel="noopener"><b>RoboRev</b>review daemon</a>
+        <a class="tool" href="https://www.agentsview.io/" target="_blank" rel="noopener"><b>AgentsView</b>session search</a>
+        <a class="tool" href="https://github.com/wesm/middleman" target="_blank" rel="noopener"><b>Middleman</b>github dashboard</a>
+        <a class="tool" href="https://github.com/wesm/kata" target="_blank" rel="noopener"><b>kata</b>local issues</a>
+        <a class="tool" href="https://superset.sh/" target="_blank" rel="noopener"><b>Superset</b>worktree manager</a>
+        <a class="tool" href="https://github.com/obra/superpowers" target="_blank" rel="noopener"><b>Superpowers</b>skills framework</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"We're all just walking honeypots with our agent sessions."</p>
+      <div class="cap">Wes is "YOLO mode all the time": maximum productivity over safety, mitigated by backups and keeping sensitive data out of his home directory. The field, he says, still needs ergonomic sandboxing. <a href="https://youtube.com/live/Pq3xuChdwxQ?t=1888" target="_blank" rel="noopener">00:31:28</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="page">
+    <div>© 2026 hugo bowne-anderson · show us your agent skills · "see you all in the token mines"</div>
+    <div class="socials">
+      <a href="../../../agent-skills">show page</a>
+      <a href="https://github.com/hugobowne/show-us-your-agent-skills/blob/main/episode-field-notes/ep-1/wes.md" target="_blank" rel="noopener">full field notes</a>
+      <a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/agentic-software-factory" target="_blank" rel="noopener">factory write-up</a>
+      <a href="https://www.youtube.com/watch?v=Pq3xuChdwxQ" target="_blank" rel="noopener">episode 01</a>
+      <a href="https://hugobowne.substack.com/p/the-agentic-software-factory" target="_blank" rel="noopener">blog post</a>
+      <a href="https://hugobowne.substack.com/p/agentic-engineering-and-the-lost" target="_blank" rel="noopener">podcast</a>
+      <a href="https://wesmckinney.com/" target="_blank" rel="noopener">wesmckinney.com</a>
+      <a href="https://github.com/wesm" target="_blank" rel="noopener">github/wesm</a>
+    </div>
+  </div>
+</footer>
+<script>
+document.querySelectorAll('.ytfacade').forEach(function (f) {
+  function play() {
+    var ifr = document.createElement('iframe');
+    ifr.src = 'https://www.youtube-nocookie.com/embed/' + f.dataset.id +
+      '?start=' + (f.dataset.start || 0) + '&autoplay=1&rel=0';
+    ifr.allow = 'autoplay; encrypted-media; picture-in-picture; web-share; fullscreen';
+    ifr.allowFullscreen = true;
+    f.innerHTML = '';
+    f.appendChild(ifr);
+    f.style.cursor = 'default';
+    f.removeAttribute('role');
+  }
+  f.addEventListener('click', play, { once: true });
+  f.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+  }, { once: true });
+});
+</script>
+</body>
+</html>
