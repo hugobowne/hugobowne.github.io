@@ -710,7 +710,9 @@ a.rcard:hover {
   .hero .lockup { font-size: 11px; gap: 10px; }
   .hero .tag { font-size: 10px; }
   .lineup, .lineup.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .roster, .roster.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .roster.three { display: flex; flex-wrap: wrap; justify-content: center; }
+  .roster.three .rcard { flex: 0 0 calc(50% - 6px); }
   .roster.wrap .rcard { flex-basis: calc(50% - 6px); }
   .dossier-grid { grid-template-columns: minmax(0, 1fr); }
   .lineup.text .tcard { flex-basis: calc(50% - 6px); }
