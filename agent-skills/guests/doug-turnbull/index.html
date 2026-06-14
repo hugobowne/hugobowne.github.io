@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Doug Turnbull · Show Us Your Agent Skills</title>
-<meta name="description" content="Doug Turnbull's Show Us Your Agent Skills dossier: auto-research, BM25, MS MARCO, hidden validation, tryout patches, and agentic search feedback loops.">
+<meta name="description" content="Doug Turnbull's Show Us Your Agent Skills dossier: auto research. Let an agent rewrite your search-ranking code and go wild, then hide the test it has to pass so it can't overfit. A change survives only if validation it never saw improves.">
 <meta name="author" content="Hugo Bowne-Anderson">
 <link rel="canonical" href="https://hugobowne.github.io/agent-skills/guests/doug-turnbull/">
 
 <meta property="og:type" content="profile">
 <meta property="og:url" content="https://hugobowne.github.io/agent-skills/guests/doug-turnbull/">
 <meta property="og:title" content="Doug Turnbull · Show Us Your Agent Skills">
-<meta property="og:description" content="Auto-research for search ranking code: sandboxed patches, hidden validation, serialized rounds, and judged feedback.">
+<meta property="og:description" content="Auto research: let an agent rewrite your search-ranking code and go wild, then hide the test it has to pass so it can't overfit. A change survives only if validation it never saw improves.">
 <meta property="og:site_name" content="hugo-bowne-anderson.ai">
 <meta property="og:image" content="https://hugobowne.github.io/show/avatars/doug.png">
 
@@ -19,330 +19,31 @@
 <meta name="twitter:site" content="@hugobowne">
 <meta name="twitter:creator" content="@hugobowne">
 <meta name="twitter:title" content="Doug Turnbull · Show Us Your Agent Skills">
-<meta name="twitter:description" content="Auto-research for search ranking code: sandboxed patches, hidden validation, serialized rounds, and judged feedback.">
+<meta name="twitter:description" content="Auto research: let an agent rewrite your search-ranking code and go wild, then hide the test it has to pass so it can't overfit. A change survives only if validation it never saw improves.">
 <meta name="twitter:image" content="https://hugobowne.github.io/show/avatars/doug.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Doug Turnbull",
+    "url": "https://softwaredoug.com/",
+    "sameAs": ["https://github.com/softwaredoug", "https://softwaredoug.com/", "https://x.com/softwaredoug"],
+    "jobTitle": "Search relevance engineer"
+  }
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../shared/shared.css">
+<link rel="stylesheet" href="../guest.css">
 <style>
-:root {
-  --bg: #0a0a10;
-  --bg-2: #14141e;
-  --bg-3: #1c1c2a;
-  --line: #2a2a3a;
-  --line-2: #3a3a55;
-  --fg: #f1f0ff;
-  --fg-2: #b4b0d4;
-  --fg-3: #6e6a8a;
-  --cyan: #43fafb;
-  --magenta: #de21e9;
-  --purple-deep: #422074;
-}
-html, body { background: var(--bg); color: var(--fg); margin: 0; }
-body {
-  font-family: "Geist", -apple-system, "Segoe UI", sans-serif;
-  font-size: 15px;
-  line-height: 1.55;
-  overflow-x: hidden;
-}
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 3px);
-  pointer-events: none;
-  z-index: 100;
-}
-a { color: inherit; text-decoration: none; }
-img { display: block; max-width: 100%; }
-.page { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
-.topbar {
-  border-bottom: 1px solid var(--line);
-  padding: 14px 0;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-}
-.topbar > .page {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 24px;
-}
-.logo .dot, .topbar nav a.active, .status { color: var(--cyan); }
-.topbar nav { display: flex; gap: 22px; flex-wrap: wrap; }
-.topbar nav a { color: var(--fg-2); }
-.topbar nav a:hover { color: var(--fg); }
-.status { white-space: nowrap; }
-.status::before {
-  content: "";
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-right: 8px;
-  border-radius: 50%;
-  background: var(--cyan);
-  box-shadow: 0 0 12px var(--cyan);
-}
-.hero {
-  padding: 56px 0;
-  border-bottom: 2px solid var(--magenta);
-  background:
-    radial-gradient(ellipse 720px 480px at 82% 20%, rgba(67,250,251,0.12), transparent 62%),
-    radial-gradient(ellipse 720px 480px at 20% 12%, rgba(222,33,233,0.18), transparent 62%),
-    var(--bg);
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
-  gap: 34px;
-  align-items: center;
-}
-.crumb {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  color: var(--fg-3);
-  margin-bottom: 24px;
-}
-.crumb a { color: var(--cyan); border-bottom: 1px dotted var(--line-2); }
-.eyebrow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 22px;
-  font-family: "Press Start 2P", monospace;
-  font-size: 9px;
-  color: var(--fg-3);
-}
-.mini-avatar {
-  width: 44px;
-  height: 44px;
-  border: 2px solid var(--cyan);
-  box-shadow: 3px 3px 0 var(--magenta);
-  overflow: hidden;
-  background: var(--bg-3);
-  flex: 0 0 auto;
-}
-.mini-avatar img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
-.chip {
-  border: 2px solid var(--line-2);
-  padding: 8px 10px;
-  background: rgba(20,20,30,.82);
-}
-.chip.cyan { color: #0a0a10; background: var(--cyan); border-color: var(--cyan); }
-.hero h1 {
-  margin: 0 0 18px;
-  font-family: "Press Start 2P", monospace;
-  font-size: clamp(30px, 5.2vw, 58px);
-  line-height: 1.18;
-  letter-spacing: 0;
-  text-shadow: -4px 0 var(--magenta), 4px 0 var(--cyan);
-}
-.hero h1 span { color: var(--cyan); text-shadow: none; }
-.dek {
-  max-width: 68ch;
-  color: var(--fg-2);
-  font-size: 17px;
-  line-height: 1.65;
-}
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
-.btn {
-  font-family: "Press Start 2P", monospace;
-  font-size: 11px;
-  padding: 15px 18px;
-  background: var(--magenta);
-  color: #fff;
-  box-shadow: 0 5px 0 var(--purple-deep), 0 0 26px rgba(222,33,233,.35);
-}
-.btn.cyan { background: var(--cyan); color: #0a0a10; box-shadow: 0 5px 0 #1e8a8b, 0 0 26px rgba(67,250,251,.35); }
-.btn:hover { transform: translateY(-1px); }
-.portrait {
-  background: var(--bg-2);
-  border: 2px solid var(--cyan);
-  box-shadow: 8px 8px 0 var(--magenta);
-  padding: 14px;
-}
-.portrait-media {
-  aspect-ratio: 1 / 1;
-  background:
-    repeating-linear-gradient(45deg, transparent 0, transparent 10px, rgba(67,250,251,.05) 10px, rgba(67,250,251,.05) 11px),
-    var(--bg-3);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-.portrait-media img, .portrait-media video { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
-.portrait-caption {
-  margin-top: 14px;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  color: var(--fg-2);
-  display: grid;
-  gap: 6px;
-}
-.portrait-caption b {
-  font-family: "Press Start 2P", monospace;
-  font-size: 10px;
-  color: var(--cyan);
-  font-weight: 400;
-}
-.hero-quote {
-  margin: 0 0 14px;
-  padding: 12px 14px;
-  border-left: 4px solid var(--magenta);
-  background: rgba(222,33,233,.08);
-  color: var(--fg);
-  font-style: italic;
-}
-.hero-quote a {
-  color: var(--cyan);
-  font-style: normal;
-}
-.sec { padding: 48px 0; border-bottom: 2px solid var(--line); }
-.sec h2 {
-  margin: 0 0 10px;
-  font-family: "Press Start 2P", monospace;
-  font-size: 22px;
-  line-height: 1.35;
-  letter-spacing: 0;
-}
-.sec h2 span { color: var(--cyan); }
-.sub {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  color: var(--fg-3);
-  margin-bottom: 28px;
-}
-.sub::before { content: "// "; }
-.split {
-  display: grid;
-  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-  gap: 18px;
-}
-.panel, .card, .quote, .moment, .tool, .step {
-  background: var(--bg-2);
-  border: 2px solid var(--line);
-}
-.panel { padding: 24px; }
-.panel p { margin: 0 0 14px; color: var(--fg-2); }
-.panel p:last-child { margin-bottom: 0; }
-.list { display: grid; gap: 10px; }
-.moment {
-  display: grid;
-  grid-template-columns: 92px minmax(0, 1fr);
-  gap: 14px;
-  align-items: baseline;
-  padding: 14px 16px;
-}
-.moment .ts {
-  font-family: "Press Start 2P", monospace;
-  font-size: 9px;
-  color: var(--cyan);
-}
-.moment .ti { color: var(--fg); font-weight: 500; }
-.moment .de {
-  display: block;
-  margin-top: 4px;
-  color: var(--fg-3);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  line-height: 1.5;
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-.card { padding: 18px 20px; }
-.card .tag {
-  display: inline-block;
-  margin-bottom: 14px;
-  padding: 5px 7px;
-  font-family: "Press Start 2P", monospace;
-  font-size: 7px;
-  letter-spacing: 0;
-  background: var(--cyan);
-  color: #0a0a10;
-}
-.card .tag.workflow { background: var(--magenta); color: #fff; }
-.card h3 { margin: 0 0 10px; font-size: 17px; line-height: 1.3; }
-.card p { margin: 0; color: var(--fg-2); font-size: 13.5px; }
-.steps {
-  counter-reset: step;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-.step {
-  counter-increment: step;
-  padding: 18px;
-  display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
-  gap: 12px;
-}
-.step::before {
-  content: counter(step, decimal-leading-zero);
-  font-family: "Press Start 2P", monospace;
-  font-size: 10px;
-  color: var(--magenta);
-  padding-top: 3px;
-}
-.step b { display: block; margin-bottom: 5px; color: var(--fg); }
-.step span { color: var(--fg-2); font-size: 13.5px; }
-.tools {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 10px;
-}
-.tool {
-  padding: 14px 12px;
-  text-align: center;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  color: var(--fg-2);
-}
-.tool b {
-  display: block;
-  margin-bottom: 5px;
-  font-family: "Press Start 2P", monospace;
-  font-size: 8px;
-  color: var(--cyan);
-  font-weight: 400;
-}
-.quotes {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-.quote { padding: 20px; color: var(--fg-2); }
-.quote p { margin: 0 0 12px; font-size: 15px; line-height: 1.55; }
-.quote a { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--cyan); }
-.footer {
-  padding: 28px 0;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11.5px;
-  color: var(--fg-3);
-}
-.footer > .page { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.footer a { color: var(--fg-2); }
-.footer a:hover { color: var(--cyan); }
-.footer .socials { display: flex; gap: 18px; flex-wrap: wrap; }
-@media (max-width: 980px) {
-  .hero-grid, .split { grid-template-columns: minmax(0, 1fr); }
-  .portrait { max-width: 460px; }
-  .steps, .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 720px) {
-  .topbar > .page { display: flex; flex-wrap: wrap; gap: 8px 14px; }
-  .topbar nav { order: 3; flex: 1 1 100%; gap: 14px; }
-  .status { margin-left: auto; }
-  .hero { padding: 38px 0 44px; }
-  .hero h1 { text-shadow: -2px 0 var(--magenta), 2px 0 var(--cyan); }
-  .cards, .quotes, .steps { grid-template-columns: minmax(0, 1fr); }
-  .moment { grid-template-columns: minmax(0, 1fr); }
-}
+/* Doug's 8-bit clip is a 16:9 narrative video; show it uncropped */
+.portrait-media { aspect-ratio: 16 / 9; }
 </style>
 </head>
 <body>
@@ -367,17 +68,17 @@ img { display: block; max-width: 100%; }
         <div class="eyebrow">
           <span class="mini-avatar"><img src="../../../show/avatars/doug.png" alt=""></span>
           <span class="chip cyan">DOUG TURNBULL</span>
-          <span class="chip">SEARCH</span>
-          <span class="chip">BM25</span>
+          <span class="chip">SEARCH @ SHOPIFY · REDDIT</span>
           <span class="chip">AUTO-RESEARCH</span>
+          <span class="chip">"AI-POWERED SEARCH"</span>
         </div>
         <h1>DOUG <span>TURNBULL</span></h1>
         <p class="dek">
-          Doug shows an auto-research workflow for agentic search: give an agent one ranking problem, let it try BM25 code changes in a sandbox, and keep the final accept/reject decision behind hidden validation data.
+          Doug runs auto research on his agentic search agents: turn one loose on the search code, let it patch, measure, and revert, then hide the test it has to pass, so a change survives only if it beats validation the agent never saw. The judgment stays outside the agent's reach, an eval or an outside judge, never its own reasoning about why the change should work.
         </p>
         <div class="hero-actions">
-          <a class="btn cyan" href="https://www.youtube.com/watch?v=XaYQFtca798&t=4835s" target="_blank" rel="noopener">▶ WATCH SEGMENT</a>
-          <a class="btn" href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/auto-research-agentic-search" target="_blank" rel="noopener">$ WORKFLOW WRITE-UP</a>
+          <a class="btn cyan" href="https://www.youtube.com/watch?v=XaYQFtca798&t=4811s" target="_blank" rel="noopener">▶ WATCH SEGMENT</a>
+          <a class="btn" href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/auto-research-agentic-search" target="_blank" rel="noopener">$ AUTO-RESEARCH</a>
         </div>
       </div>
       <aside class="portrait" aria-label="Doug Turnbull portrait">
@@ -388,131 +89,155 @@ img { display: block; max-width: 100%; }
           </video>
         </div>
         <div class="portrait-caption">
-          <blockquote class="hero-quote">
-            "I'm still in that labyrinth trying to find my way out."
-            <a href="https://youtube.com/live/XaYQFtca798?t=4787" target="_blank" rel="noopener">01:19:47</a>
-          </blockquote>
-          <b>8-BIT VIDEO</b>
-          <span>Doug's explorer-style intro clip for the Show Us Your Agent Skills arcade treatment.</span>
+          <b>"STILL IN THE LABYRINTH"</b>
+          <span>Bit by the search bug in 2012, still trying to find his way out. <a href="https://youtube.com/live/XaYQFtca798?t=4811" target="_blank" rel="noopener" style="color:var(--cyan)">01:20:11</a></span>
         </div>
       </aside>
     </div>
   </section>
 
-  <section class="sec">
-    <div class="page split">
-      <div class="panel">
-        <h2>WHAT HE <span>SHOWED</span></h2>
-        <p>Doug showed an auto-research loop for search-ranking code. The worked example is a BM25-style scoring function on MS MARCO: the agent inspects training queries, tries temporary patches, and asks to keep a change only after it has seen training feedback.</p>
-        <p>The apply step is judged on validation data the agent cannot inspect. That split is the point of the workflow: let the agent experiment aggressively, then let hidden validation decide which search changes survive.</p>
-      </div>
-      <div class="list">
-        <a class="moment" href="https://youtube.com/live/XaYQFtca798?t=5695" target="_blank" rel="noopener">
-          <span class="ts">01:34:55</span>
-          <span><span class="ti">Pose the research question</span><span class="de">Can an agent propose patches that improve retrieval on an MS MARCO evaluation set?</span></span>
-        </a>
-        <a class="moment" href="https://youtube.com/live/XaYQFtca798?t=5907" target="_blank" rel="noopener">
-          <span class="ts">01:38:27</span>
-          <span><span class="ti">Name the overfitting failure</span><span class="de">Visible eval examples can lead to brittle query-specific hacks.</span></span>
-        </a>
-        <a class="moment" href="https://youtube.com/live/XaYQFtca798?t=5981" target="_blank" rel="noopener">
-          <span class="ts">01:39:41</span>
-          <span><span class="ti">Run tryout patch</span><span class="de">A sandboxed patch tests temporary scoring-code changes on training queries.</span></span>
-        </a>
-        <a class="moment" href="https://youtube.com/live/XaYQFtca798?t=6067" target="_blank" rel="noopener">
-          <span class="ts">01:41:07</span>
-          <span><span class="ti">Gate the apply step</span><span class="de">The system accepts or rejects the patch based on hidden validation performance.</span></span>
-        </a>
-        <a class="moment" href="https://youtube.com/live/XaYQFtca798?t=6460" target="_blank" rel="noopener">
-          <span class="ts">01:47:40</span>
-          <span><span class="ti">Serialize research rounds</span><span class="de">Each run leaves a new scoring function and summary for the next round.</span></span>
-        </a>
+  <section class="scoreboard-sec">
+    <div class="page">
+      <div class="scoreboard">
+        <a class="stat" href="https://youtube.com/live/XaYQFtca798?t=6067" target="_blank" rel="noopener"><span class="n">HIDDEN</span><span class="l">validation the agent never sees decides which changes survive</span></a>
+        <a class="stat" href="https://youtube.com/live/XaYQFtca798?t=5915" target="_blank" rel="noopener"><span class="n">CHEATS</span><span class="l">an agent that can see the test it's scored on will overfit it</span></a>
+        <a class="stat" href="https://youtube.com/live/XaYQFtca798?t=5166" target="_blank" rel="noopener"><span class="n">BM25</span><span class="l">the fast keyword-search baseline the agent has to beat, not replace</span></a>
+        <a class="stat" href="https://youtube.com/live/XaYQFtca798?t=6187" target="_blank" rel="noopener"><span class="n">BORING</span><span class="l">the wins are obvious tricks the model already knew, not breakthroughs</span></a>
+        <a class="stat" href="https://youtube.com/live/XaYQFtca798?t=6460" target="_blank" rel="noopener"><span class="n">ROUNDS</span><span class="l">he runs it in short rounds, each handing back a better search function</span></a>
+        <a class="stat" href="https://youtube.com/live/XaYQFtca798?t=6338" target="_blank" rel="noopener"><span class="n">PROCESS</span><span class="l">the hard part is the process around the agent, not the agent's idea</span></a>
       </div>
     </div>
   </section>
 
   <section class="sec">
     <div class="page">
-      <h2>PRINCIPLES</h2>
-      <div class="sub">the portable ideas inside Doug's auto-research loop</div>
+      <div class="ytfacade" data-id="XaYQFtca798" data-start="4811" role="button" tabindex="0" aria-label="Play Doug Turnbull's EP 04 segment" style="max-width:880px;margin:0 auto;">
+        <img src="https://i.ytimg.com/vi/XaYQFtca798/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/XaYQFtca798/hqdefault.jpg'" alt="" loading="lazy">
+        <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
+        <div class="ytcap"><b>EP 04 · DOUG TURNBULL</b> · auto research on a BM25 ranker, live on stream</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"An extreme example of trusting agents to go nuts and just work on a problem until some metric increases."</p>
+      <div class="cap">That's auto research, and both halves are load-bearing: bounded patch tools and a sandbox to fail in, then a hidden score that has the only vote on what gets saved. <a href="https://youtube.com/live/XaYQFtca798?t=6303" target="_blank" rel="noopener">01:45:03</a></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>HIDE THE <span>TEST</span></h2>
+      <div class="sub">his <a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/auto-research-agentic-search" target="_blank" rel="noopener">auto-research</a> loop on a BM25 ranker, gated on data the agent never sees</div>
+      <div class="split">
+        <div class="panel">
+          <p>Doug led search teams at Shopify, Reddit, and Wikipedia and wrote <i>AI-Powered Search</i>. His demo points an agent at a BM25 ranker, the keyword-matching baseline search teams have leaned on for decades, scoring MS MARCO, a question-answering set of roughly ten million passages.</p>
+          <p>The agent gets a few bounded actions: run the ranker on a query, read the labeled top results, try a patch in a sandbox, revert, or ask to apply. On the training queries it can dig as deep as it likes. The validation set stays hidden until it applies a patch, and the patch is kept only if that hidden score went up.</p>
+          <p>Skip that split and the agent games the eval: "make search better" with the answers in view produces hacks tuned to the exact queries you graded.</p>
+        </div>
+        <figure class="figure">
+          <a href="https://youtube.com/live/XaYQFtca798?t=4960" target="_blank" rel="noopener"><img src="images/setup.jpg" alt="Doug's auto-research setup: BM25 reranker code, codegen config, and live agent output"></a>
+          <figcaption>The whole rig: the BM25 reranker, the codegen config, and the agent's live output against MS MARCO. "This matrix concoction I have going on here." <a href="https://youtube.com/live/XaYQFtca798?t=4960" target="_blank" rel="noopener">[01:22:40]</a></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"Completely overconfident and thinks the human is stupid."</p>
+      <div class="cap">That's one of his days with an agent. Other days it begs permission for any minor thing. The swing is his main frustration, and steering that line is the job. <a href="https://youtube.com/live/XaYQFtca798?t=4885" target="_blank" rel="noopener">01:21:25</a></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>TRY, MEASURE, <span>GATE</span></h2>
+      <div class="sub">the bounded actions, and the one that runs the validation he keeps hidden</div>
       <div class="steps">
-        <div class="step"><span><b>Work on one search problem</b><span>Choose one scoring function and one dataset where improvement can be measured. Doug's demo uses BM25-style ranking on MS MARCO.</span></span></div>
-        <div class="step"><span><b>Give the agent concrete actions</b><span>The agent can inspect queries, try a patch, apply a patch, revert changes, and run evals. The edit surface stays narrow.</span></span></div>
-        <div class="step"><span><b>Hide the test it must pass</b><span>Training queries are visible for diagnosis. Validation queries decide whether a proposed change generalizes.</span></span></div>
-        <div class="step"><span><b>Let patches run in a sandbox</b><span>`tryout patch` creates a temporary scoring function and returns detailed training feedback before anything is saved.</span></span></div>
-        <div class="step"><span><b>Gate changes with validation</b><span>The apply step keeps a patch only when holdout performance improves, regardless of how plausible the agent's explanation sounds.</span></span></div>
-        <div class="step"><span><b>Expect known ideas faster</b><span>The useful changes were familiar search moves such as stop-word handling and phrase boosts, tested quickly against a local metric.</span></span></div>
-        <div class="step"><span><b>Serialize the research rounds</b><span>One run produces a changed scorer and a summary. The next run starts from that output instead of one long autonomous session.</span></span></div>
-        <div class="step"><span><b>Return judged feedback as user input</b><span>For agentic search, Doug sends result judgments back as a user-visible message because that changes agent behavior more reliably.</span></span></div>
+        <div class="step"><span><b>Pick one search target</b><span>One scoring function, one dataset where a win is real. Not a universal new BM25. "For this dataset, which almost every search team just cares about, could I find a better retrieval function?" <a class="ts" href="https://youtube.com/live/XaYQFtca798?t=5739" target="_blank" rel="noopener">01:35:39</a></span></span></div>
+        <div class="step"><span><b>Hand it a tiny edit tool</b><span>One tool finds a snippet of code, finds the other end, deletes the region, and drops in new text. "It's not that hard if you feel comfortable building an MCP or your own tools." <a class="ts" href="https://youtube.com/live/XaYQFtca798?t=5817" target="_blank" rel="noopener">01:36:57</a></span></span></div>
+        <div class="step"><span><b>Let it introspect the training queries</b><span>Run a single query, see the labeled top results, learn where the ranker fails. "Training data exists to let the agent really, really introspect on the behavior of those specific queries." <a class="ts" href="https://youtube.com/live/XaYQFtca798?t=5969" target="_blank" rel="noopener">01:39:29</a></span></span></div>
+        <div class="step"><span><b>Sandbox every change with tryout patch</b><span>A temporary scoring function, graded on training queries, with detailed feedback, nothing saved. "That's its little sandbox way of evaluating things." <a class="ts" href="https://youtube.com/live/XaYQFtca798?t=5981" target="_blank" rel="noopener">01:39:41</a></span></span></div>
+        <div class="step"><span><b>Gate apply on the hidden holdout</b><span>Apply runs the change against data the agent never saw; accept or reject on that score alone. "That helps prevent most of the stupid overfitting agents tend to do to ranking code." <a class="ts" href="https://youtube.com/live/XaYQFtca798?t=6091" target="_blank" rel="noopener">01:41:31</a></span></span></div>
+        <div class="step"><span><b>Serialize the rounds</b><span>One round summarizes and hands back a new ranker; the next round starts from that. "I don't expect the agent to go and do everything in one pass." <a class="ts" href="https://youtube.com/live/XaYQFtca798?t=6460" target="_blank" rel="noopener">01:47:40</a></span></span></div>
       </div>
+      <figure class="figure" style="max-width:860px;margin:28px auto 0;">
+        <a href="https://youtube.com/live/XaYQFtca798?t=6067" target="_blank" rel="noopener"><img src="images/holdout-gate.jpg" alt="Diagram of apply_patch running hidden validation with accept and reject paths"></a>
+        <figcaption>The gate: <span class="mono">apply_patch</span> runs the change against the holdout the agent never saw, and saves it only if that score improves. <a href="https://youtube.com/live/XaYQFtca798?t=6067" target="_blank" rel="noopener">[01:41:07]</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"The code is kind of a nightmare."</p>
+      <div class="cap">What the agent wrote to win was ugly, and it won anyway. The eval is the judge here, not how readable the code is. <a href="https://youtube.com/live/XaYQFtca798?t=6120" target="_blank" rel="noopener">01:42:00</a></div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"The agent really adjusts its behavior to account for that... in a way it doesn't from its own reasoning."</p>
+      <div class="cap">Same shape, different problem: a naive LLM judge labels the search results, and the label comes back to the agent as a user message. "It's oddly amazing how much that improves search." <a href="https://youtube.com/live/XaYQFtca798?t=7022" target="_blank" rel="noopener">01:57:02</a></div>
     </div>
   </section>
 
   <section class="sec">
     <div class="page">
-      <h2>SKILLS &amp; <span>WORKFLOWS</span></h2>
-      <div class="sub">the reusable pieces from Doug's setup</div>
+      <h2>IT'S ALL A SEARCH <span>PROBLEM</span></h2>
+      <div class="sub">the threads running next to auto research, all of them retrieval in disguise</div>
       <div class="cards">
         <article class="card">
-          <span class="tag workflow">workflow</span>
-          <h3>auto-research agentic search</h3>
-          <p>A loop for making search-ranking changes with an agent while keeping validation data outside the agent's view.</p>
+          <span class="tag">agentic search</span>
+          <h3><a href="https://github.com/softwaredoug/search-experiments/blob/main/notebooks/codegen/codegen_minimarco.ipynb" target="_blank" rel="noopener" style="color:var(--cyan)">search-experiments</a></h3>
+          <p>The bulk of his repo: an agent calling search tools, inspecting results, and adapting to judged feedback. "Agentic search loosely defined is an agent using some search tools to solve a user's search problem."</p>
         </article>
         <article class="card">
-          <span class="tag">tool</span>
-          <h3>tryout patch</h3>
-          <p>Creates a temporary search-scoring function, runs training-query feedback, and lets the agent revise before applying a change.</p>
+          <span class="tag">memory</span>
+          <h3><a href="https://youtube.com/live/XaYQFtca798?t=6624" target="_blank" rel="noopener" style="color:var(--cyan)">logs and traces</a></h3>
+          <p>He gave the agent search over its own past runs. "I haven't cracked that nut yet." Grep alone isn't enough; durable agent memory is a retrieval problem wearing a different hat.</p>
         </article>
         <article class="card">
-          <span class="tag">gate</span>
-          <h3>hidden validation</h3>
-          <p>Accepts or rejects a proposed patch using holdout performance, which prevents most query-specific ranking hacks.</p>
+          <span class="tag">next</span>
+          <h3><a href="https://youtube.com/live/XaYQFtca798?t=6495" target="_blank" rel="noopener" style="color:var(--cyan)">fork the rounds</a></h3>
+          <p>Today the rounds run serially. The open idea is genetic: fork promising rerankers, push them in different directions, then recombine the best parts of different ideas.</p>
         </article>
         <article class="card">
-          <span class="tag workflow">workflow</span>
-          <h3>judged search feedback</h3>
-          <p>Labels search results with a simple judge and sends that judgment back to the agent as a user message.</p>
+          <span class="tag">the writeup</span>
+          <h3><a href="https://softwaredoug.com/blog/2026/05/17/autoresearching-a-better-msmarco-bm25" target="_blank" rel="noopener" style="color:var(--cyan)">autoresearching BM25</a></h3>
+          <p>The post behind the demo, with the reranker code and the experiment. Vespa already has a follow-up that pushes the result further with their own features.</p>
         </article>
       </div>
     </div>
   </section>
 
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"They come with a pre-built encyclopedia of a compressed version of the entire human knowledge."</p>
+      <div class="cap">Why he hands an agent the keys at all. Auto research leans on that prior to try ideas the model already half-knows, and the evals decide which ones were real. <a href="https://youtube.com/live/XaYQFtca798?t=4838" target="_blank" rel="noopener">01:20:38</a></div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"I find auto research such an amazing place to learn about this stuff."</p>
+      <div class="cap">The payoff isn't only a better ranker. Designing the split, the sandbox, and the holdout is what taught him where agent workflows actually break. <a href="https://youtube.com/live/XaYQFtca798?t=6169" target="_blank" rel="noopener">01:42:49</a></div>
+    </div>
+  </section>
+
   <section class="sec">
     <div class="page">
-      <h2>TOOLS <span>MENTIONED</span></h2>
-      <div class="sub">the stack around the demo</div>
+      <h2>THE SEARCH <span>STACK</span></h2>
+      <div class="sub">the harness on screen, the baseline under test, and the tools that are his own builds</div>
       <div class="tools">
-        <a class="tool" href="https://opencode.ai/" target="_blank" rel="noopener"><b>OpenCode</b>agent</a>
-        <a class="tool" href="https://microsoft.github.io/msmarco/" target="_blank" rel="noopener"><b>MS MARCO</b>eval set</a>
-        <a class="tool" href="https://softwaredoug.com/blog/2026/05/17/autoresearching-a-better-msmarco-bm25" target="_blank" rel="noopener"><b>BM25</b>demo post</a>
-        <a class="tool" href="https://github.com/softwaredoug/search-experiments/blob/main/notebooks/codegen/codegen_minimarco.ipynb" target="_blank" rel="noopener"><b>notebook</b>artifact</a>
-        <a class="tool" href="https://vespa.ai/" target="_blank" rel="noopener"><b>Vespa</b>search</a>
-        <a class="tool" href="https://maven.com/softwaredoug/build-enterprise-agents" target="_blank" rel="noopener"><b>course</b>agents</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec">
-    <div class="page">
-      <h2>PULL <span>QUOTES</span></h2>
-      <div class="sub">short excerpts from Doug's segment</div>
-      <div class="quotes">
-        <blockquote class="quote">
-          <p>"There are some days where it's like that agent wants to beg permission to do any minor thing."</p>
-          <a href="https://youtube.com/live/XaYQFtca798?t=4872" target="_blank" rel="noopener">01:21:12</a>
-        </blockquote>
-        <blockquote class="quote">
-          <p>"Completely overconfident and thinks the human is stupid."</p>
-          <a href="https://youtube.com/live/XaYQFtca798?t=4884" target="_blank" rel="noopener">01:21:24</a>
-        </blockquote>
-        <blockquote class="quote">
-          <p>"The code is kind of a nightmare."</p>
-          <a href="https://youtube.com/live/XaYQFtca798?t=6120" target="_blank" rel="noopener">01:42:00</a>
-        </blockquote>
-        <blockquote class="quote">
-          <p>"That helps to prevent most of the stupid overfitting that agents tend to do to ranking code."</p>
-          <a href="https://youtube.com/live/XaYQFtca798?t=6091" target="_blank" rel="noopener">01:41:31</a>
-        </blockquote>
+        <a class="tool" href="https://opencode.ai/" target="_blank" rel="noopener"><b>OpenCode</b>the coding agent on screen, picked for model switching</a>
+        <a class="tool" href="https://en.wikipedia.org/wiki/Okapi_BM25" target="_blank" rel="noopener"><b>BM25</b>the keyword baseline under test</a>
+        <a class="tool" href="https://microsoft.github.io/msmarco/" target="_blank" rel="noopener"><b>MS MARCO</b>the ~10M-passage eval set</a>
+        <a class="tool" href="https://pypi.org/project/searcharray/" target="_blank" rel="noopener"><b>SearchArray</b>his own lexical-search pandas extension</a>
+        <a class="tool" href="https://www.manning.com/books/ai-powered-search" target="_blank" rel="noopener"><b>AI-Powered Search</b>his book</a>
+        <a class="tool" href="https://maven.com/softwaredoug/build-enterprise-agents" target="_blank" rel="noopener"><b>Enterprise Agents</b>his course with Hugo</a>
       </div>
     </div>
   </section>
@@ -520,14 +245,36 @@ img { display: block; max-width: 100%; }
 
 <footer class="footer">
   <div class="page">
-    <div>© 2026 hugo bowne-anderson · show us your agent skills · doug turnbull field notes</div>
+    <div>© 2026 hugo bowne-anderson · show us your agent skills · doug's rule: "all the gotchas are really about process"</div>
     <div class="socials">
       <a href="../../../agent-skills">show page</a>
       <a href="https://github.com/hugobowne/show-us-your-agent-skills/blob/main/episode-field-notes/ep-4/doug.md" target="_blank" rel="noopener">full field notes</a>
-      <a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/auto-research-agentic-search" target="_blank" rel="noopener">workflow write-up</a>
+      <a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/auto-research-agentic-search" target="_blank" rel="noopener">auto-research workflow</a>
+      <a href="https://softwaredoug.com/blog/2026/05/17/autoresearching-a-better-msmarco-bm25" target="_blank" rel="noopener">bm25 post</a>
       <a href="https://www.youtube.com/watch?v=XaYQFtca798" target="_blank" rel="noopener">episode 04</a>
+      <a href="https://softwaredoug.com/" target="_blank" rel="noopener">softwaredoug.com</a>
+      <a href="https://github.com/softwaredoug" target="_blank" rel="noopener">github/softwaredoug</a>
     </div>
   </div>
 </footer>
+<script>
+document.querySelectorAll('.ytfacade').forEach(function (f) {
+  function play() {
+    var ifr = document.createElement('iframe');
+    ifr.src = 'https://www.youtube-nocookie.com/embed/' + f.dataset.id +
+      '?start=' + (f.dataset.start || 0) + '&autoplay=1&rel=0';
+    ifr.allow = 'autoplay; encrypted-media; picture-in-picture; web-share; fullscreen';
+    ifr.allowFullscreen = true;
+    f.innerHTML = '';
+    f.appendChild(ifr);
+    f.style.cursor = 'default';
+    f.removeAttribute('role');
+  }
+  f.addEventListener('click', play, { once: true });
+  f.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+  }, { once: true });
+});
+</script>
 </body>
 </html>
