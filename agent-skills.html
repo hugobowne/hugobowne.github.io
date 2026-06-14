@@ -450,14 +450,6 @@ a.rcard:hover {
   border-top: 2px solid var(--magenta); letter-spacing: 0; line-height: 1.4;
 }
 .rcard .lbl .co { color: var(--cyan); display: block; margin-top: 2px; }
-.rcard .dossier-tag {
-  position: absolute; top: 8px; right: 8px;
-  font-family: "Press Start 2P", monospace; font-size: 7px;
-  color: #0a0a10; background: var(--cyan);
-  padding: 5px 6px; letter-spacing: 0;
-  box-shadow: 3px 3px 0 var(--magenta);
-}
-
 /* ─── guest dossiers ─── */
 .dossier-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .dossier-card {
@@ -718,7 +710,9 @@ a.rcard:hover {
   .hero .lockup { font-size: 11px; gap: 10px; }
   .hero .tag { font-size: 10px; }
   .lineup, .lineup.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .roster, .roster.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .roster.three { display: flex; flex-wrap: wrap; justify-content: center; }
+  .roster.three .rcard { flex: 0 0 calc(50% - 6px); }
   .roster.wrap .rcard { flex-basis: calc(50% - 6px); }
   .dossier-grid { grid-template-columns: minmax(0, 1fr); }
   .lineup.text .tcard { flex-basis: calc(50% - 6px); }
@@ -798,7 +792,7 @@ a.rcard:hover {
   <div class="ctas">
     <a class="btn" href="https://luma.com/0t8kiodw" target="_blank" rel="noopener">▶ PRESS START · EP 05</a>
     <a class="btn cyan" href="#past">▣ WATCH PAST EPISODES</a>
-    <a class="btn" href="#dossiers">▣ GUEST DOSSIERS</a>
+    <a class="btn" href="#dossiers">▣ MEET THE GUESTS</a>
   </div>
   </div>
 </section>
@@ -839,6 +833,339 @@ a.rcard:hover {
   <div class="foot">
     <div class="ho">HOSTS <b>HUGO BOWNE-ANDERSON</b> · <b>THOMAS WIECKI</b></div>
     <a class="btn sm cyan" href="https://luma.com/0t8kiodw" target="_blank" rel="noopener">REGISTER ▶</a>
+  </div>
+  </div>
+</section>
+
+<!-- PAST EPISODES -->
+<section class="sec ep" id="past">
+  <div class="page">
+  <div class="hd">
+    <div class="num">EP 04</div>
+    <div class="stat">· MAY 2026 · 03 GUESTS · FULL EPISODE</div>
+  </div>
+  <h3>HOW TO EVALUATE AGENTIC WORKFLOWS</h3>
+  <p class="hub-intro">Skill scepticism, plan review, implementation review, agentic search, and hidden holdout tests.</p>
+  <div class="ytfacade" data-id="XaYQFtca798" data-start="0" role="button" tabindex="0" aria-label="Play EP 04 - How to Evaluate Agentic Workflows">
+    <img src="https://i.ytimg.com/vi/XaYQFtca798/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/XaYQFtca798/hqdefault.jpg'" alt="" loading="lazy">
+    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
+    <div class="ytcap"><b>EP 04 · HOW TO EVALUATE AGENTIC WORKFLOWS</b> - skill scepticism, review loops, and hidden holdout tests</div>
+  </div>
+  <div class="roster three">
+    <a class="rcard" href="agent-skills/guests/hamel-husain/"><img src="show/avatars/hamel.png" alt="Hamel Husain"><div class="lbl">HAMEL HUSAIN<span class="co">parlance labs</span></div></a>
+    <a class="rcard" href="agent-skills/guests/chris-fonnesbeck/"><img src="show/avatars/chris.png" alt="Chris Fonnesbeck"><div class="lbl">CHRIS FONNESBECK<span class="co">pymc labs · mets / brewers / yankees</span></div></a>
+    <a class="rcard" href="agent-skills/guests/doug-turnbull/"><img src="show/avatars/doug.png" alt="Doug Turnbull"><div class="lbl">DOUG TURNBULL<span class="co">search · shopify / reddit</span></div></a>
+  </div>
+  <div class="skillz">
+    <div class="hd2">▣ HIGHLIGHT REEL</div>
+    <div class="item">
+      <div class="idx">01</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/skill-scepticism" target="_blank" rel="noopener">skill-scepticism</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">Read public skills like code: check provenance, maintenance, and constraints, then fork the idea instead of importing a shortcut. · Hamel Husain</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=XaYQFtca798&t=1352s" target="_blank" rel="noopener">00:22:32</a>
+    </div>
+    <div class="item">
+      <div class="idx">02</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/plan-review-implementation-review" target="_blank" rel="noopener">plan-review-implementation-review</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">Turn cheap experimentation into checkpoints: plan first, review red and yellow flags, implement, then review the code before trust. · Chris Fonnesbeck</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=XaYQFtca798&t=3953s" target="_blank" rel="noopener">01:05:53</a>
+    </div>
+    <div class="item">
+      <div class="idx">03</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/auto-research-agentic-search" target="_blank" rel="noopener">auto-research-agentic-search</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">Give the agent room to mutate a search ranker, but keep the final score hidden so improvements have to survive a real holdout. · Doug Turnbull</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=XaYQFtca798&t=6067s" target="_blank" rel="noopener">01:41:07</a>
+    </div>
+  </div>
+  <div class="actions">
+    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=XaYQFtca798" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
+  </div>
+  </div>
+</section>
+
+<section class="sec ep">
+  <div class="page">
+  <div class="hd">
+    <div class="num">EP 03</div>
+    <div class="stat">· MAY 2026 · 06 GUESTS · RUNTIME 3H 18M</div>
+  </div>
+  <h3>FROM SKILLS TO AGENT HARNESSES</h3>
+  <p class="hub-intro">Research memory, local boxes, debug panes, live notebooks, video generation, and code repair.</p>
+  <div class="ytfacade" data-id="ud2WzkKeDZs" data-start="0" role="button" tabindex="0" aria-label="Play EP 03 - From Skills to Agent Harnesses">
+    <img src="https://i.ytimg.com/vi/ud2WzkKeDZs/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/ud2WzkKeDZs/hqdefault.jpg'" alt="" loading="lazy">
+    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
+    <div class="ytcap"><b>EP 03 · FROM SKILLS TO AGENT HARNESSES</b> - research memory, debug surfaces, notebooks, video, and code repair</div>
+  </div>
+  <div class="roster wrap">
+    <a class="rcard" href="agent-skills/guests/paul-iusztin/"><img src="show/avatars/paul.png" alt="Paul Iusztin"><div class="lbl">PAUL IUSZTIN<span class="co">decoding ai</span></div></a>
+    <a class="rcard" href="agent-skills/guests/eleanor-berger/"><img src="show/avatars/eleanor.png" alt="Eleanor Berger"><div class="lbl">ELEANOR BERGER<span class="co">elite ai coding</span></div></a>
+    <a class="rcard" href="agent-skills/guests/alan-nichol/"><img src="show/avatars/alan.png" alt="Alan Nichol"><div class="lbl">ALAN NICHOL<span class="co">rasa</span></div></a>
+    <a class="rcard" href="agent-skills/guests/vincent-warmerdam/"><img src="show/avatars/vincent.png" alt="Vincent Warmerdam"><div class="lbl">VINCENT WARMERDAM<span class="co">marimo</span></div></a>
+    <a class="rcard" href="agent-skills/guests/nicolay-gerold/"><img src="show/avatars/nicolay.png" alt="Nicolay Gerold"><div class="lbl">NICOLAY GEROLD<span class="co">amp</span></div></a>
+    <a class="rcard" href="agent-skills/guests/matthew-honnibal/"><img src="show/avatars/honnibal.png" alt="Matthew Honnibal"><div class="lbl">MATTHEW HONNIBAL<span class="co">spacy / explosion</span></div></a>
+    <div class="rcard"><img src="show/avatars/ines.png" alt="Ines Montani"><div class="lbl">INES MONTANI<span class="co">spacy / explosion</span></div></div>
+  </div>
+  <div class="skillz">
+    <div class="hd2">▣ HIGHLIGHT REEL</div>
+    <div class="item">
+      <div class="idx">01</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/try-except" target="_blank" rel="noopener">try-except</a> <span class="ttag skill">skill</span></div>
+        <div class="de">A narrow audit pass for the failure mode agents love: broad <i>try</i> blocks and exception handlers that make bad code look green. · Matthew Honnibal</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=729s" target="_blank" rel="noopener">00:12:09</a>
+    </div>
+    <div class="item">
+      <div class="idx">02</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/pre-mortem" target="_blank" rel="noopener">pre-mortem</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Instead of hunting today's bugs, write incident reports for the failures a future reasonable edit could cause. · Matthew Honnibal</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=850s" target="_blank" rel="noopener">00:14:10</a>
+    </div>
+    <div class="item">
+      <div class="idx">03</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/mutation-testing" target="_blank" rel="noopener">mutation-testing</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Deliberately break the code, one mutation at a time, to find the bugs your test suite would let through. · Matthew Honnibal</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=850s" target="_blank" rel="noopener">00:14:10</a>
+    </div>
+    <div class="item">
+      <div class="idx">04</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/here-now" target="_blank" rel="noopener">here-now</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Collapse publishing into one instruction: the agent ships HTML pages and small sites to live URLs without a GitHub Pages detour. · Eleanor Berger</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=2755s" target="_blank" rel="noopener">00:45:55</a>
+    </div>
+    <div class="item">
+      <div class="idx">05</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/anki-connect" target="_blank" rel="noopener">anki-connect</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Drive Anki through its local API with confirmation checks, so an agent can maintain flashcards without silently mutating memory. · Eleanor Berger</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=2986s" target="_blank" rel="noopener">00:49:46</a>
+    </div>
+    <div class="item">
+      <div class="idx">06</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/impeccable" target="_blank" rel="noopener">impeccable</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Give coding agents a design language: fewer generic panels, more interfaces that look like someone meant it. · Eleanor Berger</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=3002s" target="_blank" rel="noopener">00:50:02</a>
+    </div>
+    <div class="item">
+      <div class="idx">07</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/youtube-watch-later-gist-summaries" target="_blank" rel="noopener">youtube-watch-later-gist-summaries</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Asked once from a phone; the agent invented browser login, transcript fetching, caching, and secret gist summaries. · Eleanor Berger</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=3177s" target="_blank" rel="noopener">00:52:57</a>
+    </div>
+    <div class="item">
+      <div class="idx">08</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/thread-postmortem" target="_blank" rel="noopener">thread-postmortem</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Use failed threads as harness training data: trace missteps to instructions, then delete or sharpen the rule that caused them. · Nicolay Gerold</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=7144s" target="_blank" rel="noopener">01:59:04</a>
+    </div>
+    <div class="item">
+      <div class="idx">09</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/remotion-video" target="_blank" rel="noopener">remotion-video</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Record a few minutes of audio; let the skill carry video taste, timing rules, frame checks, and avatar compositing. · Alan Nichol</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=9960s" target="_blank" rel="noopener">02:46:00</a>
+    </div>
+    <div class="item">
+      <div class="idx">10</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/research" target="_blank" rel="noopener">research</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Turn trusted sources into a durable research wiki, so future agents query accumulated context instead of starting over. · Paul Iusztin</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=8392s" target="_blank" rel="noopener">02:19:52</a>
+    </div>
+    <div class="item">
+      <div class="idx">11</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/personal-agent-harness" target="_blank" rel="noopener">personal-agent-harness</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">Run a personal agent on a separate Mac mini, with Discord as the front door and autonomy earned inside a hard perimeter. · Eleanor Berger</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=2870s" target="_blank" rel="noopener">00:47:50</a>
+    </div>
+  </div>
+  <div class="actions">
+    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=ud2WzkKeDZs" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
+    <a class="btn sm" href="#hub">$ INSTALL SKILLS</a>
+  </div>
+  </div>
+</section>
+
+<section class="sec ep">
+  <div class="page">
+  <div class="hd">
+    <div class="num">EP 02</div>
+    <div class="stat">· MAY 2026 · 04 GUESTS · RUNTIME 2H 14M</div>
+  </div>
+  <h3>BUILDING AGENTS THAT IMPROVE THE WORKFLOW</h3>
+  <p class="hub-intro">Prompt refinement, eval-driven charts, human-in-the-loop EDA, and local-first inference.</p>
+  <div class="ytfacade" data-id="l37PR-OkYKA" data-start="4435" role="button" tabindex="0" aria-label="Play EP 02 - Building Agents That Improve the Workflow">
+    <img src="https://i.ytimg.com/vi/l37PR-OkYKA/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/l37PR-OkYKA/hqdefault.jpg'" alt="" loading="lazy">
+    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
+    <div class="ytcap"><b>EP 02 · BUILDING AGENTS THAT IMPROVE THE WORKFLOW</b> - prompt refinement, eval-driven charts, EDA, and local-first inference</div>
+  </div>
+  <div class="roster">
+    <a class="rcard" href="agent-skills/guests/hilary-mason/"><img src="show/avatars/hilary.png" alt="Hilary Mason"><div class="lbl">HILARY MASON<span class="co">hidden door</span></div></a>
+    <a class="rcard" href="agent-skills/guests/bryan-bischof/"><img src="show/avatars/bryan.png" alt="Bryan Bischof"><div class="lbl">BRYAN BISCHOF<span class="co">theory ventures</span></div></a>
+    <a class="rcard" href="agent-skills/guests/eric-ma/"><img src="show/avatars/eric.png" alt="Eric Ma"><div class="lbl">ERIC MA<span class="co">moderna</span></div></a>
+    <a class="rcard" href="agent-skills/guests/tomasz-tunguz/"><img src="show/avatars/tomasz.png" alt="Tomasz Tunguz"><div class="lbl">TOMASZ TUNGUZ<span class="co">theory ventures</span></div></a>
+  </div>
+  <div class="skillz">
+    <div class="hd2">▣ HIGHLIGHT REEL</div>
+    <div class="item">
+      <div class="idx">01</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/prompt-refinement" target="_blank" rel="noopener">prompt-refinement</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Interview intent first, then generate risky variants and score them against a rubric written before the run. · Hilary Mason</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=3660s" target="_blank" rel="noopener">01:01:00</a>
+    </div>
+    <div class="item">
+      <div class="idx">02</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/marimo-pair" target="_blank" rel="noopener">marimo-pair</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Drop the agent inside a live Marimo kernel, so plots, widgets, markdown, and corrections happen in one reactive notebook. · Eric Ma</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=717s" target="_blank" rel="noopener">00:11:57</a>
+    </div>
+    <div class="item">
+      <div class="idx">03</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/agentic-eda" target="_blank" rel="noopener">agentic-eda</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">The human chooses the next scientific question; the agent renders evidence fast enough to keep exploration one plot at a time. · Eric Ma</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=1407s" target="_blank" rel="noopener">00:23:27</a>
+    </div>
+    <div class="item">
+      <div class="idx">04</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/eval-driven-charts" target="_blank" rel="noopener">eval-driven-charts</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">Turn every failed chart eval into a library feature, so the package cannot regress on a case it already learned. · Bryan Bischof</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=5111s" target="_blank" rel="noopener">01:25:11</a>
+    </div>
+    <div class="item">
+      <div class="idx">05</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/weekly-gremlins" target="_blank" rel="noopener">weekly-gremlins</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">Schedule three bad-idea personas to pitch, critique, and write moonshot docs no product roadmap would allow. · Hilary Mason</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=4460s" target="_blank" rel="noopener">01:14:20</a>
+    </div>
+    <div class="item">
+      <div class="idx">06</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/local-first-agents" target="_blank" rel="noopener">local-first-agents</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">Default local: fast Qwen on a laptop, private workflows, offline flights, and cloud calls only for named exceptions. · Tomasz Tunguz</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=7662s" target="_blank" rel="noopener">02:07:42</a>
+    </div>
+  </div>
+  <div class="actions">
+    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=l37PR-OkYKA" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
+    <a class="btn sm" href="#hub">$ INSTALL SKILLS</a>
+  </div>
+  </div>
+</section>
+
+<section class="sec ep">
+  <div class="page">
+  <div class="hd">
+    <div class="num">EP 01</div>
+    <div class="stat">· APR 2026 · 03 GUESTS · RUNTIME 1H 32M</div>
+  </div>
+  <h3>THE AGENTIC SOFTWARE FACTORY</h3>
+  <p class="hub-intro">RoboRev, agent memory, personal commands, and LLM-as-judge chart checks.</p>
+  <div class="ytfacade" data-id="Pq3xuChdwxQ" data-start="614" role="button" tabindex="0" aria-label="Play EP 01 - The Agentic Software Factory">
+    <img src="https://i.ytimg.com/vi/Pq3xuChdwxQ/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/Pq3xuChdwxQ/hqdefault.jpg'" alt="" loading="lazy">
+    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
+    <div class="ytcap"><b>EP 01 · THE AGENTIC SOFTWARE FACTORY</b> - RoboRev, agent memory, personal commands, and LLM-as-judge checks</div>
+  </div>
+  <div class="roster three">
+    <a class="rcard" href="agent-skills/guests/wes-mckinney/"><img src="show/avatars/wes.jpg" alt="Wes McKinney"><div class="lbl">WES MCKINNEY<span class="co">pandas / posit</span></div></a>
+    <a class="rcard" href="agent-skills/guests/jeremiah-lowin/"><img src="show/avatars/jeremiah.png" alt="Jeremiah Lowin"><div class="lbl">JEREMIAH LOWIN<span class="co">prefect / fastmcp</span></div></a>
+    <a class="rcard" href="agent-skills/guests/randy-olson/"><img src="show/avatars/randy.png" alt="Randy Olson"><div class="lbl">RANDY OLSON<span class="co">goodeye labs</span></div></a>
+  </div>
+  <div class="skillz">
+    <div class="hd2">▣ HIGHLIGHT REEL</div>
+    <div class="item">
+      <div class="idx">01</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/explain" target="_blank" rel="noopener">explain</a> <span class="ttag skill">skill</span></div>
+        <div class="de">When ten agents are running, each one explains the change like a colleague, not a diff bot. · Jeremiah Lowin</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=2774s" target="_blank" rel="noopener">00:46:14</a>
+    </div>
+    <div class="item">
+      <div class="idx">02</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/github-reply" target="_blank" rel="noopener">github-reply</a> <span class="ttag skill">skill</span></div>
+        <div class="de">A tiny etiquette layer for OSS maintenance: reject clearly, sound human, and stop wrapping "no" in fake praise. · Jeremiah Lowin</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=3248s" target="_blank" rel="noopener">00:54:08</a>
+    </div>
+    <div class="item">
+      <div class="idx">03</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/ship-it" target="_blank" rel="noopener">ship-it</a> <span class="ttag skill">skill</span></div>
+        <div class="de">One phrase, one override: in Jeremiah's world "ship it" means open the PR, never merge it. · Jeremiah Lowin</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=3292s" target="_blank" rel="noopener">00:54:52</a>
+    </div>
+    <div class="item">
+      <div class="idx">04</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/high-signal-chart-workflow" target="_blank" rel="noopener">high-signal-chart-workflow</a> <span class="ttag skill">skill</span></div>
+        <div class="de">Run search, chart variants, linting, and an LLM-as-judge Tufte test until the graphic actually carries the story. · Randy Olson</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=4357s" target="_blank" rel="noopener">01:12:37</a>
+    </div>
+    <div class="item">
+      <div class="idx">05</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/8-bit-video-gen" target="_blank" rel="noopener">8-bit-video-gen</a> <span class="ttag skill">skill</span></div>
+        <div class="de">The show's own production skill: turn guest photos into pixel art, animate them, and feed the retro livestream system. · Show Us Your Agent Skills</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ" target="_blank" rel="noopener">ep 01</a>
+    </div>
+    <div class="item">
+      <div class="idx">06</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/agentic-software-factory" target="_blank" rel="noopener">agentic-software-factory</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">Scale agentic engineering with commits every turn, RoboRev reading every line, and a review queue agents must drain. · Wes McKinney</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=1634s" target="_blank" rel="noopener">00:27:14</a>
+    </div>
+    <div class="item">
+      <div class="idx">07</div>
+      <div>
+        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/second-brain" target="_blank" rel="noopener">second-brain</a> <span class="ttag workflow">workflow</span></div>
+        <div class="de">Feed daily voice memos into editable agent memory, turning personal context into a substrate future sessions can use. · Jeremiah Lowin</div>
+      </div>
+      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=2150s" target="_blank" rel="noopener">00:35:50</a>
+    </div>
+  </div>
+  <div class="actions">
+    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
+    <a class="btn sm" href="#hub">$ INSTALL SKILLS</a>
   </div>
   </div>
 </section>
@@ -913,287 +1240,6 @@ a.rcard:hover {
       <span class="av"><img src="show/avatars/randy.png" alt="Randy Olson"></span>
       <span><span class="nm">RANDY OLSON</span><span class="ep">EP 01</span><span class="de">Tufte checks, chart workflows, and LLM-as-judge review</span></span>
     </a>
-  </div>
-  </div>
-</section>
-
-<!-- PAST EPISODES -->
-<section class="sec ep" id="past">
-  <div class="page">
-  <div class="hd">
-    <div class="num">EP 04</div>
-    <div class="stat">· MAY 2026 · FULL EPISODE ON YOUTUBE · HIGHLIGHT REEL SOON</div>
-  </div>
-  <h3>EVALS, SEARCH &amp; SPORTS</h3>
-  <p class="hub-intro">Three builders on LLM evals, search relevance, and Bayesian sports modelling — the real workflows they run.</p>
-  <div class="ytfacade" data-id="XaYQFtca798" data-start="0" role="button" tabindex="0" aria-label="Play EP 04 — Evals, Search &amp; Sports">
-    <img src="https://i.ytimg.com/vi/XaYQFtca798/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/XaYQFtca798/hqdefault.jpg'" alt="" loading="lazy">
-    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
-    <div class="ytcap"><b>EP 04 · EVALS, SEARCH &amp; SPORTS</b> — three builders on evals, search relevance, and Bayesian sports modelling</div>
-  </div>
-  <div class="roster three">
-    <a class="rcard" href="agent-skills/guests/hamel-husain/"><img src="show/avatars/hamel.png" alt="Hamel Husain"><span class="dossier-tag">DOSSIER</span><div class="lbl">HAMEL HUSAIN<span class="co">parlance labs</span></div></a>
-    <a class="rcard" href="agent-skills/guests/chris-fonnesbeck/"><img src="show/avatars/chris.png" alt="Chris Fonnesbeck"><span class="dossier-tag">DOSSIER</span><div class="lbl">CHRIS FONNESBECK<span class="co">pymc labs · mets / brewers / yankees</span></div></a>
-    <a class="rcard" href="agent-skills/guests/doug-turnbull/"><img src="show/avatars/doug.png" alt="Doug Turnbull"><span class="dossier-tag">DOSSIER</span><div class="lbl">DOUG TURNBULL<span class="co">search · shopify / reddit</span></div></a>
-  </div>
-  <div class="skillz">
-    <div class="hd2">▣ HIGHLIGHT REEL</div>
-    <div class="coming">
-      <b>Guest dossiers are live:</b> <a href="agent-skills/guests/hamel-husain/">Hamel Husain</a>, <a href="agent-skills/guests/chris-fonnesbeck/">Chris Fonnesbeck</a>, and <a href="agent-skills/guests/doug-turnbull/">Doug Turnbull</a>. Companion repo packages and highlight links can keep landing as they are ready.
-    </div>
-  </div>
-  <div class="actions">
-    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=XaYQFtca798" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
-  </div>
-  </div>
-</section>
-
-<section class="sec ep">
-  <div class="page">
-  <div class="hd">
-    <div class="num">EP 03</div>
-    <div class="stat">· MAY 2026 · RUNTIME 3H 18M · 22 SKILLS · 30 WORKFLOWS</div>
-  </div>
-  <h3>GOING TO EUROPE</h3>
-  <p class="hub-intro">Long-time European builders show their real agent setups: agent skills, harnesses, and the workflows they actually run.</p>
-  <div class="ytfacade" data-id="ud2WzkKeDZs" data-start="0" role="button" tabindex="0" aria-label="Play EP 03 — Going to Europe">
-    <img src="https://i.ytimg.com/vi/ud2WzkKeDZs/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/ud2WzkKeDZs/hqdefault.jpg'" alt="" loading="lazy">
-    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
-    <div class="ytcap"><b>EP 03 · GOING TO EUROPE</b> — long-time European builders on their real agent setups</div>
-  </div>
-  <div class="roster wrap">
-    <a class="rcard" href="agent-skills/guests/paul-iusztin/"><img src="show/avatars/paul.png" alt="Paul Iusztin"><span class="dossier-tag">DOSSIER</span><div class="lbl">PAUL IUSZTIN<span class="co">decoding ai</span></div></a>
-    <a class="rcard" href="agent-skills/guests/eleanor-berger/"><img src="show/avatars/eleanor.png" alt="Eleanor Berger"><span class="dossier-tag">DOSSIER</span><div class="lbl">ELEANOR BERGER<span class="co">elite ai coding</span></div></a>
-    <a class="rcard" href="agent-skills/guests/alan-nichol/"><img src="show/avatars/alan.png" alt="Alan Nichol"><span class="dossier-tag">DOSSIER</span><div class="lbl">ALAN NICHOL<span class="co">rasa</span></div></a>
-    <a class="rcard" href="agent-skills/guests/vincent-warmerdam/"><img src="show/avatars/vincent.png" alt="Vincent Warmerdam"><span class="dossier-tag">DOSSIER</span><div class="lbl">VINCENT WARMERDAM<span class="co">marimo</span></div></a>
-    <a class="rcard" href="agent-skills/guests/nicolay-gerold/"><img src="show/avatars/nicolay.png" alt="Nicolay Gerold"><span class="dossier-tag">DOSSIER</span><div class="lbl">NICOLAY GEROLD<span class="co">amp</span></div></a>
-    <a class="rcard" href="agent-skills/guests/matthew-honnibal/"><img src="show/avatars/honnibal.png" alt="Matthew Honnibal"><span class="dossier-tag">DOSSIER</span><div class="lbl">MATTHEW HONNIBAL<span class="co">spacy / explosion</span></div></a>
-    <div class="rcard"><img src="show/avatars/ines.png" alt="Ines Montani"><div class="lbl">INES MONTANI<span class="co">spacy / explosion</span></div></div>
-  </div>
-  <div class="skillz">
-    <div class="hd2">▣ HIGHLIGHT REEL</div>
-    <div class="item">
-      <div class="idx">01</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/try-except" target="_blank" rel="noopener">try-except</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Reads a Python codebase and tightens every <i>try/except</i> so the <i>try</i> covers only what can fail and the <i>except</i> catches the right exception. · Matthew Honnibal</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=729s" target="_blank" rel="noopener">00:12:09</a>
-    </div>
-    <div class="item">
-      <div class="idx">02</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/pre-mortem" target="_blank" rel="noopener">pre-mortem</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Reads production code, finds where it is fragile, and writes post-mortems for bugs that have not happened yet but a plausible change could introduce. · Matthew Honnibal</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=850s" target="_blank" rel="noopener">00:14:10</a>
-    </div>
-    <div class="item">
-      <div class="idx">03</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/mutation-testing" target="_blank" rel="noopener">mutation-testing</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Measures test-suite strength by introducing deliberate bugs one at a time and reporting which ones no test caught. · Matthew Honnibal</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=850s" target="_blank" rel="noopener">00:14:10</a>
-    </div>
-    <div class="item">
-      <div class="idx">04</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/here-now" target="_blank" rel="noopener">here-now</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Publishes HTML pages, files, and whole sites to live URLs without leaving the terminal. · Eleanor Berger</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=2755s" target="_blank" rel="noopener">00:45:55</a>
-    </div>
-    <div class="item">
-      <div class="idx">05</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/anki-connect" target="_blank" rel="noopener">anki-connect</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Drives Anki through the AnkiConnect API, gating every note- or card-modifying operation behind explicit confirmation. · Eleanor Berger</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=2986s" target="_blank" rel="noopener">00:49:46</a>
-    </div>
-    <div class="item">
-      <div class="idx">06</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/impeccable" target="_blank" rel="noopener">impeccable</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Hands a coding agent a full frontend design language so it builds production-grade interfaces instead of generic ones. · Eleanor Berger</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=3002s" target="_blank" rel="noopener">00:50:02</a>
-    </div>
-    <div class="item">
-      <div class="idx">07</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/youtube-watch-later-gist-summaries" target="_blank" rel="noopener">youtube-watch-later-gist-summaries</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Reads your YouTube Watch Later playlist, summarises every video from its transcript, and publishes each summary as a secret gist. · Eleanor Berger</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=3177s" target="_blank" rel="noopener">00:52:57</a>
-    </div>
-    <div class="item">
-      <div class="idx">08</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/thread-postmortem" target="_blank" rel="noopener">thread-postmortem</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Introspects a thread that went sideways, traces each misstep to the instruction behind it, and proposes edits biased toward deletion. · Nicolay Gerold</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=7144s" target="_blank" rel="noopener">01:59:04</a>
-    </div>
-    <div class="item">
-      <div class="idx">09</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/remotion-video" target="_blank" rel="noopener">remotion-video</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Encodes a builder's design judgment for programmatic video, so Claude turns a few minutes of recorded audio into a finished explainer. · Alan Nichol</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=9960s" target="_blank" rel="noopener">02:46:00</a>
-    </div>
-    <div class="coming">
-      <b>Still to come from this episode:</b> Paul Iusztin's <i>writing loop</i> — diff a hand-edit against the agent's draft, extract the signal, and fold it back into a markdown style profile the agent reads next time — plus Vincent Warmerdam on <i>notebooks as a shared canvas</i> for humans and agents (his marimo-pair skill already shipped in EP 02).
-    </div>
-  </div>
-  <div class="actions">
-    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=ud2WzkKeDZs" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
-    <a class="btn sm" href="#hub">$ INSTALL SKILLS</a>
-  </div>
-  </div>
-</section>
-
-<section class="sec ep">
-  <div class="page">
-  <div class="hd">
-    <div class="num">EP 02</div>
-    <div class="stat">· MAY 2026 · RUNTIME 2H 14M · 05 SKILLS · 28 WORKFLOWS</div>
-  </div>
-  <h3>HIDDEN DOORS, EVAL-DRIVEN CHARTS &amp; LOCAL-FIRST INFERENCE</h3>
-  <p class="hub-intro">Not vibe coding — four builders, four ways to put scaffolding around an agent. Hilary's weekly gremlins, Bryan's eval-driven chart library, Eric's human-in-the-loop EDA in Marimo, and Tom's local-first inference at 120 t/s on Qwen 35B.</p>
-  <div class="ytfacade" data-id="l37PR-OkYKA" data-start="4435" role="button" tabindex="0" aria-label="Play EP 02 — Hilary Mason on cron-scheduled agents for bad ideas">
-    <img src="https://i.ytimg.com/vi/l37PR-OkYKA/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/l37PR-OkYKA/hqdefault.jpg'" alt="" loading="lazy">
-    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
-    <div class="ytcap"><b>EP 02 · HILARY MASON</b> — gremlins: cron-scheduled agents for bad ideas</div>
-  </div>
-  <div class="roster">
-    <a class="rcard" href="agent-skills/guests/hilary-mason/"><img src="show/avatars/hilary.png" alt="Hilary Mason"><span class="dossier-tag">DOSSIER</span><div class="lbl">HILARY MASON<span class="co">hidden door</span></div></a>
-    <a class="rcard" href="agent-skills/guests/bryan-bischof/"><img src="show/avatars/bryan.png" alt="Bryan Bischof"><span class="dossier-tag">DOSSIER</span><div class="lbl">BRYAN BISCHOF<span class="co">theory ventures</span></div></a>
-    <a class="rcard" href="agent-skills/guests/eric-ma/"><img src="show/avatars/eric.png" alt="Eric Ma"><span class="dossier-tag">DOSSIER</span><div class="lbl">ERIC MA<span class="co">moderna</span></div></a>
-    <a class="rcard" href="agent-skills/guests/tomasz-tunguz/"><img src="show/avatars/tomasz.png" alt="Tomasz Tunguz"><span class="dossier-tag">DOSSIER</span><div class="lbl">TOMASZ TUNGUZ<span class="co">theory ventures</span></div></a>
-  </div>
-  <div class="skillz">
-    <div class="hd2">▣ HIGHLIGHT REEL</div>
-    <div class="item">
-      <div class="idx">01</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/prompt-refinement" target="_blank" rel="noopener">prompt-refinement</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Interview the user's intent, ask for three variations at different magnitudes of change, score against a rubric you wrote up front. · Hilary Mason</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=3660s" target="_blank" rel="noopener">01:01:00</a>
-    </div>
-    <div class="item">
-      <div class="idx">02</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/marimo-pair" target="_blank" rel="noopener">marimo-pair</a> <span class="ttag skill">skill</span></div>
-        <div class="de">A coding agent drives a reactive Marimo notebook through a bash bridge into the Python kernel, for human-in-the-loop EDA. · Eric Ma</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=717s" target="_blank" rel="noopener">00:11:57</a>
-    </div>
-    <div class="item">
-      <div class="idx">03</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/agentic-eda" target="_blank" rel="noopener">agentic-eda</a> <span class="ttag workflow">workflow</span></div>
-        <div class="de">Human-in-the-loop EDA: agent renders the next plot, human picks the next question, every claim backed by an artifact. · Eric Ma</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=1407s" target="_blank" rel="noopener">00:23:27</a>
-    </div>
-    <div class="item">
-      <div class="idx">04</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/eval-driven-charts" target="_blank" rel="noopener">eval-driven-charts</a> <span class="ttag workflow">workflow</span></div>
-        <div class="de">Build an agent-facing chart library by generalising eval failures into features; the package can never regress on an eval it once passed. · Bryan Bischof</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=5111s" target="_blank" rel="noopener">01:25:11</a>
-    </div>
-    <div class="item">
-      <div class="idx">05</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/workflows/weekly-gremlins" target="_blank" rel="noopener">weekly-gremlins</a> <span class="ttag workflow">workflow</span></div>
-        <div class="de">Three agent personas pull from a bad-ideas backlog, pitch and critique each other, and write design docs for moonshots no roadmap would schedule. · Hilary Mason</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=l37PR-OkYKA&t=4460s" target="_blank" rel="noopener">01:14:20</a>
-    </div>
-    <div class="coming">
-      <b>Still to come from this episode:</b> Tom Tunguz's <i>public-company financial analysis skill</i> — local Qwen 35B pulls earnings data and assembles an HTML walkthrough in ~2.5 minutes — plus the <i>local-first inference</i> stack it sits on.
-    </div>
-  </div>
-  <div class="actions">
-    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=l37PR-OkYKA" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
-    <a class="btn sm" href="#hub">$ INSTALL SKILLS</a>
-  </div>
-  </div>
-</section>
-
-<section class="sec ep">
-  <div class="page">
-  <div class="hd">
-    <div class="num">EP 01</div>
-    <div class="stat">· APR 2026 · RUNTIME 1H 32M · 07 SKILLS · 10 WORKFLOWS</div>
-  </div>
-  <h3>ROBOREV, THE LOST ART OF VERIFICATION &amp; VOICE-MEMO MEMORY</h3>
-  <p class="hub-intro">Three builders, three layers of structure around an agent. Wes's RoboRev daemon reviewing every commit at ~1.3B tokens/day, Jeremiah's personal skill folder bending agents to his voice and verb vocabulary, and Randy's LLM-as-judge verifier loop encoding Tufte's rules into a daily chart-making skill.</p>
-  <div class="ytfacade" data-id="Pq3xuChdwxQ" data-start="614" role="button" tabindex="0" aria-label="Play EP 01 — Wes McKinney on the agentic engineering stack">
-    <img src="https://i.ytimg.com/vi/Pq3xuChdwxQ/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/Pq3xuChdwxQ/hqdefault.jpg'" alt="" loading="lazy">
-    <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
-    <div class="ytcap"><b>EP 01 · WES MCKINNEY</b> — a million lines of code in six months: spicytakes.org &amp; the agentic engineering stack</div>
-  </div>
-  <div class="roster three">
-    <a class="rcard" href="agent-skills/guests/wes-mckinney/"><img src="show/avatars/wes.jpg" alt="Wes McKinney"><span class="dossier-tag">DOSSIER</span><div class="lbl">WES MCKINNEY<span class="co">pandas / posit</span></div></a>
-    <a class="rcard" href="agent-skills/guests/jeremiah-lowin/"><img src="show/avatars/jeremiah.png" alt="Jeremiah Lowin"><span class="dossier-tag">DOSSIER</span><div class="lbl">JEREMIAH LOWIN<span class="co">prefect / fastmcp</span></div></a>
-    <a class="rcard" href="agent-skills/guests/randy-olson/"><img src="show/avatars/randy.png" alt="Randy Olson"><span class="dossier-tag">DOSSIER</span><div class="lbl">RANDY OLSON<span class="co">goodeye labs</span></div></a>
-  </div>
-  <div class="skillz">
-    <div class="hd2">▣ HIGHLIGHT REEL</div>
-    <div class="item">
-      <div class="idx">01</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/explain" target="_blank" rel="noopener">explain</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Agent narrates what it just did, like a teammate handing off. · Jeremiah Lowin</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=2774s" target="_blank" rel="noopener">00:46:14</a>
-    </div>
-    <div class="item">
-      <div class="idx">02</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/github-reply" target="_blank" rel="noopener">github-reply</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Replies to GitHub contributors in your voice, no "Great work, but rejected" sandwiches. · Jeremiah Lowin</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=3248s" target="_blank" rel="noopener">00:54:08</a>
-    </div>
-    <div class="item">
-      <div class="idx">03</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/ship-it" target="_blank" rel="noopener">ship-it</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Re-trains "ship it" to mean <i>open a PR</i>, not merge. · Jeremiah Lowin</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=3292s" target="_blank" rel="noopener">00:54:52</a>
-    </div>
-    <div class="item">
-      <div class="idx">04</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/high-signal-chart-workflow" target="_blank" rel="noopener">high-signal-chart-workflow</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Turns a one-line idea into a Tufte-style chart, with an LLM-as-judge verifier loop. · Randy Olson</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ&t=4357s" target="_blank" rel="noopener">01:12:37</a>
-    </div>
-    <div class="item">
-      <div class="idx">05</div>
-      <div>
-        <div class="nm"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/8-bit-video-gen" target="_blank" rel="noopener">8-bit-video-gen</a> <span class="ttag skill">skill</span></div>
-        <div class="de">Turns guest headshots into short 8-bit pixel-art video clips for livestream intros and cutaways. · Show Us Your Agent Skills</div>
-      </div>
-      <a class="ts" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ" target="_blank" rel="noopener">ep 01</a>
-    </div>
-    <div class="coming">
-      <b>Still to come from this episode:</b> Wes McKinney's stack writeup — <i>agents reviewing agents</i> (every commit read by agents 4–5 times before merge), <i>a fleet of long-running Superpowers sessions</i> (one ran 14 hours and 45 tasks unattended), and <i>"off the rails?" review</i> (no line-level reading, just whether the agent strayed structurally).
-    </div>
-  </div>
-  <div class="actions">
-    <a class="btn sm cyan" href="https://www.youtube.com/watch?v=Pq3xuChdwxQ" target="_blank" rel="noopener">▶ WATCH ON YOUTUBE</a>
-    <a class="btn sm" href="#hub">$ INSTALL SKILLS</a>
   </div>
   </div>
 </section>
