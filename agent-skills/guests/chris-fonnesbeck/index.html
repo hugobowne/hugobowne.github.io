@@ -3,6 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  var newBase = "https://hugobowne.github.io/show-us-your-agent-skills/";
+  var rest = window.location.pathname.replace(/^\/agent-skills\/?/, "").replace(/^\/+/, "");
+  var target = new URL(rest ? "agent-skills/" + rest : "", newBase);
+  target.search = window.location.search;
+  target.hash = window.location.hash;
+  window.location.replace(target.href);
+}());
+</script>
 <title>Chris Fonnesbeck · Show Us Your Agent Skills</title>
 <meta name="description" content="Chris Fonnesbeck's Show Us Your Agent Skills dossier: a review loop of two local Pi skills that audit an agent's plan and then its code for red and yellow flags before he accepts the work.">
 <meta name="author" content="Hugo Bowne-Anderson">

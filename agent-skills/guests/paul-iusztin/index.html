@@ -3,6 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  var newBase = "https://hugobowne.github.io/show-us-your-agent-skills/";
+  var rest = window.location.pathname.replace(/^\/agent-skills\/?/, "").replace(/^\/+/, "");
+  var target = new URL(rest ? "agent-skills/" + rest : "", newBase);
+  target.search = window.location.search;
+  target.hash = window.location.hash;
+  window.location.replace(target.href);
+}());
+</script>
 <title>Paul Iusztin · Show Us Your Agent Skills</title>
 <meta name="description" content="Paul Iusztin's Show Us Your Agent Skills dossier: a personalized, compounding research wiki over his second brain that feeds a writing pipeline drafting in his voice, plus the skill suite and the diff loop that retunes his writing profiles from his own edits.">
 <meta name="author" content="Hugo Bowne-Anderson">

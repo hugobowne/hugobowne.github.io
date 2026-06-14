@@ -3,6 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  var newBase = "https://hugobowne.github.io/show-us-your-agent-skills/";
+  var rest = window.location.pathname.replace(/^\/agent-skills\/?/, "").replace(/^\/+/, "");
+  var target = new URL(rest ? "agent-skills/" + rest : "", newBase);
+  target.search = window.location.search;
+  target.hash = window.location.hash;
+  window.location.replace(target.href);
+}());
+</script>
 <title>Vincent Warmerdam · Show Us Your Agent Skills</title>
 <meta name="description" content="Vincent Warmerdam's Show Us Your Agent Skills dossier: notebooks as a shared canvas for human understanding and agent work, with live state, interactive controls, docs, and runtime variables.">
 <meta name="author" content="Hugo Bowne-Anderson">

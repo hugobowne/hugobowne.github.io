@@ -3,6 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  var newBase = "https://hugobowne.github.io/show-us-your-agent-skills/";
+  var rest = window.location.pathname.replace(/^\/agent-skills\/?/, "").replace(/^\/+/, "");
+  var target = new URL(rest ? "agent-skills/" + rest : "", newBase);
+  target.search = window.location.search;
+  target.hash = window.location.hash;
+  window.location.replace(target.href);
+}());
+</script>
 <title>Nicolay Gerold · Show Us Your Agent Skills</title>
 <meta name="description" content="Nicolay Gerold's Show Us Your Agent Skills dossier: he wires the agent its own debug views, logs, Tmux, a focus inspector, so it gathers evidence and finds the root cause before it touches code. Plus thread-postmortem, the skill that debugs his instructions, not his code.">
 <meta name="author" content="Hugo Bowne-Anderson">

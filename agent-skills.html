@@ -3,6 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  var newBase = "https://hugobowne.github.io/show-us-your-agent-skills/";
+  var rest = window.location.pathname.replace(/^\/agent-skills\/?/, "").replace(/^\/+/, "");
+  var target = new URL(rest ? "agent-skills/" + rest : "", newBase);
+  target.search = window.location.search;
+  target.hash = window.location.hash;
+  window.location.replace(target.href);
+}());
+</script>
 <title>Show Us Your Agent Skills · Hugo Bowne-Anderson</title>
 <meta name="description" content="Long-time Python, ML, and AI builders show how they're actually using agents today — real workflows, agent skills, harnesses. Vanishing Gradients × PyMC Labs, live on YouTube.">
 <meta name="author" content="Hugo Bowne-Anderson">

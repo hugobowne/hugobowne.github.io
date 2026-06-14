@@ -3,6 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  var newBase = "https://hugobowne.github.io/show-us-your-agent-skills/";
+  var rest = window.location.pathname.replace(/^\/agent-skills\/?/, "").replace(/^\/+/, "");
+  var target = new URL(rest ? "agent-skills/" + rest : "", newBase);
+  target.search = window.location.search;
+  target.hash = window.location.hash;
+  window.location.replace(target.href);
+}());
+</script>
 <title>Tomasz Tunguz · Show Us Your Agent Skills</title>
 <meta name="description" content="Tomasz Tunguz's Show Us Your Agent Skills dossier: local-first agents. Default to a local model and a harness stripped to the bone; reach for the cloud only when you can name the reason.">
 <meta name="author" content="Hugo Bowne-Anderson">
