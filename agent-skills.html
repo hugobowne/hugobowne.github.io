@@ -424,8 +424,15 @@ body::before {
 .roster.wrap { display: flex; flex-wrap: wrap; justify-content: center; }
 .roster.wrap .rcard { flex: 0 0 calc(25% - 9px); }
 .rcard {
+  display: block;
   background: var(--bg-2); border: 2px solid var(--line-2);
   aspect-ratio: 1 / 1.05; position: relative; overflow: hidden;
+  transition: border-color .15s, transform .15s, box-shadow .15s;
+}
+a.rcard:hover {
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--magenta);
 }
 .rcard img { width: 100%; height: 100%; object-fit: cover; }
 .rcard .ph {
@@ -443,6 +450,49 @@ body::before {
   border-top: 2px solid var(--magenta); letter-spacing: 0; line-height: 1.4;
 }
 .rcard .lbl .co { color: var(--cyan); display: block; margin-top: 2px; }
+.rcard .dossier-tag {
+  position: absolute; top: 8px; right: 8px;
+  font-family: "Press Start 2P", monospace; font-size: 7px;
+  color: #0a0a10; background: var(--cyan);
+  padding: 5px 6px; letter-spacing: 0;
+  box-shadow: 3px 3px 0 var(--magenta);
+}
+
+/* ─── guest dossiers ─── */
+.dossier-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.dossier-card {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; align-items: center;
+  background: var(--bg-2); border: 2px solid var(--line);
+  padding: 12px;
+  transition: border-color .15s, transform .15s, box-shadow .15s;
+}
+.dossier-card:hover {
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--magenta);
+}
+.dossier-card .av {
+  width: 72px; height: 72px;
+  border: 2px solid var(--magenta);
+  overflow: hidden; background: var(--bg-3);
+}
+.dossier-card .av img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+.dossier-card .nm {
+  display: block;
+  font-family: "Press Start 2P", monospace; font-size: 8px;
+  color: var(--fg); line-height: 1.5; letter-spacing: 0;
+}
+.dossier-card .ep {
+  display: inline-block; margin: 6px 0;
+  font-family: "Press Start 2P", monospace; font-size: 7px;
+  color: #0a0a10; background: var(--cyan);
+  padding: 4px 5px; letter-spacing: 0;
+}
+.dossier-card .de {
+  display: block;
+  font-family: "JetBrains Mono", monospace; font-size: 11px;
+  color: var(--fg-3); line-height: 1.45;
+}
 .skillz { background: var(--bg-2); border: 2px solid var(--line); padding: 22px 24px; margin-bottom: 24px; }
 .skillz .hd2 {
   font-family: "Press Start 2P", monospace; font-size: 11px;
@@ -670,6 +720,7 @@ body::before {
   .lineup, .lineup.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .roster, .roster.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .roster.wrap .rcard { flex-basis: calc(50% - 6px); }
+  .dossier-grid { grid-template-columns: minmax(0, 1fr); }
   .lineup.text .tcard { flex-basis: calc(50% - 6px); }
   .lineup.three .lcard { flex-basis: calc(50% - 6px); }
   .stats .v { font-size: 20px; }
@@ -698,6 +749,7 @@ body::before {
   .ep .hd .num { font-size: 20px; }
   .nextup .badge, .nextup .hd .date { font-size: 10px; }
   .soonafter .bar .label, .soonafter .bar .date { font-size: 9px; }
+  .dossier-grid { grid-template-columns: minmax(0, 1fr); }
 }
 </style>
 </head>
@@ -746,6 +798,7 @@ body::before {
   <div class="ctas">
     <a class="btn" href="https://luma.com/0t8kiodw" target="_blank" rel="noopener">▶ PRESS START · EP 05</a>
     <a class="btn cyan" href="#past">▣ WATCH PAST EPISODES</a>
+    <a class="btn" href="#dossiers">▣ GUEST DOSSIERS</a>
   </div>
   </div>
 </section>
@@ -790,6 +843,80 @@ body::before {
   </div>
 </section>
 
+<!-- GUEST DOSSIERS -->
+<section class="sec" id="dossiers">
+  <div class="page">
+  <h2>GUEST <span class="br">DOSSIERS</span></h2>
+  <div class="sub">one page per builder: segment video, field notes, artifacts, and the workflow they showed</div>
+  <div class="dossier-grid">
+    <a class="dossier-card" href="agent-skills/guests/hamel-husain/">
+      <span class="av"><img src="show/avatars/hamel.png" alt="Hamel Husain"></span>
+      <span><span class="nm">HAMEL HUSAIN</span><span class="ep">EP 04</span><span class="de">skill scepticism, internal APIs, and constraints over prose</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/chris-fonnesbeck/">
+      <span class="av"><img src="show/avatars/chris.png" alt="Chris Fonnesbeck"></span>
+      <span><span class="nm">CHRIS FONNESBECK</span><span class="ep">EP 04</span><span class="de">review loops for Bayesian modeling and agent-written code</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/doug-turnbull/">
+      <span class="av"><img src="show/avatars/doug.png" alt="Doug Turnbull"></span>
+      <span><span class="nm">DOUG TURNBULL</span><span class="ep">EP 04</span><span class="de">agentic search, hidden validation, and anti-overfit evals</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/paul-iusztin/">
+      <span class="av"><img src="show/avatars/paul.png" alt="Paul Iusztin"></span>
+      <span><span class="nm">PAUL IUSZTIN</span><span class="ep">EP 03</span><span class="de">research skills, trusted sources, and a writing knowledge base</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/eleanor-berger/">
+      <span class="av"><img src="show/avatars/eleanor.png" alt="Eleanor Berger"></span>
+      <span><span class="nm">ELEANOR BERGER</span><span class="ep">EP 03</span><span class="de">Hermes, fnord, local boxes, and agent boundaries</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/alan-nichol/">
+      <span class="av"><img src="show/avatars/alan.png" alt="Alan Nichol"></span>
+      <span><span class="nm">ALAN NICHOL</span><span class="ep">EP 03</span><span class="de">programmatic video, Remotion, and command-line production</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/vincent-warmerdam/">
+      <span class="av"><img src="show/avatars/vincent.png" alt="Vincent Warmerdam"></span>
+      <span><span class="nm">VINCENT WARMERDAM</span><span class="ep">EP 03</span><span class="de">marimo pair, widgets, and notebooks as shared state</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/nicolay-gerold/">
+      <span class="av"><img src="show/avatars/nicolay.png" alt="Nicolay Gerold"></span>
+      <span><span class="nm">NICOLAY GEROLD</span><span class="ep">EP 03</span><span class="de">debug surfaces, thread postmortems, and reusable context</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/matthew-honnibal/">
+      <span class="av"><img src="show/avatars/honnibal.png" alt="Matthew Honnibal"></span>
+      <span><span class="nm">MATTHEW HONNIBAL</span><span class="ep">EP 03</span><span class="de">try-except repair, mutation testing, and self-review loops</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/hilary-mason/">
+      <span class="av"><img src="show/avatars/hilary.png" alt="Hilary Mason"></span>
+      <span><span class="nm">HILARY MASON</span><span class="ep">EP 02</span><span class="de">prompt refinement, weekly gremlins, and taste loops</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/bryan-bischof/">
+      <span class="av"><img src="show/avatars/bryan.png" alt="Bryan Bischof"></span>
+      <span><span class="nm">BRYAN BISCHOF</span><span class="ep">EP 02</span><span class="de">eval-driven charts, ratchets, and chart judgment</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/eric-ma/">
+      <span class="av"><img src="show/avatars/eric.png" alt="Eric Ma"></span>
+      <span><span class="nm">ERIC MA</span><span class="ep">EP 02</span><span class="de">agentic EDA, marimo, and human-in-the-loop plots</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/tomasz-tunguz/">
+      <span class="av"><img src="show/avatars/tomasz.png" alt="Tomasz Tunguz"></span>
+      <span><span class="nm">TOMASZ TUNGUZ</span><span class="ep">EP 02</span><span class="de">local-first agents, earnings analysis, and fast local models</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/wes-mckinney/">
+      <span class="av"><img src="show/avatars/wes.jpg" alt="Wes McKinney"></span>
+      <span><span class="nm">WES MCKINNEY</span><span class="ep">EP 01</span><span class="de">RoboRev, long-running agents, and agentic engineering</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/jeremiah-lowin/">
+      <span class="av"><img src="show/avatars/jeremiah.png" alt="Jeremiah Lowin"></span>
+      <span><span class="nm">JEREMIAH LOWIN</span><span class="ep">EP 01</span><span class="de">personal software, explain, ship-it, and GitHub replies</span></span>
+    </a>
+    <a class="dossier-card" href="agent-skills/guests/randy-olson/">
+      <span class="av"><img src="show/avatars/randy.png" alt="Randy Olson"></span>
+      <span><span class="nm">RANDY OLSON</span><span class="ep">EP 01</span><span class="de">Tufte checks, chart workflows, and LLM-as-judge review</span></span>
+    </a>
+  </div>
+  </div>
+</section>
+
 <!-- PAST EPISODES -->
 <section class="sec ep" id="past">
   <div class="page">
@@ -805,14 +932,14 @@ body::before {
     <div class="ytcap"><b>EP 04 · EVALS, SEARCH &amp; SPORTS</b> — three builders on evals, search relevance, and Bayesian sports modelling</div>
   </div>
   <div class="roster three">
-    <div class="rcard"><img src="show/avatars/hamel.png" alt="Hamel Husain"><div class="lbl">HAMEL HUSAIN<span class="co">parlance labs</span></div></div>
-    <div class="rcard"><img src="show/avatars/chris.png" alt="Chris Fonnesbeck"><div class="lbl">CHRIS FONNESBECK<span class="co">pymc labs · mets / brewers / yankees</span></div></div>
-    <div class="rcard"><img src="show/avatars/doug.png" alt="Doug Turnbull"><div class="lbl">DOUG TURNBULL<span class="co">search · shopify / reddit</span></div></div>
+    <a class="rcard" href="agent-skills/guests/hamel-husain/"><img src="show/avatars/hamel.png" alt="Hamel Husain"><span class="dossier-tag">DOSSIER</span><div class="lbl">HAMEL HUSAIN<span class="co">parlance labs</span></div></a>
+    <a class="rcard" href="agent-skills/guests/chris-fonnesbeck/"><img src="show/avatars/chris.png" alt="Chris Fonnesbeck"><span class="dossier-tag">DOSSIER</span><div class="lbl">CHRIS FONNESBECK<span class="co">pymc labs · mets / brewers / yankees</span></div></a>
+    <a class="rcard" href="agent-skills/guests/doug-turnbull/"><img src="show/avatars/doug.png" alt="Doug Turnbull"><span class="dossier-tag">DOSSIER</span><div class="lbl">DOUG TURNBULL<span class="co">search · shopify / reddit</span></div></a>
   </div>
   <div class="skillz">
     <div class="hd2">▣ HIGHLIGHT REEL</div>
     <div class="coming">
-      <b>Coming soon:</b> the skills and workflows from this episode, packaged into the companion repo with repo links and timestamps — same as EP 01 &amp; EP 02. <i>Subscribe to get them when they land.</i>
+      <b>Guest dossiers are live:</b> <a href="agent-skills/guests/hamel-husain/">Hamel Husain</a>, <a href="agent-skills/guests/chris-fonnesbeck/">Chris Fonnesbeck</a>, and <a href="agent-skills/guests/doug-turnbull/">Doug Turnbull</a>. Companion repo packages and highlight links can keep landing as they are ready.
     </div>
   </div>
   <div class="actions">
@@ -835,12 +962,12 @@ body::before {
     <div class="ytcap"><b>EP 03 · GOING TO EUROPE</b> — long-time European builders on their real agent setups</div>
   </div>
   <div class="roster wrap">
-    <div class="rcard"><img src="show/avatars/paul.png" alt="Paul Iusztin"><div class="lbl">PAUL IUSZTIN<span class="co">decoding ai</span></div></div>
-    <div class="rcard"><img src="show/avatars/eleanor.png" alt="Eleanor Berger"><div class="lbl">ELEANOR BERGER<span class="co">elite ai coding</span></div></div>
-    <div class="rcard"><img src="show/avatars/alan.png" alt="Alan Nichol"><div class="lbl">ALAN NICHOL<span class="co">rasa</span></div></div>
-    <div class="rcard"><img src="show/avatars/vincent.png" alt="Vincent Warmerdam"><div class="lbl">VINCENT WARMERDAM<span class="co">marimo</span></div></div>
-    <div class="rcard"><img src="show/avatars/nicolay.png" alt="Nicolay Gerold"><div class="lbl">NICOLAY GEROLD<span class="co">amp</span></div></div>
-    <div class="rcard"><img src="show/avatars/honnibal.png" alt="Matthew Honnibal"><div class="lbl">MATTHEW HONNIBAL<span class="co">spacy / explosion</span></div></div>
+    <a class="rcard" href="agent-skills/guests/paul-iusztin/"><img src="show/avatars/paul.png" alt="Paul Iusztin"><span class="dossier-tag">DOSSIER</span><div class="lbl">PAUL IUSZTIN<span class="co">decoding ai</span></div></a>
+    <a class="rcard" href="agent-skills/guests/eleanor-berger/"><img src="show/avatars/eleanor.png" alt="Eleanor Berger"><span class="dossier-tag">DOSSIER</span><div class="lbl">ELEANOR BERGER<span class="co">elite ai coding</span></div></a>
+    <a class="rcard" href="agent-skills/guests/alan-nichol/"><img src="show/avatars/alan.png" alt="Alan Nichol"><span class="dossier-tag">DOSSIER</span><div class="lbl">ALAN NICHOL<span class="co">rasa</span></div></a>
+    <a class="rcard" href="agent-skills/guests/vincent-warmerdam/"><img src="show/avatars/vincent.png" alt="Vincent Warmerdam"><span class="dossier-tag">DOSSIER</span><div class="lbl">VINCENT WARMERDAM<span class="co">marimo</span></div></a>
+    <a class="rcard" href="agent-skills/guests/nicolay-gerold/"><img src="show/avatars/nicolay.png" alt="Nicolay Gerold"><span class="dossier-tag">DOSSIER</span><div class="lbl">NICOLAY GEROLD<span class="co">amp</span></div></a>
+    <a class="rcard" href="agent-skills/guests/matthew-honnibal/"><img src="show/avatars/honnibal.png" alt="Matthew Honnibal"><span class="dossier-tag">DOSSIER</span><div class="lbl">MATTHEW HONNIBAL<span class="co">spacy / explosion</span></div></a>
     <div class="rcard"><img src="show/avatars/ines.png" alt="Ines Montani"><div class="lbl">INES MONTANI<span class="co">spacy / explosion</span></div></div>
   </div>
   <div class="skillz">
@@ -942,10 +1069,10 @@ body::before {
     <div class="ytcap"><b>EP 02 · HILARY MASON</b> — gremlins: cron-scheduled agents for bad ideas</div>
   </div>
   <div class="roster">
-    <div class="rcard"><img src="show/avatars/hilary.png" alt="Hilary Mason"><div class="lbl">HILARY MASON<span class="co">hidden door</span></div></div>
-    <div class="rcard"><img src="show/avatars/bryan.png" alt="Bryan Bischof"><div class="lbl">BRYAN BISCHOF<span class="co">theory ventures</span></div></div>
-    <div class="rcard"><img src="show/avatars/eric.png" alt="Eric Ma"><div class="lbl">ERIC MA<span class="co">moderna</span></div></div>
-    <div class="rcard"><img src="show/avatars/tomasz.png" alt="Tomasz Tunguz"><div class="lbl">TOMASZ TUNGUZ<span class="co">theory ventures</span></div></div>
+    <a class="rcard" href="agent-skills/guests/hilary-mason/"><img src="show/avatars/hilary.png" alt="Hilary Mason"><span class="dossier-tag">DOSSIER</span><div class="lbl">HILARY MASON<span class="co">hidden door</span></div></a>
+    <a class="rcard" href="agent-skills/guests/bryan-bischof/"><img src="show/avatars/bryan.png" alt="Bryan Bischof"><span class="dossier-tag">DOSSIER</span><div class="lbl">BRYAN BISCHOF<span class="co">theory ventures</span></div></a>
+    <a class="rcard" href="agent-skills/guests/eric-ma/"><img src="show/avatars/eric.png" alt="Eric Ma"><span class="dossier-tag">DOSSIER</span><div class="lbl">ERIC MA<span class="co">moderna</span></div></a>
+    <a class="rcard" href="agent-skills/guests/tomasz-tunguz/"><img src="show/avatars/tomasz.png" alt="Tomasz Tunguz"><span class="dossier-tag">DOSSIER</span><div class="lbl">TOMASZ TUNGUZ<span class="co">theory ventures</span></div></a>
   </div>
   <div class="skillz">
     <div class="hd2">▣ HIGHLIGHT REEL</div>
@@ -1014,9 +1141,9 @@ body::before {
     <div class="ytcap"><b>EP 01 · WES MCKINNEY</b> — a million lines of code in six months: spicytakes.org &amp; the agentic engineering stack</div>
   </div>
   <div class="roster three">
-    <div class="rcard"><img src="show/avatars/wes.jpg" alt="Wes McKinney"><div class="lbl">WES MCKINNEY<span class="co">pandas / posit</span></div></div>
-    <div class="rcard"><img src="show/avatars/jeremiah.png" alt="Jeremiah Lowin"><div class="lbl">JEREMIAH LOWIN<span class="co">prefect / fastmcp</span></div></div>
-    <div class="rcard"><img src="show/avatars/randy.png" alt="Randy Olson"><div class="lbl">RANDY OLSON<span class="co">goodeye labs</span></div></div>
+    <a class="rcard" href="agent-skills/guests/wes-mckinney/"><img src="show/avatars/wes.jpg" alt="Wes McKinney"><span class="dossier-tag">DOSSIER</span><div class="lbl">WES MCKINNEY<span class="co">pandas / posit</span></div></a>
+    <a class="rcard" href="agent-skills/guests/jeremiah-lowin/"><img src="show/avatars/jeremiah.png" alt="Jeremiah Lowin"><span class="dossier-tag">DOSSIER</span><div class="lbl">JEREMIAH LOWIN<span class="co">prefect / fastmcp</span></div></a>
+    <a class="rcard" href="agent-skills/guests/randy-olson/"><img src="show/avatars/randy.png" alt="Randy Olson"><span class="dossier-tag">DOSSIER</span><div class="lbl">RANDY OLSON<span class="co">goodeye labs</span></div></a>
   </div>
   <div class="skillz">
     <div class="hd2">▣ HIGHLIGHT REEL</div>

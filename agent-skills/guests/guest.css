@@ -114,10 +114,11 @@ img { display: block; max-width: 100%; }
 .hero h1 {
   margin: 0 0 18px;
   font-family: "Press Start 2P", monospace;
-  font-size: clamp(30px, 5.2vw, 58px);
+  font-size: clamp(28px, 4.8vw, 54px);
   line-height: 1.18;
   letter-spacing: 0;
   text-shadow: -4px 0 var(--magenta), 4px 0 var(--cyan);
+  overflow-wrap: anywhere;
 }
 .hero h1 span { color: var(--cyan); text-shadow: none; }
 .dek {
@@ -177,6 +178,7 @@ img { display: block; max-width: 100%; }
   font-size: 22px;
   line-height: 1.35;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 }
 .sec h2 span { color: var(--cyan); }
 .sub {
@@ -323,6 +325,7 @@ figure.figure { margin: 0; }
   font-size: 8px;
   color: var(--cyan);
   font-weight: 400;
+  overflow-wrap: anywhere;
 }
 
 .quotes {
@@ -357,10 +360,14 @@ figure.figure { margin: 0; }
   .topbar nav { order: 3; flex: 1 1 100%; gap: 14px; }
   .status { margin-left: auto; }
   .hero { padding: 38px 0 44px; }
+  .hero h1 { font-size: clamp(24px, 8vw, 42px); }
   .hero h1 { text-shadow: -2px 0 var(--magenta), 2px 0 var(--cyan); }
   .cards, .quotes, .steps { grid-template-columns: minmax(0, 1fr); }
   .moment { grid-template-columns: minmax(0, 1fr); }
   .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 360px) {
+  .tools { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Scoreboard stat band */
