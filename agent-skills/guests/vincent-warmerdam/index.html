@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vincent Warmerdam · Show Us Your Agent Skills</title>
+<meta name="description" content="Vincent Warmerdam's Show Us Your Agent Skills dossier: notebooks as a shared canvas for human understanding and agent work, with live state, interactive controls, docs, and runtime variables.">
+<meta name="author" content="Hugo Bowne-Anderson">
+<link rel="canonical" href="https://hugobowne.github.io/agent-skills/guests/vincent-warmerdam/">
+
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://hugobowne.github.io/agent-skills/guests/vincent-warmerdam/">
+<meta property="og:title" content="Vincent Warmerdam · Show Us Your Agent Skills">
+<meta property="og:description" content="Notebooks as a shared canvas for human understanding and agent work, with live state, interactive controls, docs, and runtime variables.">
+<meta property="og:site_name" content="hugo-bowne-anderson.ai">
+<meta property="og:image" content="https://hugobowne.github.io/show/avatars/vincent.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@hugobowne">
+<meta name="twitter:creator" content="@hugobowne">
+<meta name="twitter:title" content="Vincent Warmerdam · Show Us Your Agent Skills">
+<meta name="twitter:description" content="Notebooks as a shared canvas for human understanding and agent work, with live state, interactive controls, docs, and runtime variables.">
+<meta name="twitter:image" content="https://hugobowne.github.io/show/avatars/vincent.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Vincent Warmerdam",
+    "url": "https://koaning.io/",
+    "sameAs": [
+      "https://github.com/koaning",
+      "https://koaning.io/",
+      "https://koaning.github.io/wigglystuff/",
+      "https://calmcode.io/",
+      "https://marimo.io/"
+    ],
+    "worksFor": { "@type": "Organization", "name": "marimo" }
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../shared/shared.css">
+<link rel="stylesheet" href="../guest.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+.portrait-media { aspect-ratio: 1 / 1; }
+.stat .n { font-size: clamp(14px, 1.45vw, 18px); }
+@media (max-width: 720px) {
+  .page { width: 100%; }
+  .status { display: none; }
+  .hero-grid > *, .split > * { min-width: 0; }
+  .dek { max-width: 32ch; font-size: 16px; }
+  .portrait { max-width: calc(100% - 18px); box-shadow: 4px 4px 0 var(--magenta); }
+  .ytfacade, .stat { max-width: 100%; }
+  .portrait-caption { min-width: 0; font-size: 11px; overflow-wrap: anywhere; }
+  .hero-actions { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .btn { text-align: center; white-space: normal; line-height: 1.45; }
+  .scoreboard { grid-template-columns: minmax(0, 1fr); }
+  .stat .l, .ytfacade .ytcap {
+    display: block;
+    max-width: 100%;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .ytfacade .ytcap { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="page">
+    <div class="logo"><a href="../../../index.html">hugo-bowne-anderson<span class="dot">.</span>ai</a></div>
+    <nav>
+      <a href="../../../index.html#podcasts">podcasts</a>
+      <a href="../../../index.html#writing">writing</a>
+      <a href="../../../agent-skills" class="active">agent skills</a>
+      <a href="../../../agent-skills#hub">skills hub</a>
+    </nav>
+    <div class="status">ep 03 field notes</div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="page hero-grid">
+      <div>
+        <div class="crumb"><a href="../../../agent-skills#past">Show Us Your Agent Skills</a> / EP 03 / guest dossier</div>
+        <div class="eyebrow">
+          <span class="mini-avatar"><img src="../../../show/avatars/vincent.png" alt=""></span>
+          <span class="chip cyan">VINCENT WARMERDAM</span>
+          <span class="chip">MARIMO</span>
+          <span class="chip">SHARED CANVAS</span>
+          <span class="chip">LIVE NOTEBOOK STATE</span>
+          <span class="chip">HUMAN UNDERSTANDING</span>
+        </div>
+        <h1>VINCENT <span>WARMERDAM</span></h1>
+        <p class="dek">
+          Vincent shows notebooks as a shared canvas for human understanding and agent work. The notebook exposes live state, interactive controls, docs, and runtime variables so the human and the coding agent can act on the same running system. Wiggly Stuff supplies the interactive widgets, marimo keeps the surface reactive, and marimo pair gives the agent access to variables and controls.
+        </p>
+        <div class="hero-actions">
+          <a class="btn cyan" href="https://www.youtube.com/watch?v=ud2WzkKeDZs&t=4263s" target="_blank" rel="noopener">▶ WATCH SEGMENT</a>
+          <a class="btn" href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/marimo-pair" target="_blank" rel="noopener">$ MARIMO-PAIR SKILL</a>
+        </div>
+      </div>
+      <aside class="portrait" aria-label="Vincent Warmerdam portrait">
+        <div class="portrait-media">
+          <video poster="../../../show/avatars/vincent.png" autoplay muted loop playsinline controls preload="metadata" aria-label="8-bit Vincent Warmerdam intro video">
+            <source src="vincent-warmerdam-8bit.mp4" type="video/mp4">
+            <img src="../../../show/avatars/vincent.png" alt="Vincent Warmerdam">
+          </video>
+        </div>
+        <div class="portrait-caption">
+          <b>"WE CAN REALLY LOOK AT THE NOTEBOOK MORE LIKE A CANVAS."</b>
+          <span>A notebook cell updates from a widget. Code, controls, state, docs, and agents share one surface. <a href="https://youtube.com/live/ud2WzkKeDZs?t=4365" target="_blank" rel="noopener" style="color:var(--cyan)">01:12:45</a></span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="scoreboard-sec">
+    <div class="page">
+      <div class="scoreboard">
+        <a class="stat" href="https://youtube.com/live/ud2WzkKeDZs?t=4365" target="_blank" rel="noopener"><span class="n">CANVAS</span><span class="l">shared notebook for human and agent work</span></a>
+        <a class="stat" href="https://youtube.com/live/ud2WzkKeDZs?t=5136" target="_blank" rel="noopener"><span class="n">LIVE PY</span><span class="l">agent reads notebook variables</span></a>
+        <a class="stat" href="https://youtube.com/live/ud2WzkKeDZs?t=5165" target="_blank" rel="noopener"><span class="n">SLIDER</span><span class="l">agent can change UI controls</span></a>
+        <a class="stat" href="https://youtube.com/live/ud2WzkKeDZs?t=4442" target="_blank" rel="noopener"><span class="n">HUMAN</span><span class="l">Vincent still has to understand</span></a>
+        <a class="stat" href="https://youtube.com/live/ud2WzkKeDZs?t=4321" target="_blank" rel="noopener"><span class="n">DOCS</span><span class="l">Markdown and llms.txt for agents</span></a>
+        <a class="stat" href="https://youtube.com/live/ud2WzkKeDZs?t=5682" target="_blank" rel="noopener"><span class="n">CHECK</span><span class="l">boring science: does the thing work, yes or no?</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <div class="ytfacade" data-id="ud2WzkKeDZs" data-start="4263" role="button" tabindex="0" aria-label="Play Vincent Warmerdam's EP 03 segment" style="max-width:880px;margin:0 auto;">
+        <img src="https://i.ytimg.com/vi/ud2WzkKeDZs/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/ud2WzkKeDZs/hqdefault.jpg'" alt="" loading="lazy">
+        <button class="ytplay" aria-hidden="true" tabindex="-1">&#9654;</button>
+        <div class="ytcap"><b>EP 03 · VINCENT WARMERDAM</b> · notebooks as a shared canvas for humans and agents</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>THE SHARED <span>CANVAS</span></h2>
+      <div class="sub"><a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/marimo-pair" target="_blank" rel="noopener">marimo pair</a> gives the agent the running Python state</div>
+      <div class="split">
+        <div class="panel">
+          <p>Vincent draws pixels in a Paint-like widget, Python reacts every second, then the same surface becomes Conway's Game of Life. A straight line and an arc produce different growth. He changes the system and watches the system answer.</p>
+          <p><b>marimo pair puts the agent on that same surface.</b> In the slider demo, OpenCode can read the live Python variables, inspect the current slider value, and change the UI control from the notebook scratch pad.</p>
+          <p>Wiggly Stuff supplies the interactive pieces, marimo keeps them reactive, and marimo pair gives the coding agent access to the runtime state Vincent is using to understand the system.</p>
+        </div>
+        <figure class="figure">
+          <a href="https://youtube.com/live/ud2WzkKeDZs?t=5164" target="_blank" rel="noopener"><img src="images/marimo-pair-slider.jpg" alt="Vincent showing marimo pair connected to a live notebook with a slider value the agent can inspect"></a>
+          <figcaption>marimo pair gives the agent the same live state Vincent is inspecting. The slider is a UI control, a Python value, and an agent-readable object at once. <a href="https://youtube.com/live/ud2WzkKeDZs?t=5164" target="_blank" rel="noopener">[01:26:04]</a></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"The whole point of a notebook is that I eventually understand something and that's not something the agent can do for me."</p>
+      <div class="cap">The agent can produce code, cards, explanations, and demos. Vincent still wants a surface he can change with his hands until the idea is actually his. <a href="https://youtube.com/live/ud2WzkKeDZs?t=4442" target="_blank" rel="noopener">01:14:02</a></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>FROM WIDGET TO <span>PAIRING</span></h2>
+      <div class="sub">playful UI pieces, agent-readable docs, runnable demos, live runtime state</div>
+      <div class="steps">
+        <div class="step"><span><b>Start with suspiciously useful pieces</b><span>Wiggly Stuff brings 3D widgets, graph widgets, zooming, drawing, and Game of Life surfaces into Python notebooks. <a class="ts" href="https://youtube.com/live/ud2WzkKeDZs?t=4288" target="_blank" rel="noopener">01:11:28</a></span></span></div>
+        <div class="step"><span><b>Make the docs machine-readable</b><span>Every widget has Markdown docs, and <span class="mono">llms.txt</span> gives coding agents a path into the library's patterns. <a class="ts" href="https://youtube.com/live/ud2WzkKeDZs?t=4313" target="_blank" rel="noopener">01:11:53</a></span></span></div>
+        <div class="step"><span><b>Use examples as style memory</b><span>When Claude builds another widget, the existing widgets teach the shape, names, and taste Vincent wants repeated. <a class="ts" href="https://youtube.com/live/ud2WzkKeDZs?t=4968" target="_blank" rel="noopener">01:22:48</a></span></span></div>
+        <div class="step"><span><b>Make every demo runnable</b><span>Conductor installs dependencies and starts the notebook demos, so each agent iteration ends in something Vincent can open and inspect. <a class="ts" href="https://youtube.com/live/ud2WzkKeDZs?t=4945" target="_blank" rel="noopener">01:22:25</a></span></span></div>
+        <div class="step"><span><b>Give the agent the running state</b><span>marimo pair opens the scratch pad, exposes notebook variables, and gives the agent a way to act inside the live app. <a class="ts" href="https://youtube.com/live/ud2WzkKeDZs?t=5165" target="_blank" rel="noopener">01:26:05</a></span></span></div>
+        <div class="step"><span><b>Put a fence around the notebook</b><span>MoLab and Pi point toward cloud notebook execution with local file reads limited to the pairing files the task actually needs. <a class="ts" href="https://youtube.com/live/ud2WzkKeDZs?t=5288" target="_blank" rel="noopener">01:28:08</a></span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>PLAY UNTIL IT <span>CLICKS</span></h2>
+      <div class="sub">Wiggly Stuff makes abstract behavior inspectable and playable</div>
+      <div class="split">
+        <div class="panel">
+          <p>Wiggly Stuff is Vincent's notebook widget library. He calls the components "just a Lego brick": drawing surfaces, graphs, 3D widgets, zoomable views, and demos that also run in Wasm-hosted notebooks.</p>
+          <p>Draw pixels in a Paint-like widget, let Python react every second, then switch the same surface into Conway's Game of Life.</p>
+          <p>A straight line and an arc do different things. The user sees the result, changes the code, changes the drawing, and learns from the system pushing back.</p>
+        </div>
+        <div class="panel">
+          <p>A custom drawing widget makes pixels into Python data. A Game of Life loop turns a doodle into behavior. A slider becomes a Python value the agent can read and change.</p>
+          <p>Vincent, Python, widgets, and the agent keep handing state back to one another inside the notebook.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"I just want normal boring people to exchange notes."</p>
+      <div class="cap">Agent ideas arrive as performance too often. Vincent wants reports from practice, calm demos, and claims that survive a direct check. <a href="https://youtube.com/live/ud2WzkKeDZs?t=5532" target="_blank" rel="noopener">01:32:12</a></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>THE BORING PERSON <span>WINS</span></h2>
+      <div class="sub">his agent practice keeps evidence louder than performance</div>
+      <div class="principles">
+        <div class="principle">
+          <div class="k">UNDERSTANDING</div>
+          <div class="v">The LLM can generate a deck in seconds. Vincent still writes cards by hand when the goal is memory, because the model cannot know which card is useless for him.</div>
+        </div>
+        <div class="principle">
+          <div class="k">ATTENTION</div>
+          <div class="v">A weaker, faster model can keep him more engaged. Less trust and shorter waits keep Vincent on his toes, inside the loop, and willing to check the work.</div>
+        </div>
+        <div class="principle">
+          <div class="k">PROVENANCE</div>
+          <div class="v">Skill files still get handed to an agent. Vincent maintains marimo skills, checks for tampering, and tells users to control where the file came from.</div>
+        </div>
+        <div class="principle">
+          <div class="k">BORING SCIENCE</div>
+          <div class="v">When demand outruns evidence, gurus appear. Vincent's answer is plain: check whether the thing works, yes or no, and go slowly enough to understand the result.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="interstitial">
+    <div class="page iq">
+      <p>"It's okay to go slow if it means you understand it better."</p>
+      <div class="cap">Fast prototypes keep Vincent curious and close to the work. If speed replaces understanding, he slows the loop down. <a href="https://youtube.com/live/ud2WzkKeDZs?t=5735" target="_blank" rel="noopener">01:35:35</a></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="page">
+      <h2>VINCENT'S <span>STACK</span></h2>
+      <div class="sub">the tools behind the shared notebook surface</div>
+      <div class="tools">
+        <a class="tool" href="https://marimo.io/" target="_blank" rel="noopener"><b>marimo</b>reactive notebook surface</a>
+        <a class="tool" href="https://github.com/marimo-team/marimo-pair" target="_blank" rel="noopener"><b>marimo pair</b>agent bridge into runtime</a>
+        <a class="tool" href="https://koaning.github.io/wigglystuff/" target="_blank" rel="noopener"><b>Wiggly Stuff</b>interactive widgets</a>
+        <a class="tool" href="https://docs.anywidget.dev/" target="_blank" rel="noopener"><b>AnyWidget</b>Python to JavaScript bridge</a>
+        <a class="tool" href="https://docs.conductor.build/" target="_blank" rel="noopener"><b>Conductor</b>scripted agent workspace</a>
+        <a class="tool" href="https://pi.dev/" target="_blank" rel="noopener"><b>Pi</b>tool-call event control</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="page">
+    <div>© 2026 hugo bowne-anderson · show us your agent skills · vincent on agent culture: "the internet could use a good linter"</div>
+    <div class="socials">
+      <a href="../../../agent-skills">show page</a>
+      <a href="https://github.com/hugobowne/show-us-your-agent-skills/blob/main/episode-field-notes/ep-3/vincent.md" target="_blank" rel="noopener">full field notes</a>
+      <a href="https://github.com/hugobowne/show-us-your-agent-skills/tree/main/skills/marimo-pair" target="_blank" rel="noopener">marimo-pair write-up</a>
+      <a href="https://www.youtube.com/watch?v=ud2WzkKeDZs" target="_blank" rel="noopener">episode 03</a>
+      <a href="https://koaning.io/" target="_blank" rel="noopener">vincent's site</a>
+      <a href="https://github.com/koaning" target="_blank" rel="noopener">github/koaning</a>
+    </div>
+  </div>
+</footer>
+<script>
+document.querySelectorAll('.ytfacade').forEach(function (f) {
+  function play() {
+    var ifr = document.createElement('iframe');
+    ifr.src = 'https://www.youtube-nocookie.com/embed/' + f.dataset.id +
+      '?start=' + (f.dataset.start || 0) + '&autoplay=1&rel=0';
+    ifr.allow = 'autoplay; encrypted-media; picture-in-picture; web-share; fullscreen';
+    ifr.allowFullscreen = true;
+    f.innerHTML = '';
+    f.appendChild(ifr);
+    f.style.cursor = 'default';
+    f.removeAttribute('role');
+  }
+  f.addEventListener('click', play, { once: true });
+  f.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+  }, { once: true });
+});
+</script>
+</body>
+</html>
