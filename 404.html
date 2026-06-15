@@ -8,11 +8,11 @@
 (function () {
   var oldPrefix = "/agent-skills";
   if (window.location.pathname === oldPrefix || window.location.pathname.indexOf(oldPrefix + "/") === 0) {
-    var newBase = "https://hugobowne.github.io/show-us-your-agent-skills/";
+    var newBase = "https://hugobowne.github.io/agent-skills.html";
     var rest = window.location.pathname.replace(/^\/agent-skills\/?/, "").replace(/^\/+/, "");
-    var target = new URL(rest ? "agent-skills/" + rest : "", newBase);
+    var target = new URL(newBase);
     target.search = window.location.search;
-    target.hash = window.location.hash;
+    target.hash = window.location.hash || (rest ? "#" + rest : "");
     window.location.replace(target.href);
   }
 }());
@@ -37,7 +37,7 @@ a { color: #8df36c; }
 <body>
 <main>
   <h1>Page not found</h1>
-  <p>The agent skills site moved to <a href="https://hugobowne.github.io/show-us-your-agent-skills/">hugobowne.github.io/show-us-your-agent-skills</a>.</p>
+  <p>The agent skills site moved to <a href="https://hugobowne.github.io/agent-skills.html">hugobowne.github.io/agent-skills.html</a>.</p>
 </main>
 </body>
 </html>
