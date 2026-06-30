@@ -305,6 +305,8 @@ body::before {
   min-height: 430px;
   display: flex;
   flex-direction: column;
+  color: inherit;
+  text-decoration: none;
   transition: border-color .12s, transform .12s;
 }
 .card:hover { border-color: var(--accent); transform: translateY(-2px); }
@@ -368,6 +370,7 @@ body::before {
 .card .actions .btn {
   width: 100%;
   justify-content: center;
+  pointer-events: none;
 }
 
 .split {
@@ -536,7 +539,7 @@ body::before {
     <div class="sub">choose by problem, audience, and depth</div>
 
     <div class="cards">
-      <article class="card">
+      <a class="card" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">
         <div class="thumb"><img src="https://maven.com/api/og/course/build-ai-agents-from-first-principles" alt="Build AI Agents from First Principles course artwork"></div>
         <div class="body">
           <div class="pill">Maven workshop</div>
@@ -548,10 +551,10 @@ body::before {
             <div><strong>Price:</strong> USD $350</div>
           </div>
         </div>
-        <div class="actions"><a class="btn" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">View on Maven →</a></div>
-      </article>
+        <div class="actions"><span class="btn">View on Maven →</span></div>
+      </a>
 
-      <article class="card">
+      <a class="card" href="https://maven.com/softwaredoug/build-enterprise-agents" target="_blank" rel="noopener">
         <div class="thumb"><img src="https://maven.com/api/og/course/build-enterprise-agents" alt="Build Production-Ready AI Agents for the Enterprise course artwork"></div>
         <div class="body">
           <div class="pill">Maven cohort</div>
@@ -563,10 +566,10 @@ body::before {
             <div><strong>Price:</strong> USD $750</div>
           </div>
         </div>
-        <div class="actions"><a class="btn" href="https://maven.com/softwaredoug/build-enterprise-agents" target="_blank" rel="noopener">View on Maven →</a></div>
-      </article>
+        <div class="actions"><span class="btn">View on Maven →</span></div>
+      </a>
 
-      <article class="card">
+      <a class="card" href="https://vanishinggradients.short.gy/data-science-agentic" target="_blank" rel="noopener">
         <div class="thumb"><img src="https://res.cloudinary.com/dx3t8udaw/image/upload/v1774869995/qbyhpbcva7fb4arstntp.png" alt="Master Agentic Data Science course artwork"></div>
         <div class="body">
           <div class="pill">PyMC Labs + VG</div>
@@ -578,10 +581,10 @@ body::before {
             <div><strong>Instructors:</strong> Hugo, Thomas Wiecki, Luca Fiaschi</div>
           </div>
         </div>
-        <div class="actions"><a class="btn" href="https://vanishinggradients.short.gy/data-science-agentic" target="_blank" rel="noopener">View course page →</a></div>
-      </article>
+        <div class="actions"><span class="btn">View course page →</span></div>
+      </a>
 
-      <article class="card">
+      <a class="card" href="https://maven.com/hugo-stefan/building-ai-apps-ds-and-swe-from-first-principles" target="_blank" rel="noopener">
         <div class="thumb"><img src="https://maven.com/api/og/course/building-ai-apps-ds-and-swe-from-first-principles" alt="Building AI Applications for Data Scientists and Software Engineers course artwork"></div>
         <div class="body">
           <div class="pill">Maven course</div>
@@ -593,8 +596,8 @@ body::before {
             <div><strong>Price:</strong> listed on Maven</div>
           </div>
         </div>
-        <div class="actions"><a class="btn" href="https://maven.com/hugo-stefan/building-ai-apps-ds-and-swe-from-first-principles" target="_blank" rel="noopener">View on Maven →</a></div>
-      </article>
+        <div class="actions"><span class="btn">View on Maven →</span></div>
+      </a>
     </div>
   </section>
 
