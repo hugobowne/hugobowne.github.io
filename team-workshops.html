@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workshops · Hugo Bowne-Anderson</title>
+<meta name="description" content="Workshops for engineering, product, data, and leadership teams building reliable systems using AI. Evals, context engineering, agent harnesses, human-in-the-loop workflows.">
+<meta name="author" content="Hugo Bowne-Anderson">
+<link rel="canonical" href="https://hugobowne.github.io/workshops">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hugobowne.github.io/workshops">
+<meta property="og:title" content="Workshops · Build reliable systems using AI">
+<meta property="og:description" content="Workshops for teams moving beyond prototypes into real AI-powered workflows. Evals, context engineering, agent harnesses.">
+<meta property="og:site_name" content="hugo-bowne-anderson.ai">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@hugobowne">
+<meta name="twitter:creator" content="@hugobowne">
+<meta name="twitter:title" content="Workshops · Build reliable systems using AI">
+<meta name="twitter:description" content="Workshops for teams moving beyond prototypes into real AI-powered workflows.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
+:root, :root[data-theme="dark"] {
+  --bg: #0b0c0d;
+  --bg-2: #111315;
+  --bg-3: #17191c;
+  --line: #22262b;
+  --line-2: #2d3239;
+  --fg: #e8eaed;
+  --fg-2: #aeb3ba;
+  --fg-3: #6b7280;
+  --accent: oklch(0.82 0.19 135);
+  --accent-ink: #0b0c0d;
+  --warn: oklch(0.78 0.16 55);
+  --magenta: oklch(0.72 0.20 330);
+}
+:root[data-theme="light"] {
+  --bg: #f7f6f3;
+  --bg-2: #ecebe6;
+  --bg-3: #e3e1db;
+  --line: #d4d2ca;
+  --line-2: #a8a59a;
+  --fg: #15171a;
+  --fg-2: #3a3d42;
+  --fg-3: #6a6d73;
+  --accent: oklch(0.48 0.17 135);
+  --accent-ink: #f7f6f3;
+  --warn: oklch(0.55 0.16 55);
+  --magenta: oklch(0.42 0.20 330);
+}
+html, body { background: var(--bg); color: var(--fg); }
+body {
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.page { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+/* Subtle scanline overlay (restrained nod to show.html) */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgba(255,255,255,0.012) 2px,
+    rgba(255,255,255,0.012) 3px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+:root[data-theme="light"] body::before { display: none; }
+
+/* Top bar */
+.topbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+.logo { color: var(--fg); letter-spacing: -0.01em; }
+.logo a { text-decoration: none; }
+.logo .dot { color: var(--accent); }
+.topbar nav { display: flex; gap: 22px; }
+.topbar nav a { color: var(--fg-2); text-decoration: none; }
+.topbar nav a:hover { color: var(--fg); }
+.topbar nav a.active { color: var(--accent); }
+.topbar .status {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--fg-2);
+}
+.topbar .status::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 10px var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+.topbar #theme-toggle { white-space: nowrap; }
+.topbar .status { white-space: nowrap; }
+
+/* Hero */
+.hero {
+  padding: 88px 0 72px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 700px 400px at 88% 12%, color-mix(in oklab, var(--accent), transparent 88%), transparent 60%),
+    radial-gradient(ellipse 600px 360px at 6% 95%, color-mix(in oklab, var(--magenta), transparent 92%), transparent 60%);
+  pointer-events: none;
+}
+.hero > .page { position: relative; z-index: 1; }
+.hero .tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-bottom: 22px;
+}
+.hero .tag::before { content: "// "; color: var(--fg-3); }
+.hero h1 {
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 84px;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  margin: 0 0 28px;
+  max-width: 22ch;
+}
+.hero h1 .k { color: var(--accent); }
+.hero h1 .dim { color: var(--fg-2); font-weight: 300; }
+.hero .dek {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--fg-2);
+  max-width: 62ch;
+  margin: 0 0 36px;
+}
+.hero .dek em { color: var(--fg); font-style: normal; }
+.hero .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  padding: 13px 18px;
+  border: 1px solid var(--line-2);
+  color: var(--fg);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: background .12s, border-color .12s, color .12s;
+}
+.btn:hover { background: var(--bg-2); border-color: var(--fg-3); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { background: #fff; border-color: #fff; }
+
+/* Stats bar */
+.kv {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.kv .cell { background: var(--bg); padding: 22px 24px; }
+.kv .cell .k { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); letter-spacing: 0.04em; margin-bottom: 10px; }
+.kv .cell .v { font-size: 26px; line-height: 1.05; letter-spacing: -0.02em; font-weight: 500; }
+.kv .cell .v .u { color: var(--accent); }
+
+/* Section base */
+.sec { border-bottom: 1px solid var(--line); padding: 64px 0; }
+.sec h2 {
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin: 0 0 6px;
+}
+.sec h2 .k { color: var(--accent); }
+.sec .sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-2);
+  margin-bottom: 34px;
+}
+.sec .sub::before { content: "// "; color: var(--fg-3); }
+
+/* Positioning section */
+.position {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.position .lede { font-size: 19px; line-height: 1.55; color: var(--fg); max-width: 48ch; }
+.position .lede em { color: var(--accent); font-style: normal; }
+.position .body { color: var(--fg-2); font-size: 15.5px; line-height: 1.65; max-width: 56ch; }
+.position .body p { margin: 0 0 14px; }
+.position .body p:last-child { margin-bottom: 0; }
+.position .body em { color: var(--fg); font-style: normal; }
+
+/* Core workshops grid */
+.mods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.mod {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 28px;
+  display: flex; flex-direction: column;
+  min-height: 320px;
+  transition: border-color .12s, transform .12s;
+}
+.mod:hover { border-color: var(--accent); transform: translateY(-2px); }
+.mod .i { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--accent); margin-bottom: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
+.mod .t { font-size: 22px; font-weight: 500; letter-spacing: -0.015em; line-height: 1.2; margin-bottom: 18px; }
+.mod .focus { list-style: none; padding: 0; margin: 0; }
+.mod .focus li {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--fg-2);
+  padding: 5px 0;
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.5;
+}
+.mod .focus li::before {
+  content: "›";
+  position: absolute; left: 0;
+  color: var(--accent);
+  font-weight: 500;
+}
+.mod .note {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line-2);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--fg-3);
+  line-height: 1.55;
+}
+
+/* Formats list */
+.fmts {
+  border: 1px solid var(--line);
+}
+.fmt {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 24px;
+  align-items: baseline;
+  padding: 18px 22px;
+  border-top: 1px solid var(--line);
+}
+.fmt:first-child { border-top: 0; }
+.fmt .name { font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.02em; }
+.fmt .desc { font-size: 14.5px; color: var(--fg-2); line-height: 1.5; }
+.fmt .ts { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); white-space: nowrap; }
+.fmts .foot {
+  padding: 14px 22px;
+  border-top: 1px dashed var(--line-2);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  color: var(--fg-3);
+}
+
+/* Audience: two columns */
+.aud { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.aud .col {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 24px;
+}
+.aud .col.yes { border-left: 2px solid var(--accent); }
+.aud .col.no { border-left: 2px solid var(--magenta); opacity: 0.95; }
+.aud .col h3 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--fg-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+  font-weight: 500;
+}
+.aud .col.yes h3 .lbl { color: var(--accent); }
+.aud .col.no h3 .lbl { color: var(--magenta); }
+.aud .col ul { list-style: none; padding: 0; margin: 0; }
+.aud .col li {
+  padding: 8px 0;
+  border-top: 1px dashed var(--line);
+  font-size: 14px;
+  color: var(--fg-2);
+}
+.aud .col li:first-child { border-top: 0; }
+
+/* Testimonials: editorial pull-quote grid */
+.tms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 48px;
+  row-gap: 36px;
+}
+.tm { margin: 0; padding-top: 20px; border-top: 1px solid var(--line-2); }
+.tm blockquote {
+  margin: 0 0 14px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  max-width: 42ch;
+}
+.tm blockquote::before { content: "“"; color: var(--accent); margin-right: 2px; }
+.tm blockquote::after { content: "”"; color: var(--accent); margin-left: 1px; }
+.tm figcaption {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--fg-3);
+  letter-spacing: 0.02em;
+}
+.tm figcaption b { color: var(--fg-2); font-weight: 500; }
+.tm figcaption .aff { display: block; margin-top: 3px; color: var(--fg-3); }
+
+/* Ecosystem grid */
+.eco-intro { color: var(--fg-2); max-width: 64ch; margin-bottom: 24px; font-size: 15.5px; line-height: 1.6; }
+.eco-intro em { color: var(--fg); font-style: normal; }
+.collabs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.collabs .n {
+  background: var(--bg);
+  padding: 14px 16px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12.5px;
+}
+.collabs .n .co { display: block; color: var(--fg-3); font-size: 11px; margin-top: 3px; }
+
+/* Show cross-link */
+.showlink {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 28px;
+  align-items: center;
+  background:
+    radial-gradient(ellipse at top right, color-mix(in oklab, var(--magenta), transparent 88%), transparent 60%),
+    var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 36px 40px;
+}
+.showlink .left h3 {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+.showlink .left p {
+  color: var(--fg-2);
+  max-width: 64ch;
+  margin: 0;
+  line-height: 1.55;
+}
+.showlink .left p em { color: var(--fg); font-style: normal; }
+
+/* Pricing strip */
+.pricing {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 24px 28px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+}
+.pricing .lbl {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pricing .body {
+  font-size: 15.5px;
+  color: var(--fg-2);
+  line-height: 1.55;
+  max-width: 76ch;
+}
+.pricing .body em { color: var(--fg); font-style: normal; }
+
+/* Final CTA */
+.final-cta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  background:
+    radial-gradient(ellipse at top left, color-mix(in oklab, var(--accent), transparent 88%), transparent 60%),
+    var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 48px;
+  margin: 40px 0 64px;
+}
+.final-cta h3 {
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin: 0 0 14px;
+}
+.final-cta h3 em { font-style: normal; color: var(--accent); }
+.final-cta p { color: var(--fg-2); max-width: 44ch; margin: 0; line-height: 1.55; }
+.final-cta .actions { display: flex; flex-direction: column; gap: 10px; align-self: center; }
+.final-cta .tiny { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); margin-top: 12px; }
+
+/* Footer */
+.footer { border-top: 1px solid var(--line); padding: 28px 0; display: flex; justify-content: space-between; font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--fg-3); }
+.footer a { color: var(--fg-2); text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+.footer .socials { display: flex; gap: 18px; flex-wrap: wrap; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero h1 { font-size: 64px; }
+  .kv { grid-template-columns: repeat(2, 1fr); }
+  .mods { grid-template-columns: 1fr; }
+  .position { grid-template-columns: 1fr; gap: 20px; }
+  .aud { grid-template-columns: 1fr; }
+  .tms { grid-template-columns: 1fr; column-gap: 0; row-gap: 28px; }
+  .showlink { grid-template-columns: 1fr; }
+  .collabs { grid-template-columns: repeat(3, 1fr); }
+  .pricing { grid-template-columns: 1fr; gap: 12px; }
+  .final-cta { grid-template-columns: 1fr; padding: 32px; }
+}
+@media (max-width: 720px) {
+  .page { padding: 0 18px; }
+  .topbar { display: flex; flex-wrap: wrap; gap: 10px 14px; }
+  .topbar nav { flex: 1 1 100%; flex-wrap: wrap; gap: 14px; order: 3; }
+  .hero { padding: 56px 0 48px; }
+  .hero h1 { font-size: 44px; letter-spacing: -0.03em; }
+  .hero .dek { font-size: 16px; }
+  .hero .ctas { flex-direction: column; align-items: stretch; }
+  .hero .ctas .btn { justify-content: center; }
+  .sec { padding: 48px 0; }
+  .sec h2 { font-size: 28px; }
+  .fmt { grid-template-columns: 1fr; gap: 6px; padding: 14px 18px; }
+  .fmt .ts { font-size: 10.5px; }
+  .collabs { grid-template-columns: repeat(2, 1fr); }
+  .final-cta h3 { font-size: 28px; }
+  .showlink { padding: 26px; }
+  .footer { flex-direction: column; gap: 12px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+
+  <header class="topbar">
+    <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">hugo-bowne-anderson<span class="dot">.</span>ai</a></div>
+    <nav>
+      <a href="index.html#podcasts">podcasts</a>
+      <a href="index.html#writing">writing</a>
+      <a href="workshops" class="active">workshops</a>
+      <a href="agent-skills">agent skills</a>
+      <a href="index.html#course">building agents</a>
+    </nav>
+    <div style="display:flex;gap:14px;align-items:center">
+      <button id="theme-toggle" title="Toggle theme" style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 10px;border:1px solid var(--line-2);color:var(--fg-2);letter-spacing:.04em;">[ dark ]</button>
+      <div class="status">based in Sydney</div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="page">
+      <div class="tag">workshops for teams shipping with AI</div>
+      <h1>Build reliable <span class="k">systems</span><br>using <span class="k">AI</span>.</h1>
+      <p class="dek">Workshops for engineering, product, data, and leadership teams moving <em>beyond prototypes</em> into real AI-powered workflows. Evals, context engineering, agent harnesses, human-in-the-loop systems. The operational layer that decides whether AI ships or stalls.</p>
+      <div class="ctas">
+        <a class="btn primary" href="mailto:workshops@vanishinggradients.co?subject=Workshop%20enquiry">Bring a workshop to your team →</a>
+        <a class="btn" href="agent-skills">See agent skills series →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="kv">
+    <div class="cell"><div class="k">learners reached</div><div class="v">6<span class="u">M</span>+</div></div>
+    <div class="cell"><div class="k">maven grads</div><div class="v">350<span class="u">+</span></div></div>
+    <div class="cell"><div class="k">newsletter subs</div><div class="v">13<span class="u">K</span>+</div></div>
+    <div class="cell"><div class="k">podcast episodes</div><div class="v">200<span class="u">+</span></div></div>
+  </section>
+
+  <!-- POSITIONING -->
+  <section class="sec" id="positioning">
+    <h2><span class="k">Beyond</span> prototypes.</h2>
+    <div class="sub">the operational layer</div>
+    <div class="position">
+      <div class="lede">These workshops are for teams moving from experimentation into <em>operational reality</em>: software systems, internal tooling, product workflows, and engineering practice.</div>
+      <div class="body">
+        <p>We focus on evals, context, harnesses, observability, debugging, verification, and human-in-the-loop workflows. The operational layer that determines whether AI systems become useful or collapse under ambiguity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE WORKSHOPS -->
+  <section class="sec" id="core">
+    <h2>Core <span class="k">workshops</span>.</h2>
+    <div class="sub">three flagship intensives</div>
+    <div class="mods">
+
+      <div class="mod">
+        <div class="i">01 · production</div>
+        <div class="t">Building Reliable Systems with AI</div>
+        <ul class="focus">
+          <li>From prototype to production</li>
+          <li>Evals, observability, and verification</li>
+          <li>Context engineering and debugging</li>
+          <li>Human-in-the-loop systems and production habits</li>
+        </ul>
+        <div class="note">The broad operational lens. For teams shipping AI-powered software whose demos haven't survived contact with users.</div>
+      </div>
+
+      <div class="mod">
+        <div class="i">02 · engineering</div>
+        <div class="t">Agentic Engineering Workflows</div>
+        <ul class="focus">
+          <li>How software engineering changes when agents participate</li>
+          <li>Claude Code, Codex, Cursor, MCP, background reviewer agents</li>
+          <li>AI-assisted coding and debugging workflows</li>
+          <li>Human-agent collaboration and workflow redesign</li>
+        </ul>
+        <div class="note">For engineering teams rebuilding how they ship. Tools are examples. The work is workflow design.</div>
+      </div>
+
+      <div class="mod">
+        <div class="i">03 · agents</div>
+        <div class="t">Building AI Agents for the Enterprise</div>
+        <ul class="focus">
+          <li>Tool use, memory, orchestration, harnesses</li>
+          <li>Delegation and long-running systems</li>
+          <li>Approval loops and operational safety</li>
+          <li>Enterprise constraints and production guardrails</li>
+        </ul>
+        <div class="note">For teams putting agents into production. Where reliability, safety, and operational discipline meet.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FORMATS -->
+  <section class="sec" id="formats">
+    <h2>Formats</h2>
+    <div class="sub">productized technical intensives · half-day to multi-day</div>
+    <div class="fmts">
+      <div class="fmt"><div class="name">executive briefing</div><div class="desc">A working session for technical leaders on what AI adoption actually requires. Concrete patterns, not slogans.</div><div class="ts">60–90 min</div></div>
+      <div class="fmt"><div class="name">half-day workshop</div><div class="desc">A condensed version of one core workshop. Hands-on, with running code.</div><div class="ts">~4 hours</div></div>
+      <div class="fmt"><div class="name">full-day intensive</div><div class="desc">One core workshop in full depth. Build, break, debug. Leave with running code and a shared mental model.</div><div class="ts">1 day</div></div>
+      <div class="fmt"><div class="name">multi-day bootcamp</div><div class="desc">Two core workshops combined into a technical bootcamp. The standard format for engineering orgs.</div><div class="ts">2–3 days</div></div>
+      <div class="foot">Delivered onsite in Sydney or remotely for global teams. Each format covers one or more of the three core workshops above.</div>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="sec" id="audience">
+    <h2>Who this is <span class="k">for</span></h2>
+    <div class="sub">and who it isn't</div>
+    <div class="aud">
+      <div class="col yes">
+        <h3><span class="lbl">// good fit</span></h3>
+        <ul>
+          <li>Engineering teams shipping with AI in real systems</li>
+          <li>Data &amp; ML teams adopting agentic workflows</li>
+          <li>Product teams building AI-powered experiences</li>
+          <li>AI platform teams and internal-tools groups</li>
+          <li>Technical leaders setting direction for AI work</li>
+          <li>Innovation teams that need to get beyond demos</li>
+          <li>Executives trying to understand what real AI adoption requires</li>
+        </ul>
+      </div>
+      <div class="col no">
+        <h3><span class="lbl">// not a fit</span></h3>
+        <ul>
+          <li>Generic ChatGPT onboarding</li>
+          <li>Shallow prompt tips and tricks</li>
+          <li>Inspirational AI keynotes with no operational detail</li>
+          <li>"AI transformation" with no code involved</li>
+          <li>Prompt-engineering bootcamps</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="sec" id="proof">
+    <h2>Trusted by <span class="k">builders</span> shipping AI systems.</h2>
+    <div class="sub">engineers from OpenAI, Waymo, Netflix, Meta, Amazon, Maven Clinic, and the broader Python ecosystem</div>
+    <div class="tms">
+      <figure class="tm">
+        <blockquote>Shows how solutions are deployed in production.</blockquote>
+        <figcaption><b>Nishant H.</b><span class="aff">OpenAI (ex-Netflix)</span></figcaption>
+      </figure>
+      <figure class="tm">
+        <blockquote>Applying these ideas to observability and evaluation for our AI agent.</blockquote>
+        <figcaption><b>William Horton</b><span class="aff">Staff AI/ML Engineer, Maven Clinic</span></figcaption>
+      </figure>
+      <figure class="tm">
+        <blockquote>Pragmatic understanding unlocks real-world projects.</blockquote>
+        <figcaption><b>Carol Willing</b><span class="aff">Python Steering Council</span></figcaption>
+      </figure>
+      <figure class="tm">
+        <blockquote>Cuts through complexity while staying grounded in practical systems.</blockquote>
+        <figcaption><b>Gregory G.</b><span class="aff">ML/AI Engineer, Waymo</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ECOSYSTEM -->
+  <section class="sec" id="ecosystem">
+    <h2>Embedded in the <span class="k">practitioner ecosystem</span></h2>
+    <div class="sub">guests · co-teachers · co-authors · collaborators</div>
+    <p class="eco-intro">I'm not teaching abstract AI hype. I host <em>Vanishing Gradients</em> and <em>High Signal</em>, run <em>Show Us Your [Agent] Skills</em> with PyMC Labs, and have taught alongside or interviewed builders from:</p>
+    <div class="collabs">
+      <div class="n">fast.ai<span class="co">Jeremy Howard</span></div>
+      <div class="n">Stanford<span class="co">Fei-Fei Li</span></div>
+      <div class="n">pandas · Posit<span class="co">Wes McKinney</span></div>
+      <div class="n">PyMC Labs<span class="co">Thomas Wiecki</span></div>
+      <div class="n">Rasa<span class="co">Alan Nichol</span></div>
+      <div class="n">Prefect · FastMCP<span class="co">Jeremiah Lowin</span></div>
+      <div class="n">Explosion · spaCy<span class="co">Ines Montani</span></div>
+      <div class="n">marimo<span class="co">Akshay Agrawal</span></div>
+      <div class="n">Chroma<span class="co">Jeff Huber</span></div>
+      <div class="n">DeepMind<span class="co">Ravin Kumar</span></div>
+      <div class="n">Pydantic<span class="co">Samuel Colvin</span></div>
+      <div class="n">Anaconda<span class="co">Travis Oliphant · Peter Wang</span></div>
+      <div class="n">Modal<span class="co">Charles Frye</span></div>
+      <div class="n">LangChain · Anthropic<span class="co">Lance Martin</span></div>
+      <div class="n">Parlance Labs<span class="co">Hamel Husain</span></div>
+      <div class="n">O'Reilly<span class="co">author &amp; instructor</span></div>
+      <div class="n">Harvard Business Review<span class="co">contributor</span></div>
+      <div class="n">Maven<span class="co">#9 Maven 100 instructor</span></div>
+    </div>
+  </section>
+
+  <!-- SHOW CROSS-LINK -->
+  <section class="sec" id="show">
+    <h2>Real workflows. <span class="k">Not demos.</span></h2>
+    <div class="sub">show us your [agent] skills · live series</div>
+    <div class="showlink">
+      <div class="left">
+        <h3>The same operational lens, for private teams.</h3>
+        <p><em>Show Us Your [Agent] Skills</em> is a live series with PyMC Labs where long-time Python, ML, AI, and data builders show how they actually use agents today: agent skills, harnesses, voice-memo memory, background reviewers, real workflows from people whose software you've used for years.<br><br>The workshops bring that same lens to your team. <em>Not vibe coding, not demos. The real patterns.</em></p>
+      </div>
+      <div class="right">
+        <a class="btn primary" href="agent-skills">Watch the series →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="sec" id="pricing">
+    <h2>Pricing</h2>
+    <div class="sub">productized · per format</div>
+    <div class="pricing">
+      <div class="lbl">// per format</div>
+      <div class="body">Workshops are priced by <em>format</em>, not by the hour. Most start at <em>AUD $15k</em>. Same content, same depth, whether the audience is a 10-person team or a wider org.</div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta" id="contact">
+    <div>
+      <h3>Bring this to <em>your team</em>.</h3>
+      <p>If your team is building with AI and wants to move beyond prototypes, send a note with team size and which format you're interested in.</p>
+      <div class="tiny">replies usually within 2 business days · Sydney timezone</div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="mailto:workshops@vanishinggradients.co?subject=Workshop%20enquiry">workshops@vanishinggradients.co</a>
+      <a class="btn" href="agent-skills">see agent skills series →</a>
+      <a class="btn" href="index.html">back to hugo-bowne-anderson.ai →</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© 2026 hugo bowne-anderson · darlinghurst · sydney</div>
+    <div class="socials">
+      <a href="https://hugobowne.substack.com/" target="_blank" rel="noopener">substack</a>
+      <a href="https://github.com/hugobowne" target="_blank" rel="noopener">github</a>
+      <a href="https://x.com/hugobowne" target="_blank" rel="noopener">x</a>
+      <a href="https://www.linkedin.com/in/hugo-bowne-anderson-045939a5/" target="_blank" rel="noopener">linkedin</a>
+      <a href="https://www.oreilly.com/people/hugo-bowne-anderson/" target="_blank" rel="noopener">o'reilly</a>
+    </div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var saved = localStorage.getItem('hba-theme') || 'dark';
+  var root = document.documentElement;
+  root.setAttribute('data-theme', saved);
+  var btn = document.getElementById('theme-toggle');
+  function render(){ var t = root.getAttribute('data-theme'); btn.textContent = t === 'dark' ? '[ dark ]' : '[ light ]'; }
+  render();
+  btn.addEventListener('click', function(){
+    var t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', t);
+    localStorage.setItem('hba-theme', t);
+    render();
+  });
+})();
+</script>
+</body>
+</html>
