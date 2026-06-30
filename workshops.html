@@ -202,7 +202,7 @@ body::before {
 
 .feature {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr);
   gap: 1px;
   background: var(--line);
   border: 1px solid var(--line);
@@ -267,16 +267,17 @@ body::before {
   line-height: 1.35;
 }
 .feature .visual {
-  min-height: 420px;
+  min-height: 360px;
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: stretch;
+  background: #fff;
 }
 .feature img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   filter: saturate(.95) contrast(1.04);
 }
 .feature .caption {
@@ -295,7 +296,7 @@ body::before {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 18px;
 }
 .card {
@@ -535,6 +536,21 @@ body::before {
     <div class="sub">choose by problem, audience, and depth</div>
 
     <div class="cards">
+      <article class="card">
+        <div class="thumb"><img src="https://maven.com/api/og/course/build-ai-agents-from-first-principles" alt="Build AI Agents from First Principles course artwork"></div>
+        <div class="body">
+          <div class="pill">Maven workshop</div>
+          <h3>Build AI Agents from First Principles</h3>
+          <p>Build the core architecture behind production-ready AI agents: tools, control flow, memory, evaluation, and the practical decisions that separate useful systems from fragile demos.</p>
+          <div class="facts">
+            <div><strong>Date:</strong> Jul 29, 2026 PT / Jul 30, 2026 Sydney</div>
+            <div><strong>Format:</strong> 4-hour live workshop</div>
+            <div><strong>Price:</strong> USD $350</div>
+          </div>
+        </div>
+        <div class="actions"><a class="btn" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">View on Maven →</a></div>
+      </article>
+
       <article class="card">
         <div class="thumb"><img src="https://maven.com/api/og/course/build-enterprise-agents" alt="Build Production-Ready AI Agents for the Enterprise course artwork"></div>
         <div class="body">
