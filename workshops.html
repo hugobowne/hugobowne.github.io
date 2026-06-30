@@ -380,6 +380,92 @@ body::before {
   pointer-events: none;
 }
 
+.tms {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 48px;
+  row-gap: 34px;
+}
+.tm {
+  margin: 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-2);
+}
+.tm blockquote {
+  margin: 0 0 14px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--fg);
+  max-width: 44ch;
+}
+.tm blockquote::before { content: "“"; color: var(--accent); margin-right: 2px; }
+.tm blockquote::after { content: "”"; color: var(--accent); margin-left: 1px; }
+.tm figcaption {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--fg-3);
+  letter-spacing: 0.02em;
+}
+.tm figcaption b {
+  display: block;
+  color: var(--fg-2);
+  font-weight: 500;
+}
+
+.ecosystem {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.ecosystem > div {
+  background: var(--bg-2);
+  padding: 30px;
+}
+.ecosystem h3 {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  margin: 0 0 14px;
+}
+.ecosystem h3 .k { color: var(--accent); }
+.ecosystem p {
+  margin: 0;
+  color: var(--fg-2);
+  line-height: 1.65;
+}
+.ecosystem p em { color: var(--fg); font-style: normal; }
+.ecosystem p a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+.ecosystem p a:hover { color: var(--accent); }
+.ecosystem-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  align-self: stretch;
+}
+.ecosystem-list .n {
+  background: var(--bg);
+  padding: 14px 16px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--fg-2);
+}
+.ecosystem-list .n span {
+  display: block;
+  color: var(--fg-3);
+  font-size: 11px;
+  margin-top: 4px;
+}
+
 .split {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -453,6 +539,7 @@ body::before {
   .feature { grid-template-columns: 1fr; }
   .feature .visual { min-height: 360px; }
   .cards { grid-template-columns: 1fr; }
+  .ecosystem { grid-template-columns: 1fr; }
   .split { grid-template-columns: 1fr; }
   .final-cta { grid-template-columns: 1fr; padding: 32px; }
 }
@@ -471,6 +558,9 @@ body::before {
   .feature h3 { font-size: 28px; }
   .feature .visual { min-height: 260px; }
   .meta { grid-template-columns: 1fr; }
+  .tms { grid-template-columns: 1fr; row-gap: 26px; }
+  .ecosystem > div { padding: 24px; }
+  .ecosystem-list { grid-template-columns: 1fr; }
   .final-cta h3 { font-size: 28px; }
   .footer { flex-direction: column; gap: 12px; align-items: flex-start; }
 }
@@ -496,87 +586,86 @@ body::before {
 
   <section class="hero">
     <div class="page">
-      <div class="tag">live workshops and cohort-based courses</div>
+      <div class="tag">AI courses and live workshops</div>
       <h1>Learn to build <span class="k">AI systems</span><br><span class="dim">from first principles.</span></h1>
-      <p class="dek">Live public courses and workshops for engineers, data scientists, analysts, founders, and technical teams building with AI. Learn agents, evals, context engineering, and AI application development through hands-on systems and first-principles instruction.</p>
+      <p class="dek">Live courses and workshops for engineers, data scientists, analysts, founders, and technical teams building with AI. Learn agents, evals, context engineering, and AI application development through hands-on systems and first-principles instruction.</p>
       <div class="ctas">
-        <a class="btn primary" href="#upcoming">See upcoming workshops →</a>
-        <a class="btn" href="mailto:workshops@vanishinggradients.co?subject=Corporate%20AI%20training%20enquiry">Corporate training enquiries →</a>
+        <a class="btn primary" href="#upcoming">Explore courses →</a>
+        <a class="btn" href="mailto:contact@vanishinggradients.co?subject=Corporate%20AI%20training%20enquiry">Corporate training enquiries →</a>
       </div>
     </div>
   </section>
 
   <section class="kv">
-    <div class="cell"><div class="k">courses</div><div class="v">Maven <span class="u">+</span> partners</div></div>
-    <div class="cell"><div class="k">topics</div><div class="v">Agents <span class="u">·</span> evals</div></div>
-    <div class="cell"><div class="k">audience</div><div class="v">Builders <span class="u">·</span> teams</div></div>
-    <div class="cell"><div class="k">format</div><div class="v">Live <span class="u">·</span> hands-on</div></div>
+    <div class="cell"><div class="k">learners reached</div><div class="v">6<span class="u">M</span>+</div></div>
+    <div class="cell"><div class="k">course graduates</div><div class="v">350<span class="u">+</span></div></div>
+    <div class="cell"><div class="k">podcast episodes</div><div class="v">200<span class="u">+</span></div></div>
+    <div class="cell"><div class="k">workshops</div><div class="v">Live <span class="u">·</span> hands-on</div></div>
   </section>
 
   <section class="sec" id="upcoming">
-    <h2>Upcoming <span class="k">workshops</span></h2>
-    <div class="sub">enrolling now · public cohorts and partner courses</div>
+    <h2>Featured <span class="k">workshop</span></h2>
+    <div class="sub">next scheduled live session</div>
 
     <div class="feature">
       <div class="copy">
         <a class="feature-link" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">
-          <div class="eyebrow">featured · Maven · Jul 29/30, 2026</div>
+          <div class="eyebrow">featured · Jul 29, 2026 PT</div>
           <h3>Build AI Agents from First Principles</h3>
           <p>Build the core architecture behind production-ready AI agents: tools, control flow, memory, evaluation, and the practical decisions that separate a useful agent from a fragile demo.</p>
         </a>
         <div class="meta">
-          <div><b>status</b><span>Enrolling now</span></div>
-          <div><b>schedule</b><span>Jul 29, 2026 PT<br>Jul 30, 2026 Sydney</span></div>
-          <div><b>format</b><span>4-hour live Maven workshop</span></div>
-          <div><b>tuition</b><span>USD $350</span></div>
+          <div><b>registration</b><span>Open now</span></div>
+          <div><b>schedule</b><span>Jul 29, 2026 PT</span></div>
+          <div><b>format</b><span>4-hour live workshop</span></div>
+          <div><b>tuition</b><span>USD $500<br>$350 until Jul 6</span></div>
         </div>
         <div class="ctas">
-          <a class="btn primary" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">Register on Maven →</a>
-          <a class="btn" href="#all-workshops">Compare all workshops ↓</a>
+          <a class="btn primary" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">Register now →</a>
+          <a class="btn" href="#all-workshops">Compare courses ↓</a>
         </div>
       </div>
       <a class="feature-link visual" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">
         <img src="https://maven.com/api/og/course/build-ai-agents-from-first-principles" alt="Build AI Agents from First Principles course artwork">
-        <div class="caption">Course artwork from Maven · Build AI Agents from First Principles</div>
       </a>
     </div>
   </section>
 
   <section class="sec" id="all-workshops">
     <h2>Courses and <span class="k">workshops</span></h2>
-    <div class="sub">schedule, tuition, and registration status</div>
+    <div class="sub">registration, schedule, format, and tuition</div>
 
     <div class="cards">
       <a class="card" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">
         <div class="thumb"><img src="https://maven.com/api/og/course/build-ai-agents-from-first-principles" alt="Build AI Agents from First Principles course artwork"></div>
         <div class="body">
-          <div class="pill">Maven workshop</div>
+          <div class="pill">Live workshop</div>
           <h3>Build AI Agents from First Principles</h3>
           <p>Build the core architecture behind production-ready AI agents: tools, control flow, memory, evaluation, and the practical decisions that separate useful systems from fragile demos.</p>
           <div class="facts">
-            <div><strong>Status:</strong> enrolling now</div>
-            <div><strong>Schedule:</strong> Jul 29, 2026 PT / Jul 30, 2026 Sydney</div>
+            <div><strong>Registration:</strong> open now</div>
+            <div><strong>Schedule:</strong> Jul 29, 2026 PT</div>
             <div><strong>Format:</strong> 4-hour live workshop</div>
-            <div><strong>Tuition:</strong> USD $350</div>
+            <div><strong>Tuition:</strong> USD $500 (early bird $350 until Jul 6; $425 until Jul 19)</div>
           </div>
         </div>
-        <div class="actions"><span class="btn">View on Maven →</span></div>
+        <div class="actions"><span class="btn">View course page →</span></div>
       </a>
 
       <a class="card" href="https://maven.com/softwaredoug/build-enterprise-agents" target="_blank" rel="noopener">
         <div class="thumb"><img src="https://maven.com/api/og/course/build-enterprise-agents" alt="Build Production-Ready AI Agents for the Enterprise course artwork"></div>
         <div class="body">
-          <div class="pill">Maven cohort</div>
+          <div class="pill">Live cohort</div>
           <h3>Build Production-Ready AI Agents for the Enterprise</h3>
-          <p>Build and reason about enterprise agents grounded in your team's knowledge base, with attention to retrieval, evaluation, and production constraints. Co-taught by Hugo Bowne-Anderson and Doug Turnbull.</p>
+          <p>Build and reason about enterprise agents grounded in your team's knowledge base, with attention to retrieval, evaluation, and production constraints. Co-taught by Hugo Bowne-Anderson and Doug Turnbull, who led search at Reddit and Shopify.</p>
           <div class="facts">
-            <div><strong>Status:</strong> enrolling now</div>
+            <div><strong>Registration:</strong> open now</div>
             <div><strong>Schedule:</strong> Aug 27-Sep 7, 2026</div>
             <div><strong>Format:</strong> multi-session live cohort</div>
-            <div><strong>Tuition:</strong> USD $750</div>
+            <div><strong>Tuition:</strong> USD $950 (early bird $750 until Jul 6; $850 until Jul 31)</div>
           </div>
         </div>
-        <div class="actions"><span class="btn">View on Maven →</span></div>
+        <div class="actions"><span class="btn">View course page →</span></div>
       </a>
 
       <a class="card" href="https://vanishinggradients.short.gy/data-science-agentic" target="_blank" rel="noopener">
@@ -584,10 +673,11 @@ body::before {
         <div class="body">
           <div class="pill">PyMC Labs + VG</div>
           <h3>Master Agentic Data Science</h3>
-          <p>A live workshop for data scientists, analysts, and engineers who want to use AI agents for structured data science without sacrificing statistical rigor or reproducibility.</p>
+          <p>A live workshop for data scientists, analysts, and engineers who want to use AI agents for structured data science without sacrificing statistical rigor or reproducibility. Co-taught with Thomas Wiecki and Luca Fiaschi of PyMC Labs.</p>
           <div class="facts">
-            <div><strong>Status:</strong> enrolling</div>
-            <div><strong>Schedule:</strong> see course page for current cohort details</div>
+            <div><strong>Registration:</strong> open now</div>
+            <div><strong>Schedule:</strong> Aug 4, 6, 11, 13, 2026</div>
+            <div><strong>Time:</strong> Tue & Thu, 8-11 AM ET / 12:00-15:00 UTC</div>
             <div><strong>Format:</strong> 12 hours live instruction, 4 sessions</div>
             <div><strong>Tuition:</strong> USD $1,900</div>
           </div>
@@ -598,32 +688,74 @@ body::before {
       <a class="card" href="https://maven.com/hugo-stefan/building-ai-apps-ds-and-swe-from-first-principles" target="_blank" rel="noopener">
         <div class="thumb"><img src="https://maven.com/api/og/course/building-ai-apps-ds-and-swe-from-first-principles" alt="Building AI Applications for Data Scientists and Software Engineers course artwork"></div>
         <div class="body">
-          <div class="pill">Maven course</div>
+          <div class="pill">Live course</div>
           <h3>Building AI Applications for Data Scientists and Software Engineers</h3>
-          <p>Build AI-powered software reliably from first principles: agents, evals, iteration, product loops, and the GenAI software development lifecycle. Co-taught by Hugo Bowne-Anderson and Stefan Krawczyk.</p>
+          <p>Build AI-powered software reliably from first principles: agents, evals, iteration, product loops, and the GenAI software development lifecycle. Co-taught by Hugo Bowne-Anderson and Stefan Krawczyk, who works on Agentforce at Salesforce.</p>
           <div class="facts">
-            <div><strong>Status:</strong> join waitlist on Maven</div>
-            <div><strong>Schedule:</strong> see Maven for current cohort details</div>
+            <div><strong>Registration:</strong> waitlist open</div>
+            <div><strong>Schedule:</strong> final cohort completed; join the waitlist for what comes next</div>
             <div><strong>Format:</strong> live cohort course</div>
             <div><strong>Tuition:</strong> USD $2,100</div>
           </div>
         </div>
-        <div class="actions"><span class="btn">View on Maven →</span></div>
+        <div class="actions"><span class="btn">View course page →</span></div>
       </a>
+    </div>
+  </section>
+
+  <section class="sec" id="proof">
+    <h2>Trusted by <span class="k">builders</span> shipping AI systems</h2>
+    <div class="sub">engineers from OpenAI, Waymo, Netflix, Meta, Amazon, Maven Clinic, and the Python ecosystem</div>
+    <div class="tms">
+      <figure class="tm">
+        <blockquote>Shows how solutions are deployed in production.</blockquote>
+        <figcaption><b>Nishant H.</b>OpenAI / ex-Netflix</figcaption>
+      </figure>
+      <figure class="tm">
+        <blockquote>Applying these ideas to observability and evaluation for our AI agent.</blockquote>
+        <figcaption><b>William Horton</b>Staff AI/ML Engineer, Maven Clinic</figcaption>
+      </figure>
+      <figure class="tm">
+        <blockquote>Pragmatic understanding unlocks real-world projects.</blockquote>
+        <figcaption><b>Carol Willing</b>Python Steering Council</figcaption>
+      </figure>
+      <figure class="tm">
+        <blockquote>Cuts through complexity while staying grounded in practical systems.</blockquote>
+        <figcaption><b>Gregory G.</b>ML/AI Engineer, Waymo</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" id="ecosystem">
+    <h2>From the <span class="k">practitioner ecosystem</span></h2>
+    <div class="sub">courses shaped by real AI, data, and software work</div>
+    <div class="ecosystem">
+      <div>
+        <h3>Working patterns from the <span class="k">practitioner ecosystem.</span></h3>
+        <p>Hugo's courses draw on <a href="https://hugobowne.substack.com/podcast" target="_blank" rel="noopener"><em>Vanishing Gradients</em></a>, <a href="https://delphina.ai/podcast" target="_blank" rel="noopener"><em>High Signal</em></a>, and years of conversations with people shaping modern AI, data science, Python, and production software.</p>
+      </div>
+      <div class="ecosystem-list">
+        <div class="n">fast.ai<span>Jeremy Howard</span></div>
+        <div class="n">Stanford<span>Fei-Fei Li</span></div>
+        <div class="n">pandas · Posit<span>Wes McKinney</span></div>
+        <div class="n">Anaconda<span>Travis Oliphant · Peter Wang</span></div>
+        <div class="n">Pydantic<span>Samuel Colvin</span></div>
+        <div class="n">O'Reilly · HBR<span>author and contributor</span></div>
+      </div>
     </div>
   </section>
 
   <section class="sec" id="what">
     <h2>For individuals <span class="k">and teams</span></h2>
-    <div class="sub">public cohorts · corporate training · custom team sessions</div>
+    <div class="sub">open cohorts · corporate training · custom team sessions</div>
     <div class="split">
       <div class="panel">
-        <h3>Public courses</h3>
-        <p>Join an open cohort when you want structured live instruction, a hands-on technical curriculum, and a community of peers building with AI.</p>
+        <h3>Open courses</h3>
+        <p>Join a live cohort when you want structured instruction, a hands-on technical curriculum, and a community of peers building with AI.</p>
         <ul>
-          <li>Register directly through Maven or the partner course page</li>
+          <li>Register directly through each course page</li>
           <li>Learn through live sessions, examples, and implementation work</li>
-          <li>Best for individuals and small groups joining published cohorts</li>
+          <li>Best for individuals and small groups joining scheduled cohorts</li>
         </ul>
       </div>
       <div class="panel">
@@ -632,7 +764,7 @@ body::before {
         <ul>
           <li>Private cohorts for engineering, data, product, and leadership teams</li>
           <li>Custom emphasis on agents, evals, data science, or AI application development</li>
-          <li>Email workshops@vanishinggradients.co for availability and scope</li>
+          <li>Email contact@vanishinggradients.co for availability and scope</li>
         </ul>
       </div>
     </div>
@@ -642,11 +774,11 @@ body::before {
     <div>
       <h3>Bring the material to <em>your team</em>.</h3>
       <p>For corporate training, private cohorts, or a workshop adapted to your team’s AI roadmap, send a short note with team size, timeline, and the topic you care about most.</p>
-      <div class="tiny">public cohorts stay listed above · private training by enquiry</div>
+      <div class="tiny">include team size, preferred timing, and the course topic you want to adapt</div>
     </div>
     <div class="actions">
-      <a class="btn primary" href="mailto:workshops@vanishinggradients.co?subject=Corporate%20AI%20training%20enquiry">workshops@vanishinggradients.co</a>
-      <a class="btn" href="#all-workshops">compare public courses ↑</a>
+      <a class="btn primary" href="mailto:contact@vanishinggradients.co?subject=Corporate%20AI%20training%20enquiry">contact@vanishinggradients.co</a>
+      <a class="btn" href="#all-workshops">compare courses ↑</a>
       <a class="btn" href="index.html">back to hugo-bowne-anderson.ai →</a>
     </div>
   </section>
