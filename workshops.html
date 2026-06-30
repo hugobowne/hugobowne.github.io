@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workshops · Hugo Bowne-Anderson</title>
+<meta name="description" content="Upcoming live workshops from Hugo Bowne-Anderson on AI agents, agentic data science, and building reliable AI applications.">
+<meta name="author" content="Hugo Bowne-Anderson">
+<link rel="canonical" href="https://hugobowne.github.io/workshops">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hugobowne.github.io/workshops">
+<meta property="og:title" content="Workshops · Hugo Bowne-Anderson">
+<meta property="og:description" content="Upcoming live workshops on AI agents, agentic data science, and reliable AI applications.">
+<meta property="og:site_name" content="hugo-bowne-anderson.ai">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@hugobowne">
+<meta name="twitter:creator" content="@hugobowne">
+<meta name="twitter:title" content="Workshops · Hugo Bowne-Anderson">
+<meta name="twitter:description" content="Upcoming live workshops on AI agents, agentic data science, and reliable AI applications.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
+:root, :root[data-theme="dark"] {
+  --bg: #0b0c0d;
+  --bg-2: #111315;
+  --bg-3: #17191c;
+  --line: #22262b;
+  --line-2: #2d3239;
+  --fg: #e8eaed;
+  --fg-2: #aeb3ba;
+  --fg-3: #6b7280;
+  --accent: oklch(0.82 0.19 135);
+  --accent-ink: #0b0c0d;
+  --blue: oklch(0.72 0.18 235);
+  --magenta: oklch(0.72 0.20 330);
+}
+:root[data-theme="light"] {
+  --bg: #f7f6f3;
+  --bg-2: #ecebe6;
+  --bg-3: #e3e1db;
+  --line: #d4d2ca;
+  --line-2: #a8a59a;
+  --fg: #15171a;
+  --fg-2: #3a3d42;
+  --fg-3: #6a6d73;
+  --accent: oklch(0.48 0.17 135);
+  --accent-ink: #f7f6f3;
+  --blue: oklch(0.50 0.18 235);
+  --magenta: oklch(0.42 0.20 330);
+}
+html, body { background: var(--bg); color: var(--fg); }
+body {
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.page { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgba(255,255,255,0.012) 2px,
+    rgba(255,255,255,0.012) 3px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+:root[data-theme="light"] body::before { display: none; }
+
+.topbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+.logo { color: var(--fg); letter-spacing: -0.01em; }
+.logo a { text-decoration: none; }
+.logo .dot { color: var(--accent); }
+.topbar nav { display: flex; gap: 22px; }
+.topbar nav a { color: var(--fg-2); text-decoration: none; }
+.topbar nav a:hover { color: var(--fg); }
+.topbar nav a.active { color: var(--accent); }
+.topbar .status {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--fg-2);
+  white-space: nowrap;
+}
+.topbar .status::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 10px var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+.topbar #theme-toggle { white-space: nowrap; }
+
+.hero {
+  padding: 88px 0 64px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 720px 420px at 88% 16%, color-mix(in oklab, var(--accent), transparent 88%), transparent 60%),
+    radial-gradient(ellipse 620px 360px at 4% 96%, color-mix(in oklab, var(--blue), transparent 91%), transparent 60%);
+  pointer-events: none;
+}
+.hero > .page { position: relative; z-index: 1; }
+.tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-bottom: 22px;
+}
+.tag::before { content: "// "; color: var(--fg-3); }
+.hero h1 {
+  font-weight: 500;
+  font-size: 84px;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  margin: 0 0 28px;
+  max-width: 22ch;
+}
+.hero h1 .k { color: var(--accent); }
+.hero h1 .dim { color: var(--fg-2); font-weight: 300; }
+.dek {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--fg-2);
+  max-width: 66ch;
+  margin: 0 0 36px;
+}
+.dek em { color: var(--fg); font-style: normal; }
+.ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  padding: 13px 18px;
+  border: 1px solid var(--line-2);
+  color: var(--fg);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: background .12s, border-color .12s, color .12s, transform .12s;
+}
+.btn:hover { background: var(--bg-2); border-color: var(--fg-3); transform: translateY(-1px); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { background: #fff; border-color: #fff; }
+
+.kv {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.kv .cell { background: var(--bg); padding: 22px 24px; }
+.kv .cell .k { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); letter-spacing: 0.04em; margin-bottom: 10px; }
+.kv .cell .v { font-size: 24px; line-height: 1.05; letter-spacing: -0.02em; font-weight: 500; }
+.kv .cell .v .u { color: var(--accent); }
+
+.sec { border-bottom: 1px solid var(--line); padding: 64px 0; }
+.sec h2 {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin: 0 0 6px;
+}
+.sec h2 .k { color: var(--accent); }
+.sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-2);
+  margin-bottom: 34px;
+}
+.sub::before { content: "// "; color: var(--fg-3); }
+
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.feature .copy,
+.feature .visual {
+  background: var(--bg-2);
+}
+.feature-link {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+.feature-link:hover h3 { color: var(--accent); }
+.feature-link.visual { cursor: pointer; }
+.feature .copy {
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+}
+.eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.feature h3 {
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  margin: 0 0 16px;
+}
+.feature p {
+  margin: 0;
+  color: var(--fg-2);
+  max-width: 58ch;
+  line-height: 1.65;
+}
+.meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.meta div {
+  background: var(--bg);
+  padding: 14px;
+}
+.meta b {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--fg-3);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.meta span {
+  display: block;
+  font-size: 14px;
+  color: var(--fg);
+  line-height: 1.35;
+}
+.feature .visual {
+  min-height: 360px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+}
+.feature img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: saturate(.95) contrast(1.04);
+}
+.feature .caption {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  background: color-mix(in oklab, var(--bg), transparent 18%);
+  border: 1px solid color-mix(in oklab, var(--line-2), transparent 20%);
+  backdrop-filter: blur(10px);
+  padding: 12px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--fg-2);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+.card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .12s, transform .12s;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card .thumb {
+  aspect-ratio: 16 / 9;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-3);
+  overflow: hidden;
+}
+.card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card .body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+.pill {
+  width: fit-content;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--line-2);
+  padding: 5px 8px;
+}
+.card h3 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -.018em;
+  margin: 0;
+}
+.card p {
+  margin: 0;
+  color: var(--fg-2);
+  line-height: 1.6;
+}
+.facts {
+  margin-top: auto;
+  border-top: 1px dashed var(--line-2);
+  padding-top: 14px;
+  display: grid;
+  gap: 7px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--fg-3);
+}
+.facts strong {
+  color: var(--fg-2);
+  font-weight: 500;
+}
+.card .actions {
+  padding: 0 24px 24px;
+}
+.card .actions .btn {
+  width: 100%;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.tms {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 48px;
+  row-gap: 34px;
+}
+.tm {
+  margin: 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-2);
+}
+.tm blockquote {
+  margin: 0 0 14px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--fg);
+  max-width: 44ch;
+}
+.tm blockquote::before { content: "“"; color: var(--accent); margin-right: 2px; }
+.tm blockquote::after { content: "”"; color: var(--accent); margin-left: 1px; }
+.tm figcaption {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--fg-3);
+  letter-spacing: 0.02em;
+}
+.tm figcaption b {
+  display: block;
+  color: var(--fg-2);
+  font-weight: 500;
+}
+
+.ecosystem {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.ecosystem > div {
+  background: var(--bg-2);
+  padding: 30px;
+}
+.ecosystem h3 {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  margin: 0 0 14px;
+}
+.ecosystem h3 .k { color: var(--accent); }
+.ecosystem p {
+  margin: 0;
+  color: var(--fg-2);
+  line-height: 1.65;
+}
+.ecosystem p em { color: var(--fg); font-style: normal; }
+.ecosystem p a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+.ecosystem p a:hover { color: var(--accent); }
+.ecosystem-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  align-self: stretch;
+}
+.ecosystem-list .n {
+  background: var(--bg);
+  padding: 14px 16px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--fg-2);
+}
+.ecosystem-list .n span {
+  display: block;
+  color: var(--fg-3);
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.panel {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 28px;
+}
+.panel h3 {
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -.015em;
+  font-weight: 500;
+  margin: 0 0 14px;
+}
+.panel p,
+.panel li {
+  color: var(--fg-2);
+  line-height: 1.6;
+}
+.panel p { margin: 0 0 16px; }
+.panel ul { list-style: none; padding: 0; margin: 0; }
+.panel li {
+  border-top: 1px dashed var(--line);
+  padding: 10px 0;
+}
+.panel li:first-child { border-top: 0; padding-top: 0; }
+.panel li::before { content: "› "; color: var(--accent); }
+
+.final-cta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  background:
+    radial-gradient(ellipse at top left, color-mix(in oklab, var(--accent), transparent 88%), transparent 60%),
+    var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 48px;
+  margin: 40px 0 64px;
+}
+.final-cta h3 {
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin: 0 0 14px;
+}
+.final-cta h3 em { font-style: normal; color: var(--accent); }
+.final-cta p { color: var(--fg-2); max-width: 44ch; margin: 0; line-height: 1.55; }
+.final-cta .actions { display: flex; flex-direction: column; gap: 10px; align-self: center; }
+.tiny { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--fg-3); margin-top: 12px; }
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 0;
+  display: flex;
+  justify-content: space-between;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  color: var(--fg-3);
+}
+.footer a { color: var(--fg-2); text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+.footer .socials { display: flex; gap: 18px; flex-wrap: wrap; }
+
+@media (max-width: 1024px) {
+  .hero h1 { font-size: 64px; }
+  .kv { grid-template-columns: repeat(2, 1fr); }
+  .feature { grid-template-columns: 1fr; }
+  .feature .visual { min-height: 360px; }
+  .cards { grid-template-columns: 1fr; }
+  .ecosystem { grid-template-columns: 1fr; }
+  .split { grid-template-columns: 1fr; }
+  .final-cta { grid-template-columns: 1fr; padding: 32px; }
+}
+@media (max-width: 720px) {
+  .page { padding: 0 18px; }
+  .topbar { display: flex; flex-wrap: wrap; gap: 10px 14px; }
+  .topbar nav { flex: 1 1 100%; flex-wrap: wrap; gap: 14px; order: 3; }
+  .hero { padding: 56px 0 48px; }
+  .hero h1 { font-size: 44px; letter-spacing: -0.03em; }
+  .dek { font-size: 16px; }
+  .ctas { flex-direction: column; align-items: stretch; }
+  .ctas .btn { justify-content: center; }
+  .sec { padding: 48px 0; }
+  .sec h2 { font-size: 28px; }
+  .feature .copy { padding: 24px; }
+  .feature h3 { font-size: 28px; }
+  .feature .visual { min-height: 260px; }
+  .meta { grid-template-columns: 1fr; }
+  .tms { grid-template-columns: 1fr; row-gap: 26px; }
+  .ecosystem > div { padding: 24px; }
+  .ecosystem-list { grid-template-columns: 1fr; }
+  .final-cta h3 { font-size: 28px; }
+  .footer { flex-direction: column; gap: 12px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+
+  <header class="topbar">
+    <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">hugo-bowne-anderson<span class="dot">.</span>ai</a></div>
+    <nav>
+      <a href="index.html#podcasts">podcasts</a>
+      <a href="index.html#writing">writing</a>
+      <a href="workshops" class="active">workshops</a>
+      <a href="agent-skills">agent skills</a>
+      <a href="index.html#course">building agents</a>
+    </nav>
+    <div style="display:flex;gap:14px;align-items:center">
+      <button id="theme-toggle" title="Toggle theme" style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 10px;border:1px solid var(--line-2);color:var(--fg-2);letter-spacing:.04em;">[ dark ]</button>
+      <div class="status">based in Sydney</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="page">
+      <div class="tag">AI courses and live workshops</div>
+      <h1>Learn to build <span class="k">AI systems</span><br><span class="dim">from first principles.</span></h1>
+      <p class="dek">Live courses and workshops for engineers, data scientists, analysts, founders, and technical teams building with AI. Learn agents, evals, context engineering, and AI application development through hands-on systems and first-principles instruction.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#upcoming">Explore courses →</a>
+        <a class="btn" href="mailto:contact@vanishinggradients.co?subject=Corporate%20AI%20training%20enquiry">Corporate training enquiries →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="kv">
+    <div class="cell"><div class="k">learners reached</div><div class="v">6<span class="u">M</span>+</div></div>
+    <div class="cell"><div class="k">course graduates</div><div class="v">350<span class="u">+</span></div></div>
+    <div class="cell"><div class="k">podcast episodes</div><div class="v">200<span class="u">+</span></div></div>
+    <div class="cell"><div class="k">workshops</div><div class="v">Live <span class="u">·</span> hands-on</div></div>
+  </section>
+
+  <section class="sec" id="upcoming">
+    <h2>Featured <span class="k">workshop</span></h2>
+    <div class="sub">next scheduled live session</div>
+
+    <div class="feature">
+      <div class="copy">
+        <a class="feature-link" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">
+          <div class="eyebrow">featured · Jul 29, 2026 PT</div>
+          <h3>Build AI Agents from First Principles</h3>
+          <p>Build the core architecture behind production-ready AI agents: tools, control flow, memory, evaluation, and the practical decisions that separate a useful agent from a fragile demo.</p>
+        </a>
+        <div class="meta">
+          <div><b>registration</b><span>Open now</span></div>
+          <div><b>schedule</b><span>Jul 29, 2026 PT</span></div>
+          <div><b>format</b><span>4-hour live workshop</span></div>
+          <div><b>tuition</b><span>USD $500<br>$350 until Jul 6</span></div>
+        </div>
+        <div class="ctas">
+          <a class="btn primary" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">Register now →</a>
+          <a class="btn" href="#all-workshops">Compare courses ↓</a>
+        </div>
+      </div>
+      <a class="feature-link visual" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">
+        <img src="https://maven.com/api/og/course/build-ai-agents-from-first-principles" alt="Build AI Agents from First Principles course artwork">
+      </a>
+    </div>
+  </section>
+
+  <section class="sec" id="all-workshops">
+    <h2>Courses and <span class="k">workshops</span></h2>
+    <div class="sub">registration, schedule, format, and tuition</div>
+
+    <div class="cards">
+      <a class="card" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://maven.com/api/og/course/build-ai-agents-from-first-principles" alt="Build AI Agents from First Principles course artwork"></div>
+        <div class="body">
+          <div class="pill">Live workshop</div>
+          <h3>Build AI Agents from First Principles</h3>
+          <p>Build the core architecture behind production-ready AI agents: tools, control flow, memory, evaluation, and the practical decisions that separate useful systems from fragile demos.</p>
+          <div class="facts">
+            <div><strong>Registration:</strong> open now</div>
+            <div><strong>Schedule:</strong> Jul 29, 2026 PT</div>
+            <div><strong>Format:</strong> 4-hour live workshop</div>
+            <div><strong>Tuition:</strong> USD $500 (early bird $350 until Jul 6; $425 until Jul 19)</div>
+          </div>
+        </div>
+        <div class="actions"><span class="btn">View course page →</span></div>
+      </a>
+
+      <a class="card" href="https://maven.com/softwaredoug/build-enterprise-agents" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://maven.com/api/og/course/build-enterprise-agents" alt="Build Production-Ready AI Agents for the Enterprise course artwork"></div>
+        <div class="body">
+          <div class="pill">Live cohort</div>
+          <h3>Build Production-Ready AI Agents for the Enterprise</h3>
+          <p>Build and reason about enterprise agents grounded in your team's knowledge base, with attention to retrieval, evaluation, and production constraints. Co-taught by Hugo Bowne-Anderson and Doug Turnbull, who led search at Reddit and Shopify.</p>
+          <div class="facts">
+            <div><strong>Registration:</strong> open now</div>
+            <div><strong>Schedule:</strong> Aug 27-Sep 7, 2026</div>
+            <div><strong>Format:</strong> multi-session live cohort</div>
+            <div><strong>Tuition:</strong> USD $950 (early bird $750 until Jul 6; $850 until Jul 31)</div>
+          </div>
+        </div>
+        <div class="actions"><span class="btn">View course page →</span></div>
+      </a>
+
+      <a class="card" href="https://vanishinggradients.short.gy/data-science-agentic" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://res.cloudinary.com/dx3t8udaw/image/upload/v1774869995/qbyhpbcva7fb4arstntp.png" alt="Master Agentic Data Science course artwork"></div>
+        <div class="body">
+          <div class="pill">PyMC Labs + VG</div>
+          <h3>Master Agentic Data Science</h3>
+          <p>A live workshop for data scientists, analysts, and engineers who want to use AI agents for structured data science without sacrificing statistical rigor or reproducibility. Co-taught with Thomas Wiecki and Luca Fiaschi of PyMC Labs.</p>
+          <div class="facts">
+            <div><strong>Registration:</strong> open now</div>
+            <div><strong>Schedule:</strong> Aug 4, 6, 11, 13, 2026</div>
+            <div><strong>Time:</strong> Tue & Thu, 8-11 AM ET / 12:00-15:00 UTC</div>
+            <div><strong>Format:</strong> 12 hours live instruction, 4 sessions</div>
+            <div><strong>Tuition:</strong> USD $1,900</div>
+          </div>
+        </div>
+        <div class="actions"><span class="btn">View course page →</span></div>
+      </a>
+
+      <a class="card" href="https://maven.com/hugo-stefan/building-ai-apps-ds-and-swe-from-first-principles" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://maven.com/api/og/course/building-ai-apps-ds-and-swe-from-first-principles" alt="Building AI Applications for Data Scientists and Software Engineers course artwork"></div>
+        <div class="body">
+          <div class="pill">Live course</div>
+          <h3>Building AI Applications for Data Scientists and Software Engineers</h3>
+          <p>Build AI-powered software reliably from first principles: agents, evals, iteration, product loops, and the GenAI software development lifecycle. Co-taught by Hugo Bowne-Anderson and Stefan Krawczyk, who works on Agentforce at Salesforce.</p>
+          <div class="facts">
+            <div><strong>Registration:</strong> waitlist open</div>
+            <div><strong>Schedule:</strong> final cohort completed; join the waitlist for what comes next</div>
+            <div><strong>Format:</strong> live cohort course</div>
+            <div><strong>Tuition:</strong> USD $2,100</div>
+          </div>
+        </div>
+        <div class="actions"><span class="btn">View course page →</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="sec" id="proof">
+    <h2>Trusted by <span class="k">builders</span> shipping AI systems</h2>
+    <div class="sub">engineers from OpenAI, Waymo, Netflix, Meta, Amazon, Maven Clinic, and the Python ecosystem</div>
+    <div class="tms">
+      <figure class="tm">
+        <blockquote>Shows how solutions are deployed in production.</blockquote>
+        <figcaption><b>Nishant H.</b>OpenAI / ex-Netflix</figcaption>
+      </figure>
+      <figure class="tm">
+        <blockquote>Applying these ideas to observability and evaluation for our AI agent.</blockquote>
+        <figcaption><b>William Horton</b>Staff AI/ML Engineer, Maven Clinic</figcaption>
+      </figure>
+      <figure class="tm">
+        <blockquote>Pragmatic understanding unlocks real-world projects.</blockquote>
+        <figcaption><b>Carol Willing</b>Python Steering Council</figcaption>
+      </figure>
+      <figure class="tm">
+        <blockquote>Cuts through complexity while staying grounded in practical systems.</blockquote>
+        <figcaption><b>Gregory G.</b>ML/AI Engineer, Waymo</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" id="ecosystem">
+    <h2>From the <span class="k">practitioner ecosystem</span></h2>
+    <div class="sub">courses shaped by real AI, data, and software work</div>
+    <div class="ecosystem">
+      <div>
+        <h3>Working patterns from the <span class="k">practitioner ecosystem.</span></h3>
+        <p>Hugo's courses draw on <a href="https://hugobowne.substack.com/podcast" target="_blank" rel="noopener"><em>Vanishing Gradients</em></a>, <a href="https://delphina.ai/podcast" target="_blank" rel="noopener"><em>High Signal</em></a>, and years of conversations with people shaping modern AI, data science, Python, and production software.</p>
+      </div>
+      <div class="ecosystem-list">
+        <div class="n">fast.ai<span>Jeremy Howard</span></div>
+        <div class="n">Stanford<span>Fei-Fei Li</span></div>
+        <div class="n">pandas · Posit<span>Wes McKinney</span></div>
+        <div class="n">Anaconda<span>Travis Oliphant · Peter Wang</span></div>
+        <div class="n">Pydantic<span>Samuel Colvin</span></div>
+        <div class="n">O'Reilly · HBR<span>author and contributor</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="what">
+    <h2>For individuals <span class="k">and teams</span></h2>
+    <div class="sub">open cohorts · corporate training · custom team sessions</div>
+    <div class="split">
+      <div class="panel">
+        <h3>Open courses</h3>
+        <p>Join a live cohort when you want structured instruction, a hands-on technical curriculum, and a community of peers building with AI.</p>
+        <ul>
+          <li>Register directly through each course page</li>
+          <li>Learn through live sessions, examples, and implementation work</li>
+          <li>Best for individuals and small groups joining scheduled cohorts</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Corporate training</h3>
+        <p>For companies, teams, and private groups, the material can be adapted to your stack, workflows, and priorities.</p>
+        <ul>
+          <li>Private cohorts for engineering, data, product, and leadership teams</li>
+          <li>Custom emphasis on agents, evals, data science, or AI application development</li>
+          <li>Email contact@vanishinggradients.co for availability and scope</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta" id="contact">
+    <div>
+      <h3>Bring the material to <em>your team</em>.</h3>
+      <p>For corporate training, private cohorts, or a workshop adapted to your team’s AI roadmap, send a short note with team size, timeline, and the topic you care about most.</p>
+      <div class="tiny">include team size, preferred timing, and the course topic you want to adapt</div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="mailto:contact@vanishinggradients.co?subject=Corporate%20AI%20training%20enquiry">contact@vanishinggradients.co</a>
+      <a class="btn" href="#all-workshops">compare courses ↑</a>
+      <a class="btn" href="index.html">back to hugo-bowne-anderson.ai →</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© 2026 hugo bowne-anderson · darlinghurst · sydney</div>
+    <div class="socials">
+      <a href="https://hugobowne.substack.com/" target="_blank" rel="noopener">substack</a>
+      <a href="https://github.com/hugobowne" target="_blank" rel="noopener">github</a>
+      <a href="https://x.com/hugobowne" target="_blank" rel="noopener">x</a>
+      <a href="https://www.linkedin.com/in/hugo-bowne-anderson-045939a5/" target="_blank" rel="noopener">linkedin</a>
+      <a href="https://www.oreilly.com/people/hugo-bowne-anderson/" target="_blank" rel="noopener">o'reilly</a>
+    </div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var saved = localStorage.getItem('hba-theme') || 'dark';
+  var root = document.documentElement;
+  root.setAttribute('data-theme', saved);
+  var btn = document.getElementById('theme-toggle');
+  function render(){ var t = root.getAttribute('data-theme'); btn.textContent = t === 'dark' ? '[ dark ]' : '[ light ]'; }
+  render();
+  btn.addEventListener('click', function(){
+    var t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', t);
+    localStorage.setItem('hba-theme', t);
+    render();
+  });
+})();
+</script>
+</body>
+</html>
