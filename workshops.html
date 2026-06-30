@@ -211,6 +211,13 @@ body::before {
 .feature .visual {
   background: var(--bg-2);
 }
+.feature-link {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+.feature-link:hover h3 { color: var(--accent); }
+.feature-link.visual { cursor: pointer; }
 .feature .copy {
   padding: 34px;
   display: flex;
@@ -512,11 +519,11 @@ body::before {
 
     <div class="feature">
       <div class="copy">
-        <div>
+        <a class="feature-link" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">
           <div class="eyebrow">featured · Maven · Jul 29/30, 2026</div>
           <h3>Build AI Agents from First Principles</h3>
           <p>Build the core architecture behind production-ready AI agents: tools, control flow, memory, evaluation, and the practical decisions that separate a useful agent from a fragile demo.</p>
-        </div>
+        </a>
         <div class="meta">
           <div><b>date</b><span>Jul 29, 2026 PT<br>Jul 30, 2026 Sydney</span></div>
           <div><b>format</b><span>4-hour live Maven workshop</span></div>
@@ -527,10 +534,10 @@ body::before {
           <a class="btn" href="#all-workshops">Compare all workshops ↓</a>
         </div>
       </div>
-      <div class="visual">
+      <a class="feature-link visual" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">
         <img src="https://maven.com/api/og/course/build-ai-agents-from-first-principles" alt="Build AI Agents from First Principles course artwork">
         <div class="caption">Course artwork from Maven · Build AI Agents from First Principles</div>
-      </div>
+      </a>
     </div>
   </section>
 
