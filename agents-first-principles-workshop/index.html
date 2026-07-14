@@ -201,7 +201,7 @@
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
     color: var(--dim); padding: 10px 14px;
     border-bottom: 1px solid var(--line);
-    display: flex; gap: 8px; align-items: center;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
   }
   .panel-title::before { content: "●"; color: var(--green); font-size: 8px; }
 
@@ -338,18 +338,22 @@
   }
   .term .cmd { color: var(--green); }
   .term .cmd::before { content: "$ "; color: var(--dim); }
-  .term .out { color: var(--muted); display: block; white-space: pre; }
+  .term .out { color: var(--muted); display: block; }
   .term .you { color: var(--ink); }
   .term .tok { color: var(--amber); }
   .term .bad { color: var(--ghost); }
   .term .good { color: var(--green); }
   .term .comment { color: var(--muted); font-style: italic; }
-  .term-line { opacity: 0; transform: translateY(4px); transition: opacity 0.4s ease, transform 0.4s ease; display: block; white-space: pre; }
+  .term-line {
+    opacity: 0; transform: translateY(4px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    display: block; white-space: pre-wrap; overflow-wrap: anywhere;
+  }
   .active .term-line { opacity: 1; transform: none; }
 
   .tokens-eaten {
     font-family: var(--mono); font-size: 12px; color: var(--amber);
-    position: absolute; right: 14px; top: 9px; z-index: 1;
+    margin-left: auto; z-index: 1; letter-spacing: normal; white-space: nowrap;
     font-variant-numeric: tabular-nums;
   }
 
@@ -457,11 +461,12 @@
     .hero-ghost { top: 6%; right: 2%; transform: scale(0.8); }
   }
   @media (max-width: 560px) {
+    .grid, .quotes, .details { grid-template-columns: minmax(0, 1fr); }
     .node { font-size: 11px; padding: 5px 8px; }
     .node small { display: none; }
     .label { font-size: 9.5px; }
-    /* terminal lines wrap instead of looking chopped off */
-    .term .out, .term-line { white-space: pre-wrap; word-break: break-word; }
+    /* duplicated glitch layers cannot reserve height when their text wraps */
+    .active .glitch::before, .active .glitch::after { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -578,8 +583,7 @@
     <!-- ============ STAGE 2 ============ -->
     <article class="stage" id="s2" data-stage="2">
       <div class="panel">
-        <div class="panel-title">stage 02 / the agent loop</div>
-        <div class="tokens-eaten" id="tokcount">tokens consumed: 0</div>
+        <div class="panel-title"><span>stage 02 / the agent loop</span><span class="tokens-eaten" id="tokcount">tokens consumed: 0</span></div>
         <div class="diagram">
           <svg class="underlay" viewBox="0 0 460 300" aria-hidden="true">
             <rect class="flow-path draw" x="70" y="60" width="320" height="140" rx="18"></rect>
