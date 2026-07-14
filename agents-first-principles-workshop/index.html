@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Build the core architecture behind AI agents that can do useful work, then learn how to inspect, debug, and improve them. Live workshop, July 29 2026.">
+<meta name="description" content="Build AI agents from first principles. Engineer the harness around the model, diagnose failures, and improve agent behaviour without guessing. Live workshop, July 29 2026.">
 <meta property="og:title" content="Build AI Agents from First Principles">
-<meta property="og:description" content="Build the core architecture behind AI agents that can do useful work, then learn how to inspect, debug, and improve them.">
+<meta property="og:description" content="Build AI agents from first principles. Engineer the harness around the model, diagnose failures, and improve agent behaviour without guessing.">
 <meta property="og:image" content="https://hugobowne.github.io/agents-first-principles-workshop/tile.png">
 <meta property="og:url" content="https://hugobowne.github.io/agents-first-principles-workshop/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:description" content="Build the core architecture behind AI agents that can do useful work. Live workshop, July 29 2026.">
+<meta name="twitter:description" content="Build AI agents and engineer the harnesses around them. Live workshop, July 29 2026.">
 <meta name="twitter:image" content="https://hugobowne.github.io/agents-first-principles-workshop/tile.png">
 </head>
 <body>
@@ -480,7 +480,7 @@
     <div class="eyebrow">// live online workshop <b>·</b> <span style="white-space:nowrap">july 29 2026,</span> <span style="white-space:nowrap">6–10pm edt</span> <b>·</b> code-along</div>
     <h1>Build AI Agents<br>from <span class="fp">First Principles</span></h1>
     <p class="thesis">
-      <span class="thesis-ghost" aria-hidden="true">Build the core architecture behind AI agents that can do useful work. Learn how the pieces fit together, where they fail, and how to inspect and improve them.</span>
+      <span class="thesis-ghost" aria-hidden="true">Learn how agents actually work by building the loop and the harness around it: tools, instructions, context, memory, state, guardrails, traces, and feedback. Leave able to design agents, diagnose failures, and improve their behaviour without guessing.</span>
       <span class="thesis-live"><span class="typed" id="typed"></span><span class="cursor" id="cursor"></span></span>
     </p>
     <div class="hero-cta">
@@ -506,15 +506,21 @@
     <div class="sec-head">
       <div class="eyebrow">// what you'll be able to do</div>
       <h2>Build agents you can inspect, debug, and improve.</h2>
-      <p>Start with a simple LLM call and build the loop, tools, state, harness, guardrails, memory, and traces around it. Leave with working code, a starter architecture, and a mental model you can adapt to your own tools, data, and workflows.</p>
+      <p>Build the agent loop yourself, engineer the harness around it, and learn a repeatable way to improve behaviour when the agent fails.</p>
     </div>
     <div class="grid">
-      <div class="card"><h4>a tool-using agent loop</h4><p>Define tool schemas, execute the functions a model requests, return their results, and keep the loop running until the work is done.</p></div>
-      <div class="card"><h4>an engineered agent harness</h4><p>Separate instructions, tools, context, state, guardrails, traces, and feedback checks into components you can inspect and change.</p></div>
-      <div class="card"><h4>a repeatable improvement loop</h4><p>Capture a failure, read the trace, change one harness component, rerun the case, and verify that behaviour improved without changing the model.</p></div>
-      <div class="card"><h4>an SDK agent you understand</h4><p>Rebuild the same agent with the OpenAI Agents SDK and see exactly what Runner handles and what remains your responsibility.</p></div>
-      <div class="card"><h4>reusable tools behind MCP</h4><p>Expose one tool surface through an MCP server so browser chat, terminal chat, and scheduled work can use the same business capabilities.</p></div>
-      <div class="card"><h4>a complete working application</h4><p>Leave with browser and terminal chat, human approval boundaries, proactive draft outreach, runnable behaviour checks, and the full repository.</p></div>
+      <div class="card"><h4>build the agent loop</h4><p>Give a model tools, execute its requests, return the results, and keep the loop running until the work is complete.</p></div>
+      <div class="card"><h4>engineer the harness</h4><p>Design the instructions, tool schemas, context, memory, state, and guardrails that shape how the agent behaves.</p></div>
+      <div class="card"><h4>improve agents systematically</h4><p>Reproduce failures, read traces, identify the responsible harness component, change it, and verify the improvement with repeatable checks.</p></div>
+    </div>
+    <div class="sec-head" style="margin-top:56px;">
+      <div class="eyebrow">// then take it further</div>
+      <h2>Understand the abstractions built on top.</h2>
+    </div>
+    <div class="grid">
+      <div class="card"><h4>understand what frameworks do</h4><p>Rebuild your hand-written agent with the OpenAI Agents SDK and see which responsibilities it handles and which remain yours.</p></div>
+      <div class="card"><h4>create reusable agent architecture</h4><p>Put tools behind MCP so different agent applications can use the same capabilities without duplicating the underlying logic.</p></div>
+      <div class="card"><h4>leave with working code</h4><p>Keep the complete application, five ordered builds, runnable behaviour checks, and a starter architecture you can adapt to your own work.</p></div>
     </div>
   </div>
 </section>
@@ -524,10 +530,11 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">// workshop progression</div>
-      <h2>From one LLM call to a working agent.</h2>
-      <p>A customer service agent gives us a concrete problem to build against: answering
-      product questions, inspecting orders, calling tools, remembering context, and preparing
-      actions for human approval. The architecture applies far beyond this example.</p>
+      <h2>Build one agent from the model call up.</h2>
+      <p>Throughout the workshop, you build a customer service agent that answers product
+      questions, looks up orders, uses tools, remembers context, and prepares consequential
+      actions for human approval. The example gives us something concrete to build and debug.
+      The architecture applies to agents across many different domains.</p>
     </div>
 
     <!-- ============ STAGE 1 ============ -->
@@ -600,7 +607,7 @@
       </div>
       <div class="stage-copy">
         <div class="stage-num">stage 02</div>
-        <h3>Write the agent loop yourself.</h3>
+        <h3>Build the tool-calling loop.</h3>
         <p>You give the model tool definitions and <strong>write the control loop</strong>. The
         model requests a tool, your code runs it, and the result goes back to the model. You
         can inspect every step and see why token use grows as the conversation history is
@@ -636,11 +643,11 @@
       </div>
       <div class="stage-copy">
         <div class="stage-num">stage 03</div>
-        <h3>Engineer the harness around the loop.</h3>
-        <p>You separate instructions, tools, context, state, guardrails, traces, and feedback
-        into <strong>components you control</strong>. Then you run a deliberate failure, read
-        the trace, change one harness component, and verify the improvement without changing
-        the model.</p>
+        <h3>Engineer the agent harness.</h3>
+        <p>Separate the agent’s instructions, tools, context, memory, state, guardrails, traces,
+        and feedback into <strong>components you control</strong>. Run a failing case, inspect
+        what happened, change one component, and verify the improvement without changing the
+        model.</p>
         <div class="term">
           <span class="term-line" style="transition-delay:.2s"><span class="cmd">uv run python workshop/03_harness_engineering/harness.py</span></span>
           <span class="term-line" style="transition-delay:.6s"><span class="out">Feedback check: <span class="bad">["Guardrail did not fire; the request reached the model ..."]</span></span></span>
@@ -710,7 +717,7 @@
       </div>
       <div class="stage-copy">
         <div class="stage-num">stage 05</div>
-        <h3>Put reusable tools behind MCP.</h3>
+        <h3>Turn it into reusable architecture with MCP.</h3>
         <p>You move the tool surface behind an MCP server and connect it to browser chat,
         terminal chat, and scheduled work. The complete system can file tickets, create
         pending refund requests, and draft overdue-delivery outreach while keeping approval
@@ -826,7 +833,7 @@
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* hero typewriter (a hidden twin of the sentence reserves the height) */
-  var text = "Build the core architecture behind AI agents that can do useful work. Learn how the pieces fit together, where they fail, and how to inspect and improve them.";
+  var text = "Learn how agents actually work by building the loop and the harness around it: tools, instructions, context, memory, state, guardrails, traces, and feedback. Leave able to design agents, diagnose failures, and improve their behaviour without guessing.";
   var typed = document.getElementById("typed");
   if (reduced) {
     typed.textContent = text;
