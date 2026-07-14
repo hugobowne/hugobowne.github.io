@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Agent's First Principles Workshop">
+<meta property="og:description" content="An agent is an LLM calling tools in a loop. A harness is everything around it. Live workshop, July 29 2026.">
+<meta property="og:image" content="https://hugobowne.github.io/agents-first-principles-workshop/tile.png">
+<meta property="og:url" content="https://hugobowne.github.io/agents-first-principles-workshop/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://hugobowne.github.io/agents-first-principles-workshop/tile.png">
+</head>
+<body>
+<title>Agent's First Principles Workshop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<noscript><style>
+  .stage, .term-line { opacity: 1 !important; transform: none !important; }
+  .thesis-ghost { visibility: visible !important; }
+  .runner-box, .runner-tag, .zero-tokens { opacity: 1 !important; }
+</style></noscript>
+<style>
+  :root {
+    --bg: #0a0f0c;
+    --panel: #0d1410;
+    --panel-2: #101a14;
+    --line: #1e2c23;
+    --ink: #d7e2da;
+    --muted: #7d9186;
+    --dim: #6f8177;
+    --green: #46e08a;
+    --green-soft: rgba(70, 224, 138, 0.12);
+    --amber: #ffc857;
+    --ghost: #ff5d73;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+    --sans: "Geist", "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+  }
+
+  html {
+    background: var(--bg); scroll-behavior: smooth;
+    overflow-x: hidden; overflow-x: clip;
+    -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    margin: 0;
+    overflow-x: hidden; overflow-x: clip;
+  }
+  * { box-sizing: border-box; }
+
+  ::selection { background: var(--green); color: #06110a; }
+
+  a { color: var(--green); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: lowercase;
+    color: var(--muted);
+  }
+  .eyebrow b { color: var(--green); font-weight: 500; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 64px 0 48px;
+    overflow: hidden;  /* the drifting ghost must never widen the page */
+  }
+  .hero h1 {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: clamp(34px, 6vw, 66px);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    margin: 18px 0 0;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  .hero h1 .fp { color: var(--green); text-shadow: 0 0 24px rgba(70,224,138,.35); }
+
+  .thesis {
+    font-family: var(--mono);
+    font-size: clamp(15px, 2vw, 19px);
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 26px 0 0;
+    display: grid;
+  }
+  .thesis > span { grid-area: 1 / 1; }
+  .thesis-ghost { visibility: hidden; }
+  .thesis .typed { color: var(--ink); }
+  .cursor {
+    display: inline-block; width: 0.6em; height: 1.05em;
+    background: var(--green); vertical-align: -0.15em;
+    animation: blink 1.05s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 38px; }
+  .btn {
+    font-family: var(--mono); font-size: 15px; font-weight: 600;
+    background: var(--green); color: #06110a;
+    padding: 13px 22px; border: 1px solid var(--green); border-radius: 4px;
+    display: inline-block;
+  }
+  .btn:hover { background: transparent; color: var(--green); text-decoration: none; }
+  .btn-ghost {
+    font-family: var(--mono); font-size: 15px;
+    color: var(--muted); border: 1px solid var(--line);
+    padding: 13px 22px; border-radius: 4px; display: inline-block;
+  }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--muted); text-decoration: none; }
+  .hero-meta { font-family: var(--mono); font-size: 13px; color: var(--dim); margin-top: 22px; }
+  .hero-meta b { color: var(--amber); font-weight: 600; }
+
+  /* drifting ghost in hero */
+  .hero-ghost {
+    position: absolute; top: 18%; right: 6%;
+    opacity: 0.85; pointer-events: none;
+  }
+  .hero-ghost svg { animation: drift 11s ease-in-out infinite alternate; }
+  @keyframes drift {
+    0%   { translate: 0 0; rotate: -3deg; }
+    50%  { translate: -70px 46px; rotate: 2deg; }
+    100% { translate: 30px 90px; rotate: -2deg; }
+  }
+  .ghost-svg .body { fill: var(--ghost); opacity: 0.9; }
+  .ghost-svg .eye { fill: #0a0f0c; }
+  .ghost-svg .pupil { fill: #fff; }
+
+  /* ---------- section scaffolding ---------- */
+  section { padding: 84px 0; border-top: 1px solid var(--line); }
+  .sec-head { margin-bottom: 46px; max-width: 68ch; }
+  .sec-head h2 {
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(24px, 3.4vw, 34px); letter-spacing: -0.015em;
+    margin: 12px 0 14px; text-wrap: balance;
+  }
+  .sec-head p { color: var(--muted); margin: 0; }
+
+  /* ---------- stages ---------- */
+  .stage {
+    display: grid;
+    grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+    gap: 42px;
+    padding: 56px 0;
+    border-top: 1px dashed var(--line);
+    opacity: 0.25;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stage.active { opacity: 1; transform: none; }
+  .stage:first-of-type { border-top: 0; }
+
+  .stage-copy .stage-num {
+    font-family: var(--mono); font-size: 13px; color: var(--green);
+    letter-spacing: 0.12em;
+  }
+  .stage-copy h3 {
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(21px, 2.6vw, 27px);
+    margin: 10px 0 14px; letter-spacing: -0.01em; text-wrap: balance;
+  }
+  .stage-copy p { color: var(--muted); margin: 0 0 14px; max-width: 58ch; }
+  .stage-copy p strong { color: var(--ink); font-weight: 600; }
+
+  /* diagram panel */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    align-self: start;
+  }
+  .panel::after {  /* faint CRT scanlines */
+    content: "";
+    position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 3px);
+  }
+  .panel-title {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--dim); padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    display: flex; gap: 8px; align-items: center;
+  }
+  .panel-title::before { content: "●"; color: var(--green); font-size: 8px; }
+
+  .diagram { position: relative; aspect-ratio: 460 / 300; }
+
+  .node {
+    position: absolute;
+    font-family: var(--mono); font-size: 12.5px;
+    border: 1px solid var(--line); border-radius: 4px;
+    background: var(--panel-2); color: var(--muted);
+    padding: 8px 12px; white-space: nowrap;
+    transform: translate(-50%, -50%);
+    transition: border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease, opacity 0.5s ease;
+  }
+  .node.model { border-color: var(--green); color: var(--ink); box-shadow: 0 0 18px rgba(70,224,138,0.18); }
+  .node.lit { border-color: var(--green); color: var(--ink); }
+  .node.amberlit { border-color: var(--amber); color: var(--amber); }
+  .node small { display: block; font-size: 10.5px; color: var(--dim); white-space: nowrap; }
+
+  .diagram svg.underlay { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .flow-path { stroke: var(--green); stroke-width: 1.5; fill: none; opacity: 0.55; }
+  .flow-path.draw { stroke-dasharray: 900; stroke-dashoffset: 900; }
+  .active .flow-path.draw { animation: drawpath 1.6s ease forwards 0.3s; }
+  @keyframes drawpath { to { stroke-dashoffset: 0; } }
+
+  .dead-link { stroke: var(--ghost); stroke-width: 1.5; stroke-dasharray: 4 6; opacity: 0.7; }
+  .dead-x { font-family: var(--mono); fill: var(--ghost); font-size: 15px; }
+
+  /* pellets: each dims the moment the dot reaches it (delays match the 6s lap) */
+  .pellet { fill: var(--amber); opacity: 0.9; }
+  .active .pellet { animation: pellet-eat 6s linear infinite; }
+  @keyframes pellet-eat {
+    0% { opacity: 0.9; } 2% { opacity: 0.15; }
+    58% { opacity: 0.15; } 72%, 100% { opacity: 0.9; }
+  }
+
+  .runner-dot { fill: var(--green); filter: drop-shadow(0 0 5px rgba(70,224,138,0.8)); }
+
+  .label {
+    position: absolute; font-family: var(--mono); font-size: 10.5px;
+    color: var(--dim); letter-spacing: 0.06em; transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+  .label.green { color: var(--green); }
+  .label.amber { color: var(--amber); }
+  .label.pink { color: var(--ghost); }
+
+  /* stage 1 ghost + glitch */
+  .diagram .mini-ghost { position: absolute; transform: translate(-50%, -50%); }
+  .active .mini-ghost svg { animation: drift 7s ease-in-out infinite alternate; }
+
+  .glitch { position: relative; color: var(--ghost); }
+  .active .glitch::before, .active .glitch::after {
+    content: attr(data-text);
+    position: absolute; left: 0; top: 0; width: 100%;
+    overflow: hidden; opacity: 0.8;
+  }
+  .active .glitch::before { color: var(--green); clip-path: inset(0 0 55% 0); animation: gl1 2.4s steps(2) infinite; }
+  .active .glitch::after  { color: var(--ghost); clip-path: inset(55% 0 0 0); animation: gl2 2.9s steps(2) infinite; }
+  @keyframes gl1 { 0%,92% { transform: none; } 94% { transform: translate(-3px,-1px); } 97% { transform: translate(2px,1px); } }
+  @keyframes gl2 { 0%,90% { transform: none; } 93% { transform: translate(3px,1px); } 96% { transform: translate(-2px,-1px); } }
+
+  /* guardrail wall bounce */
+  .wall {
+    position: absolute; width: 3px; height: 74px; background: var(--green);
+    transform: translate(-50%, -50%); border-radius: 2px;
+    box-shadow: 0 0 12px rgba(70,224,138,0.5);
+  }
+  .bad-dot {
+    position: absolute; left: 12%; width: 9px; height: 9px; border-radius: 50%;
+    background: var(--ghost); transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px rgba(255,93,115,0.8);
+  }
+  .active .bad-dot { animation: bounce-off 3.4s ease-in-out infinite; }
+  @keyframes bounce-off {
+    0%   { left: 4%; opacity: 0; }
+    10%  { opacity: 1; }
+    42%  { left: 21.5%; }
+    52%  { left: 12%; opacity: 1; }
+    62%  { opacity: 0; left: 9%; }
+    100% { opacity: 0; left: 4%; }
+  }
+  .zero-tokens { opacity: 0; }
+  .active .zero-tokens { animation: zt 3.4s ease-in-out infinite; }
+  @keyframes zt { 0%, 40% { opacity: 0; } 48%, 72% { opacity: 1; } 82%, 100% { opacity: 0; } }
+
+  /* stage 4: the border traces the perimeter, then settles into a dashed boundary */
+  .runner-trace {
+    fill: none; stroke: var(--amber); stroke-width: 1.6;
+    stroke-dasharray: 100; stroke-dashoffset: 100; opacity: 0;
+  }
+  .active .runner-trace {
+    animation: runtrace 1.5s ease forwards 0.4s, tracefade 0.6s ease forwards 2.2s;
+  }
+  @keyframes runtrace { 0% { opacity: 1; stroke-dashoffset: 100; } 100% { opacity: 1; stroke-dashoffset: 0; } }
+  @keyframes tracefade { to { opacity: 0; } }
+  .runner-box {
+    position: absolute;
+    border: 1.5px dashed var(--amber); border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.7s ease 2.1s;
+  }
+  .active .runner-box { opacity: 1; }
+  .runner-tag {
+    position: absolute; font-family: var(--mono); font-size: 11px;
+    color: var(--amber); background: var(--panel);
+    padding: 0 8px; transform: translate(-50%, -50%);
+    opacity: 0; transition: opacity 0.6s ease 2.4s;
+  }
+  .active .runner-tag { opacity: 1; }
+  .stage .dimmable { transition: opacity 0.8s ease 1.4s; }
+  .stage.active .dimmable { opacity: 0.45; }
+  .stage .dissolve { opacity: 0.85; transition: opacity 1.2s ease 1.8s, filter 1.2s ease 1.8s; }
+  .stage.active .dissolve { opacity: 0.08; filter: blur(2px); }
+
+  /* stage 5 flowing links */
+  .mcp-link { stroke: var(--green); stroke-width: 1.5; fill: none; stroke-dasharray: 5 7; opacity: 0.7; }
+  .active .mcp-link { animation: flow 1.4s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -24; } }
+  .boundary-line { stroke: var(--amber); stroke-width: 1; stroke-dasharray: 2 5; opacity: 0.8; }
+
+  /* terminal blocks */
+  .term {
+    background: #070c09;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 12.8px;
+    line-height: 1.75;
+    padding: 14px 16px;
+    margin-top: 20px;
+    overflow-x: auto;
+    position: relative;
+  }
+  .term .cmd { color: var(--green); }
+  .term .cmd::before { content: "$ "; color: var(--dim); }
+  .term .out { color: var(--muted); display: block; white-space: pre; }
+  .term .you { color: var(--ink); }
+  .term .tok { color: var(--amber); }
+  .term .bad { color: var(--ghost); }
+  .term .good { color: var(--green); }
+  .term .comment { color: var(--muted); font-style: italic; }
+  .term-line { opacity: 0; transform: translateY(4px); transition: opacity 0.4s ease, transform 0.4s ease; display: block; white-space: pre; }
+  .active .term-line { opacity: 1; transform: none; }
+
+  .tokens-eaten {
+    font-family: var(--mono); font-size: 12px; color: var(--amber);
+    position: absolute; right: 14px; top: 9px; z-index: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mid-cta { text-align: center; padding: 48px 0 4px; }
+
+  /* ---------- outcomes ---------- */
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--panel); padding: 20px 22px;
+  }
+  .card h4 { font-family: var(--mono); font-size: 15px; margin: 0 0 8px; color: var(--ink); font-weight: 600; }
+  .card h4::before { content: "> "; color: var(--green); }
+  .card p { font-size: 14.5px; color: var(--muted); margin: 0; }
+
+  /* ---------- details strip ---------- */
+  .details {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1px; background: var(--line);
+    border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+  }
+  .detail { background: var(--panel); padding: 18px 20px; }
+  .detail .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--dim); text-transform: lowercase; }
+  .detail .v { font-family: var(--mono); font-size: 16.5px; color: var(--ink); margin-top: 8px; white-space: nowrap; }
+  .detail .v em { color: var(--amber); font-style: normal; }
+  .detail .sub { font-family: var(--mono); font-size: 12.5px; color: var(--dim); margin-top: 5px; white-space: nowrap; }
+  .detail .sub a { font-size: 12.5px; }
+
+  /* ---------- instructor ---------- */
+  .instructor { display: flex; gap: 26px; align-items: flex-start; max-width: 74ch; }
+  .instructor > div { min-width: 0; }
+  .instructor .sig {
+    font-family: var(--mono); font-size: 40px; line-height: 1;
+    color: var(--green); text-shadow: 0 0 22px rgba(70,224,138,0.3);
+  }
+  .instructor p { color: var(--muted); margin: 6px 0 0; }
+  .instructor h3 { font-family: var(--mono); margin: 0; font-size: 20px; }
+
+  /* ---------- final cta ---------- */
+  .final { text-align: center; padding: 110px 0 90px; }
+  .final h2 {
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(26px, 4vw, 42px); letter-spacing: -0.02em;
+    text-wrap: balance; margin: 14px 0 30px;
+  }
+  .final h2 span { color: var(--green); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 30px 0 48px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--dim);
+    display: flex; flex-wrap: wrap; gap: 10px 26px;
+  }
+
+  /* stage nav */
+  .stage-nav {
+    position: fixed; right: 22px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 14px; z-index: 5;
+  }
+  .stage-nav a {
+    font-family: var(--mono); font-size: 10.5px; color: var(--dim);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .stage-nav a::before {
+    content: ""; width: 7px; height: 7px; border-radius: 50%;
+    border: 1px solid var(--dim); display: block; transition: all 0.3s ease;
+  }
+  .stage-nav a.on { color: var(--green); }
+  .stage-nav a.on::before { background: var(--green); border-color: var(--green); box-shadow: 0 0 8px rgba(70,224,138,0.7); }
+  .stage-nav a:hover { text-decoration: none; color: var(--ink); }
+
+  @media (max-width: 1160px) {
+    .stage-nav { display: none; }
+  }
+  @media (max-width: 900px) {
+    /* minmax(0,...) so the terminal blocks' pre lines can't widen the column */
+    .stage { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+    .hero { min-height: auto; padding: 92px 0 64px; }
+    .hero-ghost { top: 6%; right: 2%; transform: scale(0.8); }
+  }
+  @media (max-width: 560px) {
+    .node { font-size: 11px; padding: 5px 8px; }
+    .node small { display: none; }
+    .label { font-size: 9.5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .stage, .term-line { opacity: 1 !important; transform: none !important; }
+    .flow-path.draw { stroke-dashoffset: 0 !important; }
+    .runner-trace { opacity: 0 !important; }
+    .runner-box, .runner-tag, .zero-tokens, .bad-dot { opacity: 1 !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+
+<!-- ======================= HERO ======================= -->
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">// live online workshop <b>·</b> july 29 2026, 6–10pm edt <b>·</b> code-along</div>
+    <h1>Build AI Agents<br>from <span class="fp">First Principles</span></h1>
+    <p class="thesis">
+      <span class="thesis-ghost" aria-hidden="true">An agent is an LLM calling tools in a loop. A harness is everything around it. You write both by hand, for a support agent that looks up orders, files tickets, and requests refunds a human approves.</span>
+      <span class="thesis-live"><span class="typed" id="typed"></span><span class="cursor" id="cursor"></span></span>
+    </p>
+    <div class="hero-cta">
+      <a class="btn" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">register · $425 until july 19</a>
+      <a class="btn-ghost" href="#stages">see what you build ↓</a>
+    </div>
+    <div class="hero-meta">$500 after july 19 · code <b>pacman</b> for 10% off · zero setup, runs in GitHub Codespaces</div>
+  </div>
+  <div class="hero-ghost">
+    <svg class="ghost-svg" width="52" height="56" viewBox="0 0 40 44" aria-hidden="true">
+      <path class="body" d="M20 2 C10 2 4 10 4 20 L4 40 L9 34 L14 40 L20 34 L26 40 L31 34 L36 40 L36 20 C36 10 30 2 20 2 Z"/>
+      <ellipse class="eye" cx="14" cy="18" rx="4.4" ry="5"/>
+      <ellipse class="eye" cx="26" cy="18" rx="4.4" ry="5"/>
+      <circle class="pupil" cx="15.4" cy="19.5" r="1.9"/>
+      <circle class="pupil" cx="27.4" cy="19.5" r="1.9"/>
+    </svg>
+  </div>
+</header>
+
+<!-- ======================= STAGES ======================= -->
+<section id="stages">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">// the workshop</div>
+      <h2>One support agent, built in five stages.</h2>
+      <p>You play a Northstar Outfitters support teammate using an internal agent-assist
+      tool, the rollout pattern teams use before a bot ever faces a customer. Every
+      terminal block below is output from the workshop repo. In the diagrams: the ghost is
+      a hallucination, the amber dots are tokens, the wall is a guardrail.</p>
+    </div>
+
+    <!-- ============ STAGE 1 ============ -->
+    <article class="stage" id="s1" data-stage="1">
+      <div class="panel">
+        <div class="panel-title">stage 01 / one llm call</div>
+        <div class="diagram">
+          <svg class="underlay" viewBox="0 0 460 300" preserveAspectRatio="none" aria-hidden="true">
+            <line class="dead-link" x1="230" y1="128" x2="230" y2="196"></line>
+            <text class="dead-x" x="223" y="171">✗</text>
+          </svg>
+          <div class="node model" style="left:50%; top:34%;">model</div>
+          <div class="node" style="left:50%; top:76%;">support.db · company_docs/<small>your world, unreachable</small></div>
+          <div class="mini-ghost" style="left:74%; top:30%;">
+            <svg class="ghost-svg" width="34" height="37" viewBox="0 0 40 44" aria-hidden="true">
+              <path class="body" d="M20 2 C10 2 4 10 4 20 L4 40 L9 34 L14 40 L20 34 L26 40 L31 34 L36 40 L36 20 C36 10 30 2 20 2 Z"/>
+              <ellipse class="eye" cx="14" cy="18" rx="4.4" ry="5"/>
+              <ellipse class="eye" cx="26" cy="18" rx="4.4" ry="5"/>
+              <circle class="pupil" cx="15.4" cy="19.5" r="1.9"/>
+              <circle class="pupil" cx="27.4" cy="19.5" r="1.9"/>
+            </svg>
+          </div>
+          <div class="label pink" style="left:74%; top:52%;">hallucination</div>
+        </div>
+      </div>
+      <div class="stage-copy">
+        <div class="stage-num">stage 01</div>
+        <h3>One LLM call, and it cannot see your orders.</h3>
+        <p>You start with the smallest useful program: instructions in, text out. The model
+        answers general support questions fluently. Ask it about ORD-1001, a real order
+        sitting in your local database, and it has <strong>nothing to check and no way to
+        check it</strong>.</p>
+        <div class="term">
+          <span class="term-line" style="transition-delay:.2s"><span class="cmd">uv run python workshop/01_llm_call/direct_response.py</span></span>
+          <span class="term-line" style="transition-delay:.5s"><span class="you">You: Where is order ORD-1001 right now?</span></span>
+          <span class="term-line" style="transition-delay:.9s"><span class="out">Model: <span class="glitch" data-text="I don’t have live order-tracking access in this chat...">I don’t have live order-tracking access in this chat...</span></span></span>
+          <span class="term-line" style="transition-delay:1.4s"><span class="comment"># the order exists. it is shipped and overdue. the model cannot know.</span></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ STAGE 2 ============ -->
+    <article class="stage" id="s2" data-stage="2">
+      <div class="panel">
+        <div class="panel-title">stage 02 / the agent loop</div>
+        <div class="tokens-eaten" id="tokcount">tokens consumed: 0</div>
+        <div class="diagram">
+          <svg class="underlay" viewBox="0 0 460 300" aria-hidden="true">
+            <rect class="flow-path draw" x="70" y="60" width="320" height="140" rx="18"></rect>
+            <circle class="pellet" cx="150" cy="60" r="3" style="animation-delay:.61s"></circle>
+            <circle class="pellet" cx="230" cy="60" r="3" style="animation-delay:1.15s"></circle>
+            <circle class="pellet" cx="310" cy="60" r="3" style="animation-delay:1.69s"></circle>
+            <circle class="pellet" cx="390" cy="130" r="3" style="animation-delay:2.65s"></circle>
+            <circle class="pellet" cx="310" cy="200" r="3" style="animation-delay:3.61s"></circle>
+            <circle class="pellet" cx="230" cy="200" r="3" style="animation-delay:4.15s"></circle>
+            <circle class="pellet" cx="150" cy="200" r="3" style="animation-delay:4.69s"></circle>
+            <circle class="pellet" cx="70" cy="130" r="3" style="animation-delay:5.65s"></circle>
+            <circle class="runner-dot" cx="70" cy="78" r="5">
+              <animateMotion id="dotmotion" dur="6s" repeatCount="indefinite" begin="indefinite"
+                path="M0,0 Q0,-18 18,-18 L302,-18 Q320,-18 320,0 L320,104 Q320,122 302,122 L18,122 Q0,122 0,104 Z"/>
+            </circle>
+            <line class="flow-path" x1="240" y1="264" x2="240" y2="230" opacity="0.35"></line>
+          </svg>
+          <div class="node model" style="left:26%; top:43.5%;">model</div>
+          <div class="node lit" style="left:72%; top:43.5%;">your functions</div>
+          <div class="label green" style="left:49%; top:14%;">function_call →</div>
+          <div class="label green" style="left:49%; top:73%;">← function_call_output</div>
+          <div class="node lit" style="left:52%; top:90%;">support.db · company_docs/</div>
+          <div class="label" style="left:15%; top:90%;">while True:</div>
+        </div>
+      </div>
+      <div class="stage-copy">
+        <div class="stage-num">stage 02</div>
+        <h3>The while loop that makes it an agent.</h3>
+        <p>You give the model tool contracts and <strong>write the loop yourself</strong>: it
+        requests a call, your code runs the function, the result goes back in. The loop narrates
+        every step, and the token counter only goes up, because the whole history is re-sent
+        on every step.</p>
+        <div class="term">
+          <span class="term-line" style="transition-delay:.2s"><span class="cmd">uv run python workshop/02_agent_loop/agent_loop.py "Compare ORD-1001 and ORD-1002"</span></span>
+          <span class="term-line" style="transition-delay:.6s"><span class="out">[step 1] <span class="tok">183 tokens in -> 56 out</span></span></span>
+          <span class="term-line" style="transition-delay:.9s"><span class="out">[step 1] model requested get_order({"order_id":"ORD-1001"})</span></span>
+          <span class="term-line" style="transition-delay:1.2s"><span class="out">[step 1] model requested get_order({"order_id":"ORD-1002"})</span></span>
+          <span class="term-line" style="transition-delay:1.5s"><span class="out">[step 2] <span class="tok">509 tokens in -> 116 out</span></span></span>
+          <span class="term-line" style="transition-delay:1.8s"><span class="out">[step 2] final answer</span></span>
+          <span class="term-line" style="transition-delay:2.2s"><span class="comment"># two tool calls in one step, printed as they ran.</span></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ STAGE 3 ============ -->
+    <article class="stage" id="s3" data-stage="3">
+      <div class="panel">
+        <div class="panel-title">stage 03 / harness engineering</div>
+        <div class="diagram">
+          <div class="wall" style="left:22%; top:38%;"></div>
+          <div class="bad-dot" style="top:38%;"></div>
+          <div class="label pink zero-tokens" style="left:13%; top:22%;">blocked · 0 tokens</div>
+          <div class="node lit" style="left:20%; top:66%;">guardrails.py</div>
+          <div class="node model" style="left:52%; top:38%;">the same loop</div>
+          <div class="node lit" style="left:52%; top:12%;">instructions.py</div>
+          <div class="node lit" style="left:82%; top:38%;">tools.py</div>
+          <div class="node amberlit" style="left:52%; top:66%;">trace.json<small>all calls and tokens</small></div>
+          <div class="node lit" style="left:84%; top:66%;">feedback_case.py</div>
+          <div class="label" style="left:52%; top:90%;">the harness: everything around the model</div>
+        </div>
+      </div>
+      <div class="stage-copy">
+        <div class="stage-num">stage 03</div>
+        <h3>This section ships with a bug. On purpose.</h3>
+        <p>Instructions, guardrails, tools, memory, traces, and feedback checks become
+        <strong>files you own</strong>. One of them has a deliberate gap: a politely phrased
+        request for bulk customer data slips past the guardrail and reaches the model. You watch
+        the check fail, read the trace, fix one line, and watch it pass with zero API calls.</p>
+        <div class="term">
+          <span class="term-line" style="transition-delay:.2s"><span class="cmd">uv run python workshop/03_harness_engineering/harness.py</span></span>
+          <span class="term-line" style="transition-delay:.6s"><span class="out">Feedback check: <span class="bad">["Guardrail did not fire; the request reached the model ..."]</span></span></span>
+          <span class="term-line" style="transition-delay:1.0s"><span class="comment"># read the trace. fix ONE component. run it again.</span></span>
+          <span class="term-line" style="transition-delay:1.5s"><span class="out">Feedback check: <span class="good">passed</span></span></span>
+          <span class="term-line" style="transition-delay:1.9s"><span class="comment"># zero API calls this time: the guardrail returned before the loop started.</span></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ STAGE 4 ============ -->
+    <article class="stage" id="s4" data-stage="4">
+      <div class="panel">
+        <div class="panel-title">stage 04 / the agents sdk</div>
+        <div class="diagram">
+          <svg class="underlay" viewBox="0 0 460 300" aria-hidden="true">
+            <rect class="runner-trace" x="37" y="42" width="386" height="156" rx="10" pathLength="100"></rect>
+          </svg>
+          <div class="runner-box" style="left:8%; top:14%; width:84%; height:52%;"></div>
+          <div class="runner-tag" style="left:50%; top:14%;">Runner · the loop you wrote, now the SDK’s job</div>
+          <div class="node model dimmable" style="left:30%; top:40%;">model</div>
+          <div class="node dimmable lit" style="left:70%; top:40%;">@function_tool</div>
+          <div class="label dimmable green" style="left:50%; top:26%;">the same loop, behind glass</div>
+          <div class="label green dissolve" style="left:50%; top:54%;">while True:</div>
+          <div class="node lit" style="left:22%; top:84%;">instructions</div>
+          <div class="node lit" style="left:50%; top:84%;">guardrails</div>
+          <div class="node lit" style="left:78%; top:84%;">business logic</div>
+          <div class="label" style="left:50%; top:70%;">still yours ↓</div>
+        </div>
+      </div>
+      <div class="stage-copy">
+        <div class="stage-num">stage 04</div>
+        <h3>The Agents SDK swallows your loop.</h3>
+        <p>You rebuild the same agent with the OpenAI Agents SDK and watch your loop disappear
+        into <strong>Runner</strong>. You wrote that loop an hour earlier, so you know exactly
+        what the SDK is doing on your behalf. What it cannot write for you, you keep:
+        instructions, guardrails, and the business logic itself.</p>
+        <div class="term">
+          <span class="term-line" style="transition-delay:.2s"><span class="cmd">uv run python workshop/04_agents_sdk/agents_sdk.py</span></span>
+          <span class="term-line" style="transition-delay:.6s"><span class="out">Tools the Runner called for us: lookup_order</span></span>
+          <span class="term-line" style="transition-delay:1.0s"><span class="out">I checked order ORD-1001. It shipped, but the carrier scan hasn’t</span></span>
+          <span class="term-line" style="transition-delay:1.2s"><span class="out">changed for 4 days in the Melbourne depot...</span></span>
+          <span class="term-line" style="transition-delay:1.6s"><span class="comment"># the schemas, dispatch table, and while loop are gone. find where they went.</span></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ STAGE 5 ============ -->
+    <article class="stage" id="s5" data-stage="5">
+      <div class="panel">
+        <div class="panel-title">stage 05 / mcp architecture</div>
+        <div class="diagram">
+          <svg class="underlay" viewBox="0 0 460 300" aria-hidden="true">
+            <path class="mcp-link" d="M96,52 C160,52 170,120 230,128"></path>
+            <path class="mcp-link" d="M96,128 L230,128"></path>
+            <path class="mcp-link" d="M96,204 C160,204 170,136 230,128"></path>
+            <line class="boundary-line" x1="262" y1="30" x2="262" y2="270"></line>
+            <path class="mcp-link" d="M294,128 L360,128"></path>
+          </svg>
+          <div class="node lit" style="left:21%; top:17%;">browser chat</div>
+          <div class="node lit" style="left:21%; top:43%;">terminal chat</div>
+          <div class="node lit" style="left:21%; top:68%;">scheduled job</div>
+          <div class="label amber" style="left:57%; top:12%;">MCP boundary</div>
+          <div class="node model" style="left:84%; top:43%;">mcp server<small>nine tools, one source</small></div>
+          <div class="label" style="left:84%; top:70%;">support.db · company_docs/</div>
+          <div class="label green" style="left:21%; top:88%;">three clients, one server</div>
+        </div>
+      </div>
+      <div class="stage-copy">
+        <div class="stage-num">stage 05</div>
+        <h3>Browser, terminal, and scheduler share one MCP server.</h3>
+        <p>Tools move behind an MCP server, and <strong>three clients connect to it</strong>: a
+        support-desk browser chat, a terminal chat, and a scheduled workflow. The agent files
+        tickets and requests refunds it has no tool to approve; you approve them. Then it
+        drafts overdue-delivery outreach while nobody is chatting, and you read what it
+        wrote.</p>
+        <div class="term">
+          <span class="term-line" style="transition-delay:.2s"><span class="cmd">uv run proactive-support && uv run show-outbox</span></span>
+          <span class="term-line" style="transition-delay:.6s"><span class="out">Draft 1 | to alice@example.com | about ORD-1001 | draft</span></span>
+          <span class="term-line" style="transition-delay:.8s"><span class="out">-----------------------------------------------------</span></span>
+          <span class="term-line" style="transition-delay:1.0s"><span class="out">Hi Alice, an update on your Aurora ANC Headphones: your parcel’s</span></span>
+          <span class="term-line" style="transition-delay:1.2s"><span class="out">last scan hasn’t moved in four days, so we’ve opened a delivery</span></span>
+          <span class="term-line" style="transition-delay:1.4s"><span class="out">investigation...</span></span>
+          <span class="term-line" style="transition-delay:1.8s"><span class="comment"># one of four drafts, each grounded in its own tracking note. none sent.</span></span>
+        </div>
+      </div>
+    </article>
+
+    <div class="mid-cta">
+      <a class="btn" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">build this with us · july 29</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= OUTCOMES ======================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">// outcomes</div>
+      <h2>What you leave with</h2>
+    </div>
+    <div class="grid">
+      <div class="card"><h4>the loop, by hand</h4><p>You can explain the difference between a model call and an agent, because you built the loop that separates them.</p></div>
+      <div class="card"><h4>tools and contracts</h4><p>You can define a tool, connect it to business logic, and know exactly what the model sees and never sees.</p></div>
+      <div class="card"><h4>the improvement loop</h4><p>Failure, trace, one change, rerun. You practice it on a bug the repo ships on purpose, and leave with the reflex.</p></div>
+      <div class="card"><h4>the sdk, understood</h4><p>You know what the Agents SDK does under the hood, so you can decide when to use it and when not to.</p></div>
+      <div class="card"><h4>mcp in practice</h4><p>You put nine tools behind a server and called them from three clients, including one you did not write.</p></div>
+      <div class="card"><h4>the repo</h4><p>A private working codebase: five ordered sections, runnable behaviour checks, and the complete support app. Yours to keep and rebuild for your own stack.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= DETAILS ======================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">// the details</div>
+      <h2>One evening. Zero setup.</h2>
+    </div>
+    <div class="details">
+      <div class="detail"><div class="k">date</div><div class="v">july 29, 2026</div><div class="sub">6–10pm edt</div></div>
+      <div class="detail"><div class="k">format</div><div class="v">4 hours, live</div><div class="sub">code-along in the repo</div></div>
+      <div class="detail"><div class="k">tuition</div><div class="v"><em>$425</em> until july 19</div><div class="sub">$500 after · code pacman for 10% off</div><div class="sub"><a href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">register →</a></div></div>
+      <div class="detail"><div class="k">setup</div><div class="v">GitHub Codespaces</div><div class="sub">paste one API key</div></div>
+    </div>
+    <p style="color:var(--muted); margin-top:22px; max-width:68ch;">Built for Python-capable
+    builders who understand APIs but have not built an agent, or have only built one through a
+    framework and want to know what is actually happening. No agent-framework or MCP experience
+    assumed.</p>
+  </div>
+</section>
+
+<!-- ======================= INSTRUCTOR ======================= -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow" style="margin-bottom:26px;">// your instructor</div>
+    <div class="instructor">
+      <div class="sig">&gt;_</div>
+      <div>
+        <h3>Hugo Bowne-Anderson</h3>
+        <p>Host of the Vanishing Gradients and High Signal podcasts. Hugo has taught data science
+        and AI to millions of learners, and teaches enterprise agent engineering with Doug
+        Turnbull. Every example in this workshop runs from a fresh clone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= FINAL CTA ======================= -->
+<section class="final">
+  <div class="wrap">
+    <div class="eyebrow">// july 29 2026 · $425 until july 19 · code <b>pacman</b> for 10% off</div>
+    <h2>An agent is an LLM calling tools in a loop.<br><span>Come build the loop.</span></h2>
+    <a class="btn" href="https://maven.com/hugo-stefan/build-ai-agents-from-first-principles" target="_blank" rel="noopener">register · $425 until july 19</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; flex-wrap:wrap; gap:10px 26px;">
+    <span>© 2026 hugo bowne-anderson · v9</span>
+    <a href="https://hugobowne.github.io/workshops" target="_blank" rel="noopener">all workshops</a>
+    <a href="https://hugobowne.github.io/" target="_blank" rel="noopener">free open-source course</a>
+    <a href="https://hugobowne.substack.com" target="_blank" rel="noopener">substack</a>
+  </div>
+</footer>
+
+<!-- stage nav -->
+<nav class="stage-nav" aria-label="Workshop stages">
+  <a href="#s1" data-for="s1">01</a>
+  <a href="#s2" data-for="s2">02</a>
+  <a href="#s3" data-for="s3">03</a>
+  <a href="#s4" data-for="s4">04</a>
+  <a href="#s5" data-for="s5">05</a>
+</nav>
+
+<script>
+(function () {
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* hero typewriter (a hidden twin of the sentence reserves the height) */
+  var text = "An agent is an LLM calling tools in a loop. A harness is everything around it. You write both by hand, for a support agent that looks up orders, files tickets, and requests refunds a human approves.";
+  var typed = document.getElementById("typed");
+  if (reduced) {
+    typed.textContent = text;
+  } else {
+    var i = 0;
+    (function tick() {
+      if (i <= text.length) {
+        typed.textContent = text.slice(0, i);
+        i += 1;
+        setTimeout(tick, i < 12 ? 46 : 22);
+      }
+    })();
+  }
+
+  /* stage activation + nav state */
+  var stages = document.querySelectorAll(".stage");
+  var navLinks = document.querySelectorAll(".stage-nav a");
+  var seen2 = false;
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+        navLinks.forEach(function (a) {
+          a.classList.toggle("on", a.dataset.for === entry.target.id);
+        });
+        if (entry.target.id === "s2" && !seen2) {
+          seen2 = true;
+          countTokens();
+          /* start the dot's lap now so the pellet delays line up with it */
+          var motion = document.getElementById("dotmotion");
+          if (motion && !reduced && motion.beginElement) motion.beginElement();
+        }
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -10% 0px" });
+  stages.forEach(function (s) { io.observe(s); });
+
+  /* token counter for stage 2 */
+  function countTokens() {
+    var el = document.getElementById("tokcount");
+    var target = 864;
+    if (reduced) { el.textContent = "tokens consumed: " + target; return; }
+    var n = 0;
+    var timer = setInterval(function () {
+      n += 9;
+      if (n >= target) { n = target; clearInterval(timer); }
+      el.textContent = "tokens consumed: " + n;
+    }, 24);
+  }
+})();
+</script>
+
+</body>
+</html>
