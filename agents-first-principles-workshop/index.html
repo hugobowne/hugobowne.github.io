@@ -391,6 +391,20 @@
   }
   .quote figcaption strong { display: block; color: var(--ink); font-size: 12.5px; }
 
+  /* ---------- why first principles ---------- */
+  .why-layout {
+    display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 56px; align-items: start;
+  }
+  .why-layout h2 {
+    font-family: var(--mono); font-weight: 700;
+    font-size: clamp(24px, 3.4vw, 34px); letter-spacing: -0.015em;
+    margin: 12px 0 0; text-wrap: balance;
+  }
+  .why-copy p { color: var(--muted); margin: 0 0 18px; }
+  .why-copy p:first-child { color: var(--ink); font-size: 18px; }
+  .why-copy p:last-child { margin-bottom: 0; }
+
   /* ---------- details strip ---------- */
   .details {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -453,6 +467,7 @@
   @media (max-width: 900px) {
     /* minmax(0,...) so the terminal blocks' pre lines can't widen the column */
     .stage { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+    .why-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
     .hero { min-height: auto; padding: 92px 0 64px; }
     .hero-ghost { top: 6%; right: 2%; transform: scale(0.8); }
   }
@@ -500,16 +515,54 @@
   </div>
 </header>
 
+<!-- ======================= PARTICIPANT FEEDBACK ======================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">// participant feedback</div>
+      <h2>What participants say</h2>
+    </div>
+    <div class="quotes">
+      <figure class="quote">
+        <blockquote>Pragmatic understanding unlocks real-world projects.</blockquote>
+        <figcaption><strong>Carol Willing</strong>Python core developer · three-time Python Steering Council member · Project Jupyter core contributor</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>Shows how solutions are deployed in production.</blockquote>
+        <figcaption><strong>Nishant H.</strong>OpenAI · ex-Netflix</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>Cuts through complexity while staying grounded in practical systems.</blockquote>
+        <figcaption><strong>Gregory G.</strong>ML/AI Engineer · Waymo</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= WHY FIRST PRINCIPLES ======================= -->
+<section>
+  <div class="wrap why-layout">
+    <div>
+      <div class="eyebrow">// why first principles</div>
+      <h2>Understand the system behind the SDK.</h2>
+    </div>
+    <div class="why-copy">
+      <p>Agent SDKs reduce model calls, tool execution, context, and control flow to a few lines of code. Building those layers once makes the abstraction legible.</p>
+      <p>When an agent fails, you can read the trace and identify whether the problem came from its instructions, tools, state, control flow, or guardrails. You can decide whether the job needs a single model call, a fixed workflow, or an agent, and adopt new frameworks without treating them as black boxes.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ======================= STAGES ======================= -->
 <section id="stages">
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">// the workshop</div>
       <h2>One support agent, built in five stages.</h2>
-      <p>Over four hours, you build an internal support agent for Northstar Outfitters. It
-      looks up orders, files support tickets, and prepares refund requests for a human to
-      approve. Each stage adds one part of the architecture, so you can see what changes,
-      where failures come from, and how the pieces work together.</p>
+      <p>Over four hours, you turn a simple LLM call into a working customer service agent.
+      It answers product questions, looks up orders, files support tickets, prepares refund
+      requests for a human to approve, and drafts customer outreach. Each stage adds one
+      layer of the architecture and shows you exactly what changed.</p>
     </div>
 
     <!-- ============ STAGE 1 ============ -->
@@ -729,30 +782,6 @@
       <div class="card"><h4>connect tools safely</h4><p>Define what the model can request, keep business rules in ordinary code, and require human approval for consequential actions.</p></div>
       <div class="card"><h4>reuse tools with MCP</h4><p>Expose one set of capabilities to browser, terminal, and scheduled clients without copying the business logic into each one.</p></div>
       <div class="card"><h4>adapt a working codebase</h4><p>Keep the complete support app, five ordered builds, and runnable behaviour checks as a starting point for your own work.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= PARTICIPANT FEEDBACK ======================= -->
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">// participant feedback</div>
-      <h2>From Hugo's AI courses and workshops</h2>
-    </div>
-    <div class="quotes">
-      <figure class="quote">
-        <blockquote>Pragmatic understanding unlocks real-world projects.</blockquote>
-        <figcaption><strong>Carol Willing</strong>Python core developer · three-time Python Steering Council member · Project Jupyter core contributor</figcaption>
-      </figure>
-      <figure class="quote">
-        <blockquote>Shows how solutions are deployed in production.</blockquote>
-        <figcaption><strong>Nishant H.</strong>OpenAI · ex-Netflix</figcaption>
-      </figure>
-      <figure class="quote">
-        <blockquote>Cuts through complexity while staying grounded in practical systems.</blockquote>
-        <figcaption><strong>Gregory G.</strong>ML/AI Engineer · Waymo</figcaption>
-      </figure>
     </div>
   </div>
 </section>
