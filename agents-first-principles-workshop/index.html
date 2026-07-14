@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Build a working customer support agent from scratch, then learn how to design, debug, and improve the architecture behind it. Live workshop, July 29 2026.">
+<meta name="description" content="Build the core architecture behind AI agents that can do useful work, then learn how to inspect, debug, and improve them. Live workshop, July 29 2026.">
 <meta property="og:title" content="Build AI Agents from First Principles">
-<meta property="og:description" content="Build a working customer support agent from scratch, then learn how to design, debug, and improve the architecture behind it.">
+<meta property="og:description" content="Build the core architecture behind AI agents that can do useful work, then learn how to inspect, debug, and improve them.">
 <meta property="og:image" content="https://hugobowne.github.io/agents-first-principles-workshop/tile.png">
 <meta property="og:url" content="https://hugobowne.github.io/agents-first-principles-workshop/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:description" content="Build a working customer support agent from scratch and understand the architecture behind it. Live workshop, July 29 2026.">
+<meta name="twitter:description" content="Build the core architecture behind AI agents that can do useful work. Live workshop, July 29 2026.">
 <meta name="twitter:image" content="https://hugobowne.github.io/agents-first-principles-workshop/tile.png">
 </head>
 <body>
@@ -480,7 +480,7 @@
     <div class="eyebrow">// live online workshop <b>·</b> <span style="white-space:nowrap">july 29 2026,</span> <span style="white-space:nowrap">6–10pm edt</span> <b>·</b> code-along</div>
     <h1>Build AI Agents<br>from <span class="fp">First Principles</span></h1>
     <p class="thesis">
-      <span class="thesis-ghost" aria-hidden="true">Build a working customer support agent from scratch, then learn how to design, debug, and improve the architecture behind it.</span>
+      <span class="thesis-ghost" aria-hidden="true">Build the core architecture behind AI agents that can do useful work. Learn how the pieces fit together, where they fail, and how to inspect and improve them.</span>
       <span class="thesis-live"><span class="typed" id="typed"></span><span class="cursor" id="cursor"></span></span>
     </p>
     <div class="hero-cta">
@@ -504,9 +504,9 @@
 <section>
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">// what you'll be able to build</div>
-      <h2>Build a customer support agent you can understand, debug, and adapt.</h2>
-      <p>Your agent answers product questions, looks up orders, files support tickets, prepares refunds for human approval, and drafts outreach to customers with overdue deliveries. You leave with the working code and the skills to build agents around your own tools and data.</p>
+      <div class="eyebrow">// what you'll be able to do</div>
+      <h2>Build agents you can inspect, debug, and improve.</h2>
+      <p>Start with a simple LLM call and build the loop, tools, state, harness, guardrails, memory, and traces around it. Leave with working code, a starter architecture, and a mental model you can adapt to your own tools, data, and workflows.</p>
     </div>
     <div class="grid">
       <div class="card"><h4>a tool-using agent loop</h4><p>Define tool schemas, execute the functions a model requests, return their results, and keep the loop running until the work is done.</p></div>
@@ -524,10 +524,10 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">// workshop progression</div>
-      <h2>Build it from one model call to a complete application.</h2>
-      <p>You start with a model that cannot check a single order. Across five hands-on stages,
-      you give it tools, write the loop, engineer the harness, and finish with a working
-      support application across the browser, terminal, and scheduled jobs.</p>
+      <h2>From one LLM call to a working agent.</h2>
+      <p>A customer service agent gives us a concrete problem to build against: answering
+      product questions, inspecting orders, calling tools, remembering context, and preparing
+      actions for human approval. The architecture applies far beyond this example.</p>
     </div>
 
     <!-- ============ STAGE 1 ============ -->
@@ -826,7 +826,7 @@
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* hero typewriter (a hidden twin of the sentence reserves the height) */
-  var text = "Build a working customer support agent from scratch, then learn how to design, debug, and improve the architecture behind it.";
+  var text = "Build the core architecture behind AI agents that can do useful work. Learn how the pieces fit together, where they fail, and how to inspect and improve them.";
   var typed = document.getElementById("typed");
   if (reduced) {
     typed.textContent = text;
