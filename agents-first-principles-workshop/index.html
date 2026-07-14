@@ -435,6 +435,8 @@
     .node { font-size: 11px; padding: 5px 8px; }
     .node small { display: none; }
     .label { font-size: 9.5px; }
+    /* terminal lines wrap instead of looking chopped off */
+    .term .out, .term-line { white-space: pre-wrap; word-break: break-word; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -450,7 +452,7 @@
 <!-- ======================= HERO ======================= -->
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow">// live online workshop <b>·</b> july 29 2026, 6–10pm edt <b>·</b> code-along</div>
+    <div class="eyebrow">// live online workshop <b>·</b> <span style="white-space:nowrap">july 29 2026,</span> <span style="white-space:nowrap">6–10pm edt</span> <b>·</b> code-along</div>
     <h1>Build AI Agents<br>from <span class="fp">First Principles</span></h1>
     <p class="thesis">
       <span class="thesis-ghost" aria-hidden="true">An agent is an LLM calling tools in a loop. A harness is everything around it. You write both by hand, for a support agent that looks up orders, files tickets, and requests refunds a human approves.</span>
@@ -584,9 +586,9 @@
           <div class="node lit" style="left:20%; top:66%;">guardrails.py</div>
           <div class="node model" style="left:52%; top:38%;">the same loop</div>
           <div class="node lit" style="left:52%; top:12%;">instructions.py</div>
-          <div class="node lit" style="left:82%; top:38%;">tools.py</div>
-          <div class="node amberlit" style="left:52%; top:66%;">trace.json<small>all calls and tokens</small></div>
-          <div class="node lit" style="left:84%; top:66%;">feedback_case.py</div>
+          <div class="node lit" style="left:79%; top:38%;">tools.py</div>
+          <div class="node amberlit" style="left:50%; top:66%;">trace.json<small>all calls and tokens</small></div>
+          <div class="node lit" style="left:80%; top:66%;">feedback_case.py</div>
           <div class="label" style="left:52%; top:90%;">the harness: everything around the model</div>
         </div>
       </div>
