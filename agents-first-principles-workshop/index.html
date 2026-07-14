@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Build the loop, tools, guardrails, traces, SDK integration, and MCP architecture behind a production-ready AI agent. Live workshop, July 29 2026.">
+<meta name="description" content="Build tool-using AI agents from scratch, engineer the harness around them, diagnose failures from traces, and share tools across chat and scheduled workflows. Live workshop, July 29 2026.">
 <meta property="og:title" content="Build AI Agents from First Principles">
-<meta property="og:description" content="Build the loop, tools, guardrails, traces, SDK integration, and MCP architecture behind a production-ready AI agent. Live workshop, July 29 2026.">
+<meta property="og:description" content="Build tool-using AI agents from scratch, engineer the harness around them, diagnose failures from traces, and share tools across chat and scheduled workflows.">
 <meta property="og:image" content="https://hugobowne.github.io/agents-first-principles-workshop/tile.png">
 <meta property="og:url" content="https://hugobowne.github.io/agents-first-principles-workshop/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:description" content="Build the core architecture behind a production-ready AI agent. Live workshop, July 29 2026.">
+<meta name="twitter:description" content="Build tool-using AI agents from scratch and engineer the harness around them. Live workshop, July 29 2026.">
 <meta name="twitter:image" content="https://hugobowne.github.io/agents-first-principles-workshop/tile.png">
 </head>
 <body>
@@ -368,7 +368,7 @@
   .card h4::before { content: "> "; color: var(--green); }
   .card p { font-size: 14.5px; color: var(--muted); margin: 0; }
 
-  /* ---------- participant feedback ---------- */
+  /* ---------- past student feedback ---------- */
   .quotes {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 14px;
@@ -390,20 +390,6 @@
     color: var(--dim);
   }
   .quote figcaption strong { display: block; color: var(--ink); font-size: 12.5px; }
-
-  /* ---------- why first principles ---------- */
-  .why-layout {
-    display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: 56px; align-items: start;
-  }
-  .why-layout h2 {
-    font-family: var(--mono); font-weight: 700;
-    font-size: clamp(24px, 3.4vw, 34px); letter-spacing: -0.015em;
-    margin: 12px 0 0; text-wrap: balance;
-  }
-  .why-copy p { color: var(--muted); margin: 0 0 18px; }
-  .why-copy p:first-child { color: var(--ink); font-size: 18px; }
-  .why-copy p:last-child { margin-bottom: 0; }
 
   /* ---------- details strip ---------- */
   .details {
@@ -467,7 +453,6 @@
   @media (max-width: 900px) {
     /* minmax(0,...) so the terminal blocks' pre lines can't widen the column */
     .stage { grid-template-columns: minmax(0, 1fr); gap: 26px; }
-    .why-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
     .hero { min-height: auto; padding: 92px 0 64px; }
     .hero-ghost { top: 6%; right: 2%; transform: scale(0.8); }
   }
@@ -495,7 +480,7 @@
     <div class="eyebrow">// live online workshop <b>·</b> <span style="white-space:nowrap">july 29 2026,</span> <span style="white-space:nowrap">6–10pm edt</span> <b>·</b> code-along</div>
     <h1>Build AI Agents<br>from <span class="fp">First Principles</span></h1>
     <p class="thesis">
-      <span class="thesis-ghost" aria-hidden="true">Build the core architecture behind a production-ready AI agent: the loop, tools, guardrails, traces, an SDK, and MCP. Learn how to trace failures, decide when an SDK helps, and keep business rules outside the model.</span>
+      <span class="thesis-ghost" aria-hidden="true">Build tool-using AI agents from scratch. Engineer the harness around them, diagnose failures from traces, and share the same tools across chat and scheduled workflows with MCP.</span>
       <span class="thesis-live"><span class="typed" id="typed"></span><span class="cursor" id="cursor"></span></span>
     </p>
     <div class="hero-cta">
@@ -515,40 +500,21 @@
   </div>
 </header>
 
-<!-- ======================= PARTICIPANT FEEDBACK ======================= -->
+<!-- ======================= BUILD OUTCOMES ======================= -->
 <section>
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">// participant feedback</div>
-      <h2>What participants say</h2>
+      <div class="eyebrow">// what you'll be able to build</div>
+      <h2>From one model call to a complete agent system.</h2>
+      <p>You build every layer once before a framework takes it over. By the end, you have the working code and the mental model to adapt it to your own tools, data, and workflows.</p>
     </div>
-    <div class="quotes">
-      <figure class="quote">
-        <blockquote>Pragmatic understanding unlocks real-world projects.</blockquote>
-        <figcaption><strong>Carol Willing</strong>Python core developer · three-time Python Steering Council member · Project Jupyter core contributor</figcaption>
-      </figure>
-      <figure class="quote">
-        <blockquote>Shows how solutions are deployed in production.</blockquote>
-        <figcaption><strong>Nishant H.</strong>OpenAI · ex-Netflix</figcaption>
-      </figure>
-      <figure class="quote">
-        <blockquote>Cuts through complexity while staying grounded in practical systems.</blockquote>
-        <figcaption><strong>Gregory G.</strong>ML/AI Engineer · Waymo</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= WHY FIRST PRINCIPLES ======================= -->
-<section>
-  <div class="wrap why-layout">
-    <div>
-      <div class="eyebrow">// why first principles</div>
-      <h2>Understand the system behind the SDK.</h2>
-    </div>
-    <div class="why-copy">
-      <p>Agent SDKs reduce model calls, tool execution, context, and control flow to a few lines of code. Building those layers once makes the abstraction legible.</p>
-      <p>When an agent fails, you can read the trace and identify whether the problem came from its instructions, tools, state, control flow, or guardrails. You can decide whether the job needs a single model call, a fixed workflow, or an agent, and adopt new frameworks without treating them as black boxes.</p>
+    <div class="grid">
+      <div class="card"><h4>a tool-using agent loop</h4><p>Define tool schemas, execute the functions a model requests, return their results, and keep the loop running until the work is done.</p></div>
+      <div class="card"><h4>an engineered agent harness</h4><p>Separate instructions, tools, context, state, guardrails, traces, and feedback checks into components you can inspect and change.</p></div>
+      <div class="card"><h4>a repeatable improvement loop</h4><p>Capture a failure, read the trace, change one harness component, rerun the case, and verify that behaviour improved without changing the model.</p></div>
+      <div class="card"><h4>an SDK agent you understand</h4><p>Rebuild the same agent with the OpenAI Agents SDK and see exactly what Runner handles and what remains your responsibility.</p></div>
+      <div class="card"><h4>reusable tools behind MCP</h4><p>Expose one tool surface through an MCP server so browser chat, terminal chat, and scheduled work can use the same business capabilities.</p></div>
+      <div class="card"><h4>a complete working application</h4><p>Leave with browser and terminal chat, human approval boundaries, proactive draft outreach, runnable behaviour checks, and the full repository.</p></div>
     </div>
   </div>
 </section>
@@ -557,12 +523,10 @@
 <section id="stages">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">// the workshop</div>
-      <h2>One support agent, built in five stages.</h2>
-      <p>Over four hours, you turn a simple LLM call into a working customer service agent.
-      It answers product questions, looks up orders, files support tickets, prepares refund
-      requests for a human to approve, and drafts customer outreach. Each stage adds one
-      layer of the architecture and shows you exactly what changed.</p>
+      <div class="eyebrow">// workshop progression</div>
+      <h2>Build the loop. Engineer the harness. Turn it into a system.</h2>
+      <p>The same workflow grows section by section. You see each new responsibility in the
+      code before the next abstraction takes it over.</p>
     </div>
 
     <!-- ============ STAGE 1 ============ -->
@@ -671,11 +635,11 @@
       </div>
       <div class="stage-copy">
         <div class="stage-num">stage 03</div>
-        <h3>Find and fix a guardrail failure.</h3>
-        <p>You separate instructions, guardrails, tools, memory, traces, and feedback checks
-        into <strong>files you control</strong>. A request for bulk customer data gets past a
-        faulty guardrail. You reproduce the failure, read the trace, fix the check, and verify
-        that the request is blocked before the model is called.</p>
+        <h3>Engineer the harness around the loop.</h3>
+        <p>You separate instructions, tools, context, state, guardrails, traces, and feedback
+        into <strong>components you control</strong>. Then you run a deliberate failure, read
+        the trace, change one harness component, and verify the improvement without changing
+        the model.</p>
         <div class="term">
           <span class="term-line" style="transition-delay:.2s"><span class="cmd">uv run python workshop/03_harness_engineering/harness.py</span></span>
           <span class="term-line" style="transition-delay:.6s"><span class="out">Feedback check: <span class="bad">["Guardrail did not fire; the request reached the model ..."]</span></span></span>
@@ -708,10 +672,10 @@
       </div>
       <div class="stage-copy">
         <div class="stage-num">stage 04</div>
-        <h3>Replace your loop with the OpenAI Agents SDK.</h3>
-        <p>You rebuild the same agent with the OpenAI Agents SDK. Because you wrote the loop
-        first, you can see what <strong>Runner</strong> now handles for you and what remains
-        your responsibility: instructions, guardrails, tools, and business logic.</p>
+        <h3>Rebuild the agent with the OpenAI Agents SDK.</h3>
+        <p>You replace the hand-written loop with <strong>Runner</strong>, add session memory,
+        and use SDK tools, guardrails, and tracing. Because you built the loop and harness
+        first, you can see what the SDK handles and what still belongs to your application.</p>
         <div class="term">
           <span class="term-line" style="transition-delay:.2s"><span class="cmd">uv run python workshop/04_agents_sdk/agents_sdk.py</span></span>
           <span class="term-line" style="transition-delay:.6s"><span class="out">Tools the Runner called for us: lookup_order</span></span>
@@ -745,11 +709,11 @@
       </div>
       <div class="stage-copy">
         <div class="stage-num">stage 05</div>
-        <h3>Connect three clients through one MCP server.</h3>
-        <p>You put the support tools behind an MCP server and connect them to a browser chat,
-        a terminal chat, and a scheduled workflow. The agent can file tickets and prepare
-        refund requests, but a human still approves refunds. The scheduled workflow drafts
-        overdue-delivery messages without sending them.</p>
+        <h3>Put reusable tools behind MCP.</h3>
+        <p>You move the tool surface behind an MCP server and connect it to browser chat,
+        terminal chat, and scheduled work. The complete system can file tickets, create
+        pending refund requests, and draft overdue-delivery outreach while keeping approval
+        and sending in human hands.</p>
         <div class="term">
           <span class="term-line" style="transition-delay:.2s"><span class="cmd">uv run proactive-support && uv run show-outbox</span></span>
           <span class="term-line" style="transition-delay:.6s"><span class="out">Draft 1 | to alice@example.com | about ORD-1001 | draft</span></span>
@@ -768,20 +732,27 @@
   </div>
 </section>
 
-<!-- ======================= OUTCOMES ======================= -->
+<!-- ======================= PAST STUDENT FEEDBACK ======================= -->
 <section>
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">// outcomes</div>
-      <h2>What this lets you do</h2>
+      <div class="eyebrow">// AI engineers · data scientists · software engineers</div>
+      <h2>What past students say</h2>
+      <p>Feedback from past Vanishing Gradients courses and workshops.</p>
     </div>
-    <div class="grid">
-      <div class="card"><h4>choose the right architecture</h4><p>Decide when one LLM call is enough, when a fixed workflow is safer, and when an agent's flexibility is worth the added failure modes.</p></div>
-      <div class="card"><h4>debug without guessing</h4><p>Use traces and repeatable checks to find whether a failure came from instructions, tool access, control flow, or a guardrail.</p></div>
-      <div class="card"><h4>evaluate frameworks</h4><p>See what an SDK handles for you, what it hides, and which instructions, guardrails, tools, and business rules you still need to design.</p></div>
-      <div class="card"><h4>connect tools safely</h4><p>Define what the model can request, keep business rules in ordinary code, and require human approval for consequential actions.</p></div>
-      <div class="card"><h4>reuse tools with MCP</h4><p>Expose one set of capabilities to browser, terminal, and scheduled clients without copying the business logic into each one.</p></div>
-      <div class="card"><h4>adapt a working codebase</h4><p>Keep the complete support app, five ordered builds, and runnable behaviour checks as a starting point for your own work.</p></div>
+    <div class="quotes">
+      <figure class="quote">
+        <blockquote>Pragmatic understanding unlocks real-world projects.</blockquote>
+        <figcaption><strong>Carol Willing</strong>Python core developer · three-time Python Steering Council member · Project Jupyter core contributor</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>Shows how solutions are deployed in production.</blockquote>
+        <figcaption><strong>Nishant H.</strong>OpenAI · ex-Netflix</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>Cuts through complexity while staying grounded in practical systems.</blockquote>
+        <figcaption><strong>Gregory G.</strong>ML/AI Engineer · Waymo</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -854,7 +825,7 @@
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* hero typewriter (a hidden twin of the sentence reserves the height) */
-  var text = "Build the core architecture behind a production-ready AI agent: the loop, tools, guardrails, traces, an SDK, and MCP. Learn how to trace failures, decide when an SDK helps, and keep business rules outside the model.";
+  var text = "Build tool-using AI agents from scratch. Engineer the harness around them, diagnose failures from traces, and share the same tools across chat and scheduled workflows with MCP.";
   var typed = document.getElementById("typed");
   if (reduced) {
     typed.textContent = text;
